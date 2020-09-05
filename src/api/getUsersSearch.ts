@@ -7,13 +7,17 @@ export interface SearchedUser {
 }
 
 // Get the list of countries from the api
-const getUsersSearch: (
+const getUsersSearch = async (
   query: string,
-  limit: number,
-) => Promise<SearchedUser[]> = async (query, limit = 20) => {
+  limit: number = 20,
+  token: string,
+): Promise<SearchedUser[]> => {
   const url = `${BACKEND_BASE_URL}/users/search?query=${query}&limit=${limit}`;
 
-  let response = await fetch(url);
+  // Make the request with the token
+  let response = await fetch(url, {
+    headers: {Authorization: `Bearer ${token}`},
+  });
 
   if (!response.ok) {
     throw new Error('Failed to connect');
