@@ -31,6 +31,11 @@ const DATA = [
     title: 'Chess',
     game: 'Chess',
     icon: require('../../assets/chessicon.png'),
+  },{
+    key: 'game3',
+    title: 'VideoChat',
+    game: 'VideoChat',
+    icon: require('../../assets/video_chat.png'),
   },
 ];
 
