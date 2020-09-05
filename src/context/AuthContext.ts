@@ -48,7 +48,7 @@ export const useAuth = () => {
             // Store the token
             dispatch({type: 'SIGN_UP', token});
             RNSecureKeyStore.set('orange_user_token', token, {
-              accessible: ACCESSIBLE.WHEN_UNLOCKED,
+              accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
             });
           })
           .catch((err) => {

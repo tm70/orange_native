@@ -96,11 +96,11 @@ const App: React.FC = () => {
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const loadKeyFromStore = async () => {
-      let token;
+      let token = null;
       try {
         token = await RNSecureKeyStore.get('orange_user_token');
 
-        if (token !== null) {
+        if (token) {
           // TODO: Validate the token with the server
           dispatch({type: 'RESTORE_TOKEN', token});
         }
