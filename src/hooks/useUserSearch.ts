@@ -1,5 +1,6 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import getUserSearch, {SearchedUser} from '../api/getUsersSearch';
+import AuthContext from "../context/AuthContext";
 
 const useUserSearch: (
   limit: number,
@@ -9,9 +10,12 @@ const useUserSearch: (
   const [users, setUsers] = useState([] as SearchedUser[]);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Get the user token
+  const {token} = React.useContext(AuthContext);
+
   const searchAPI = async (query: string) => {
     try {
-      const results = await getUserSearch(query, limit);
+      const results = await getUserSearch(query, limit, token);
       setUsers(results);
     } catch (err) {
       setErrorMessage('Something went wrong');
