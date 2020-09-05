@@ -9,9 +9,13 @@ export interface SignUpParams {
   hobbies: string[];
 }
 
-type Token = string;
+export interface SignUpResponse {
+  token: string;
+  id: number;
+  status: number;
+}
 
-const signup: (userInfo: SignUpParams) => Promise<Token> = async (userInfo) => {
+const signup: (userInfo: SignUpParams) => Promise<SignUpResponse> = async (userInfo) => {
   const url = `${BACKEND_BASE_URL}/signup`;
 
   console.log(JSON.stringify(userInfo));
@@ -33,7 +37,7 @@ const signup: (userInfo: SignUpParams) => Promise<Token> = async (userInfo) => {
       throw new Error(data.message);
     }
 
-    return data.token;
+    return data;
   });
 };
 
