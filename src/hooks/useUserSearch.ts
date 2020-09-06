@@ -2,11 +2,7 @@ import React, {useEffect, useState} from 'react';
 import getUserSearch, {SearchedUser} from '../api/getUsersSearch';
 import AuthContext from "../context/AuthContext";
 
-const useUserSearch: (
-  limit: number,
-) => [(query: string) => void, SearchedUser[], string] = (
-  limit: number = 20,
-) => {
+const useUserSearch: (limit: number) => [(query: string) => void, SearchedUser[], string] = (limit: number = 20) => {
   const [users, setUsers] = useState([] as SearchedUser[]);
   const [errorMessage, setErrorMessage] = useState('');
 
