@@ -105,13 +105,15 @@ const App: React.FC = () => {
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const loadKeyFromStore = async () => {
-      let token;
+      let token = null;
+      let id = -1;
       try {
         token = await RNSecureKeyStore.get('orange_user_token');
+        id = parseInt(await RNSecureKeyStore.get('orange_user_id'), 10);
 
-        if (token !== null) {
+        if (token && id !== -1) {
           // TODO: Validate the token with the server
-          dispatch({type: 'RESTORE_TOKEN', token});
+          dispatch({type: 'RESTORE_TOKEN', token, id});
         }
       } catch (e) {
         // Failed to log the user in
@@ -122,7 +124,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{token: state.token, ...actions}}>
+    <AuthContext.Provider value={{token: state.token, id: state.id, ...actions}}>
       <NavigationContainer>
         {RootStack(state.token !== null)}
       </NavigationContainer>
