@@ -25,7 +25,7 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
             {id}
           )}>
                 <Image 
-                    style={{width:47,height:47}}
+                    style={{width:60,height:60,}}
                     source={require('../../assets/person.png')}
                 />
                 <Text style={styles.title}>{firstname}</Text>
@@ -50,6 +50,7 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
                 onSubmitEditing={() => searchAPI(searchText)}
             />
             </View>
+            <View style={styles.list}>
             <FlatList
                 data={users}
                 renderItem={renderItem}
@@ -58,12 +59,14 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
                 horizontal={false}
                 columnWrapperStyle={styles.columnStyle}
             />
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         marginTop: '5%',
         marginHorizontal: '10%',
         justifyContent: 'center',
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         marginBottom: '10%',
         width: '50%',
+        alignItems:'center',
     },
 
     header: {
@@ -89,16 +93,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         
     },
-
+    list: {
+        alignItems:'center',
+        flex: 1,
+    },
     item: {
         padding: '2%',
         marginVertical: '1%',
-        marginHorizontal: '6%',
         backgroundColor: 'white',
+        alignItems:'center',
+        marginHorizontal: '5%',
     },
     
     title: {
-        fontSize: fontScaler(7),
+        fontSize: fontScaler(8),
         justifyContent: 'center',
         textAlign: 'center',
     },
