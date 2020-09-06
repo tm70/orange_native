@@ -10,11 +10,14 @@ import AuthContext, {useAuth} from './src/context/AuthContext';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import PasswordScreen from './src/screens/signup/PasswordScreen';
 
+import MainScreen from "./src/screens/MainScreen";
 import FriendFindScreen from './src/screens/FriendFindScreen';
 
 import GameList from './src/screens/GameList';
 import Chess from './src/screens/Chess';
 import TicTacToe from './src/screens/TicTacToe';
+import BioScreen from "./src/screens/BioScreen";
+import EditBio from "./src/screens/EditBio";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +34,9 @@ export type StackParamList = {
   GameList: undefined;
   TicTacToe: undefined;
   Chess: undefined;
+  MainScreen: SignUpParams,
+  Bio: undefined,
+  EditBio: undefined
 };
 
 // Create a placeholder stack navigator for now
@@ -79,10 +85,13 @@ const RootStack = (loggedIn: boolean) => {
         <>{welcomeScreens()}</>
       ) : (
         <>
+          <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"hello"}}/>
           <Stack.Screen name="FriendFind" component={FriendFindScreen} />
           <Stack.Screen name="GameList" component={GameList} />
           <Stack.Screen name="TicTacToe" component={TicTacToe} />
           <Stack.Screen name="Chess" component={Chess} />
+          <Stack.Screen name="Bio" component={BioScreen} />
+          <Stack.Screen name="EditBio" component={EditBio} />
         </>
       )}
     </Stack.Navigator>
