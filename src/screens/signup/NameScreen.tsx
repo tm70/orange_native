@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../../App';
 import NameInput from '../../components/signup/NameInput';
@@ -21,7 +21,7 @@ const NameScreen: React.FC<Props> = ({navigation, route}) => {
   const [surname, setSurname] = useState(params.surname);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.inputContainer}>
         <NameInput
           title="What is your email address?"
@@ -70,15 +70,14 @@ const NameScreen: React.FC<Props> = ({navigation, route}) => {
           }
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '15%',
-    marginHorizontal: '12%',
-    justifyContent: 'center',
+    marginTop: '10%',
+    paddingHorizontal: '10%',
   },
   inputContainer: {
     paddingHorizontal: '5%',
@@ -88,6 +87,7 @@ const styles = StyleSheet.create({
   },
   navRow: {
     marginTop: '20%',
+    marginBottom: '10%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

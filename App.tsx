@@ -34,7 +34,7 @@ export type StackParamList = {
   GameList: undefined;
   TicTacToe: undefined;
   Chess: undefined;
-  MainScreen: SignUpParams,
+  MainScreen: undefined,
   Bio: undefined,
   EditBio: undefined
 };
@@ -85,7 +85,7 @@ const RootStack = (loggedIn: boolean) => {
         <>{welcomeScreens()}</>
       ) : (
         <>
-          <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"hello"}}/>
+          <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"User"}} />
           <Stack.Screen name="FriendFind" component={FriendFindScreen} />
           <Stack.Screen name="GameList" component={GameList} />
           <Stack.Screen name="TicTacToe" component={TicTacToe} />
