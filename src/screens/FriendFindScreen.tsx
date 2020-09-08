@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
         marginVertical: '1%',
         backgroundColor: 'white',
         marginHorizontal: '5%',
-        flex: 1,
+        flex: 1/3,
+        maxWidth: '23.5%'
     },
     tile: {
         aspectRatio: 1,
