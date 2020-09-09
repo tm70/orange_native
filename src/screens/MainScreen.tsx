@@ -48,7 +48,7 @@ const Item = ({ title, onPress, icon }) => (
 
 const Main: React.FC<Props> = ({navigation, route}) => {
     const name = route.params.firstname;
-    
+
     const renderItem = ({ item }) => (
         <Item
             title={item.title}
@@ -56,7 +56,7 @@ const Main: React.FC<Props> = ({navigation, route}) => {
             icon={item.icon}
         />
     );
-    
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -73,7 +73,7 @@ const Main: React.FC<Props> = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '10%',
+        marginTop: '3%',
         marginHorizontal: 8,
         fontWeight: 'bold',
     },
