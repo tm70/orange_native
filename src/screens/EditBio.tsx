@@ -13,6 +13,7 @@ const BioScreen: React.FC<Props> = ({navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
 
 
+
     return (
         
         <View style={styles.container}>
@@ -33,11 +34,11 @@ const BioScreen: React.FC<Props> = ({navigation}) => {
             </Modal>
             <View style={styles.rowdisplay}>
                 <Image 
-                    style={{width:100,height:100}}
+                    style={{width:'30%',height:'130%'}}
                     source={require('../../assets/person.png')}
                 />
                 <View style={styles.columndisplay}>
-                    <Text style={styles.header}>Name</Text>
+                    <Text style={styles.subheader}>Name</Text>
                     <Text style={styles.subheader}>Country</Text>
                 </View>
             </View>
@@ -55,8 +56,9 @@ const styles = StyleSheet.create({
     container: {
         marginTop: '10%',
         marginHorizontal: '10%',
-        justifyContent: 'center',
+
         fontWeight: 'bold',
+        flex:1,
     },
 
     rowdisplay: {
@@ -72,15 +74,17 @@ const styles = StyleSheet.create({
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
-        padding: '5%',
+        marginTop: '5%',
     },
 
     subheader: {
-        fontSize: fontScaler(13),
-        textAlign: 'center',
-        
+        fontSize: fontScaler(15),
+        textAlign: 'center',       
     },
 
+    info: {
+        fontSize: fontScaler(15),    
+    },
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -111,5 +115,6 @@ const styles = StyleSheet.create({
       },
 
 });
+
 
 export default BioScreen;

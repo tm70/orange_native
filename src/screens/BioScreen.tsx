@@ -6,6 +6,7 @@ import fontScaler from "../util/fontScaler";
 import BasicButton from "../components/BasicButton";
 import {RouteProp} from "@react-navigation/native";
 import getBio from "../api/GetBio";
+import AuthContext from '../context/AuthContext';
 
 type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>
 type BioScreenRouteProp = RouteProp<StackParamList, 'Bio'>
@@ -15,43 +16,42 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp};
 
 const BioScreen: React.FC<Props> = ({route, navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [info, setinfo] = useState('');
+    const [bio, setBio] = useState(null);
+
+    const {token} = React.useContext(AuthContext);
+
     // get data from frindfindscreen
     const { id } = route.params;
     
-    // get data from api
+    // get data from api ()
     useEffect(() => {
-        getBio()
-            .catch((err) => {
-                console.log(err.toString())
-            })
+        const b = getBio(id, token).catch(console.log).then(setBio);
     }, []);
-
+    if (bio === null) {
+        return <Text>Loading</Text>;
+    }
     return (
-        
-
         <View style={styles.container}>
-
             <View style={styles.rowdisplay}>
                 <Image 
-                    style={{width:100,height:100}}
+                    style={{width:'30%',height:'130%'}}
                     source={require('../../assets/person.png')}
                 />
                 <View style={styles.columndisplay}>
-                    <Text style={styles.header}>{(id)}</Text>
-                    <Text style={styles.header}>{(info.country)}</Text>
+                    <Text style={styles.subheader}>{bio.firstname}  {bio.surname}</Text>
+                    <Text style={styles.subheader}>{bio.country}</Text>
                 </View>
             </View>
 
 
             <Text style={styles.header}>Bio</Text>
-
+            <Text style={styles.info}>{bio.bio}</Text>
 
             <Text style={styles.header}>Hobbies</Text>
-
+            {bio.hobbies.map((h) => <Text style={styles.info}>{h}</Text>)}
 
             <Text style={styles.header}>Game</Text>
-
+            
 
             <BasicButton color='#bbbde0' text="Send friend request" onPress={() => {setModalVisible(true);}}/>
             <Modal
@@ -80,8 +80,9 @@ const styles = StyleSheet.create({
     container: {
         marginTop: '10%',
         marginHorizontal: '10%',
-        justifyContent: 'center',
+
         fontWeight: 'bold',
+        flex:1,
     },
 
     rowdisplay: {
@@ -97,15 +98,17 @@ const styles = StyleSheet.create({
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
-        padding: '5%',
+        marginTop: '5%',
     },
 
     subheader: {
-        fontSize: fontScaler(13),
-        textAlign: 'center',
-        
+        fontSize: fontScaler(15),
+        textAlign: 'center',       
     },
 
+    info: {
+        fontSize: fontScaler(15),    
+    },
     centeredView: {
         flex: 1,
         justifyContent: "center",
