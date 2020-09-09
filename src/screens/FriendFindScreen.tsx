@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity, ImageBackground} from 'react-native';
 import {StackNavigationProp} from "@react-navigation/stack/lib/typescript/src/types";
 import {StackParamList} from "../../App";
 import fontScaler from "../util/fontScaler";
@@ -20,17 +20,16 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
     // item prefer to display
 
     const Item: React.FC<ItemProps> = ({ firstname, id }) => (
-        <View style={styles.item}>
-            <TouchableOpacity onPress={() => navigation.navigate('Bio', 
+
+        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Bio', 
             {id}
-          )}>
-                <Image 
-                    style={{width:60,height:60,}}
-                    source={require('../../assets/person.png')}
-                />
-                <Text style={styles.title}>{firstname}</Text>
-            </TouchableOpacity>
-        </View>
+        )}>
+            <ImageBackground source={require('../../assets/person.png')} style={{}}>
+                <View style={styles.tile}>
+                </View>
+            </ImageBackground>
+            <Text style={styles.title}>{firstname}</Text>
+        </TouchableOpacity>
     );
 
     // render item 
@@ -50,23 +49,18 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
                 onSubmitEditing={() => searchAPI(searchText)}
             />
             </View>
-            <View style={styles.list}>
             <FlatList
                 data={users}
                 renderItem={renderItem}
                 keyExtractor={({ id }, _index) => id.toString()}
                 numColumns={3}
-                horizontal={false}
-                columnWrapperStyle={styles.columnStyle}
             />
-            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         marginTop: '5%',
         marginHorizontal: '10%',
         justifyContent: 'center',
@@ -93,27 +87,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         
     },
-    list: {
-        alignItems:'center',
-        flex: 1,
-    },
     item: {
         padding: '2%',
         marginVertical: '1%',
         backgroundColor: 'white',
-        alignItems:'center',
         marginHorizontal: '5%',
+        flex: 1/3,
+        maxWidth: '23.5%'
     },
-    
+    tile: {
+        aspectRatio: 1,
+    },
     title: {
-        fontSize: fontScaler(8),
-        justifyContent: 'center',
+        fontSize: fontScaler(10),
         textAlign: 'center',
-    },
-
-    columnStyle:{
-        // marginLeft: '5%',
-        // marginRight: '5%',
     },
 });
 
