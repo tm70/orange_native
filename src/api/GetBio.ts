@@ -10,7 +10,6 @@ interface Bio {
 }
 
 const getBio = async (
-        query: string,
         token: string,
     ): Promise<Bio[]> => {
     const url = `${BACKEND_BASE_URL}/users/<user_id>`;

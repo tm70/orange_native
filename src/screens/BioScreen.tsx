@@ -6,6 +6,7 @@ import fontScaler from "../util/fontScaler";
 import BasicButton from "../components/BasicButton";
 import {RouteProp} from "@react-navigation/native";
 import getBio from "../api/GetBio";
+import AuthContext from '../context/AuthContext';
 
 type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>
 type BioScreenRouteProp = RouteProp<StackParamList, 'Bio'>
@@ -16,12 +17,15 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp};
 const BioScreen: React.FC<Props> = ({route, navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [info, setinfo] = useState('');
+
+    const {token} = React.useContext(AuthContext);
+
     // get data from frindfindscreen
     const { id } = route.params;
     
     // get data from api
     useEffect(() => {
-        getBio()
+        getBio()              
             .catch((err) => {
                 console.log(err.toString())
             })
@@ -29,7 +33,7 @@ const BioScreen: React.FC<Props> = ({route, navigation}) => {
 
     return (
         
-
+        
         <View style={styles.container}>
 
             <View style={styles.rowdisplay}>
@@ -38,8 +42,8 @@ const BioScreen: React.FC<Props> = ({route, navigation}) => {
                     source={require('../../assets/person.png')}
                 />
                 <View style={styles.columndisplay}>
-                    <Text style={styles.header}>{(id)}</Text>
-                    <Text style={styles.header}>{(info.country)}</Text>
+                    <Text style={styles.header}></Text>
+                    <Text style={styles.header}></Text>
                 </View>
             </View>
 
