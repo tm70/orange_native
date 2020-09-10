@@ -59,7 +59,7 @@ const Main: React.FC<Props> = ({navigation, route}) => {
     
     return (
         <View style={styles.container}>
-            <FlatList
+            <FlatList style={styles.list}
                 ListHeaderComponent={<>
                     <Text style={styles.header}>Hello {name}, what would you like to do?</Text>
                 </>}
@@ -73,9 +73,15 @@ const Main: React.FC<Props> = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '10%',
-        marginHorizontal: 8,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: '2%',
+        paddingBottom: '15%',
         fontWeight: 'bold',
+    },
+    list: {
+        flexGrow:0,
     },
     header: {
         fontSize: fontScaler(25),
@@ -88,14 +94,13 @@ const styles = StyleSheet.create({
     item: {
         backgroundColor: '#3498DB',
         flex: 1,
-        padding: 10,
-        marginVertical: 8,
-        marginHorizontal: 8,
+        padding: '2%',
+        marginVertical: '2%',
+        marginHorizontal: '2%',
     },
     tile: {
         flex: 1,
         justifyContent: 'flex-end',
-        width: '100%',
         aspectRatio: 1,
     },
     title: {
