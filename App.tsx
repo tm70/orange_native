@@ -13,6 +13,7 @@ import PasswordScreen from './src/screens/signup/PasswordScreen';
 import MainScreen from "./src/screens/MainScreen";
 import FriendFindScreen from './src/screens/FriendFindScreen';
 
+import GameMenu from './src/screens/GameMenu';
 import GameList from './src/screens/GameList';
 import GameInviteFriends from './src/screens/GameInviteFriends';
 import Chess from './src/screens/Chess';
@@ -32,6 +33,7 @@ export type StackParamList = {
   Temp: undefined;
   TempLoggedIn: undefined;
   FriendFind: undefined;
+  GameMenu: undefined;
   GameList: undefined;
   GameInviteFriends: {game: string};
   TicTacToe: undefined;
@@ -89,8 +91,9 @@ const RootStack = (loggedIn: boolean) => {
         <>
           <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"User"}} />
           <Stack.Screen name="FriendFind" component={FriendFindScreen} />
+          <Stack.Screen name="GameMenu" component={GameMenu} />
           <Stack.Screen name="GameList" component={GameList} />
-          <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} />
+          <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} initialParams={{game: "error"}} />
           <Stack.Screen name="TicTacToe" component={TicTacToe} />
           <Stack.Screen name="Chess" component={Chess} />
           <Stack.Screen name="Bio" component={BioScreen} />
