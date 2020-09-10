@@ -10,7 +10,6 @@ type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'Game
 type GameInviteFriendsRouteProp = RouteProp<StackParamList, 'GameInviteFriends'>
 type Props = { navigation: GameInviteFriendsNavigationProp; route: GameInviteFriendsRouteProp };
 
-// Placeholder screen for now
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
     return (
@@ -29,8 +28,11 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 8,
-        marginHorizontal: 8,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: '2%',
+        paddingBottom: '15%',
         fontWeight: 'bold',
     },
     header: {

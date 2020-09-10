@@ -61,7 +61,9 @@ const FriendFindScreen: React.FC<Props> = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         marginTop: '5%',
+        marginBottom: '5%',
         marginHorizontal: '10%',
         justifyContent: 'center',
         fontWeight: 'bold',
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-
     subheader: {
         fontSize: fontScaler(13),
         textAlign: 'center',
