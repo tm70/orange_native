@@ -10,10 +10,10 @@ interface Bio {
 }
 
 const getBio = async (
-        query: string,
+        id: number,
         token: string,
     ): Promise<Bio[]> => {
-    const url = `${BACKEND_BASE_URL}/users/<user_id>`;
+    const url = `${BACKEND_BASE_URL}/users/${id}`;
 
     let response = await fetch(url, {
         headers: {Authorization: `Bearer ${token}`},
