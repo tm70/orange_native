@@ -12,8 +12,8 @@ import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 
 // To get the navigation prop typed
-type IndexScreenNavigationProp = StackNavigationProp<StackParamList, 'Welcome'>;
-type Props = {navigation: IndexScreenNavigationProp};
+type GameListNavigationProp = StackNavigationProp<StackParamList, 'GameList'>;
+type Props = {navigation: GameListNavigationProp};
 
 // Games to be listed
 // 'title' is the name to be displayed on its button
@@ -48,7 +48,7 @@ const GameList: React.FC<Props> = ({navigation}) => {
   const renderItem = ({item}) => (
     <Item
       title={item.title}
-      onPress={() => navigation.navigate(item.game)}
+      onPress={() => navigation.navigate('GameInviteFriends', {game: item.game})}
       icon={item.icon}
     />
   );
