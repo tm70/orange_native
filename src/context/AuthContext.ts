@@ -4,18 +4,20 @@ import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 
 interface ContextData {
   token: string | null;
+  id: number;
   signUp: (userInfo: SignUpParams) => Promise<void>;
 }
 
-const AuthContext = React.createContext({token: null} as ContextData);
+const AuthContext = React.createContext({token: null, id: -1} as ContextData);
 
 interface State {
   token: string | null;
+  id: number;
 }
 
 type Action =
-  | {type: 'RESTORE_TOKEN'; token: string}
-  | {type: 'SIGN_UP'; token: string};
+  | {type: 'RESTORE_TOKEN'; token: string; id: number}
+  | {type: 'SIGN_UP'; token: string; id: number};
 
 export const useAuth = () => {
   const [state, dispatch] = React.useReducer(
@@ -24,11 +26,13 @@ export const useAuth = () => {
         case 'RESTORE_TOKEN': {
           return {
             token: action.token,
+            id: action.id,
           };
         }
         case 'SIGN_UP': {
           return {
             token: action.token,
+            id: action.id,
           };
         }
         default:
@@ -37,6 +41,7 @@ export const useAuth = () => {
     },
     {
       token: null,
+      id: -1,
     },
   );
 
@@ -44,11 +49,14 @@ export const useAuth = () => {
     () => ({
       signUp: async (userInfo: SignUpParams) => {
         signup(userInfo)
-          .then((token) => {
-            // Store the token
-            dispatch({type: 'SIGN_UP', token});
-            RNSecureKeyStore.set('orange_user_token', token, {
-              accessible: ACCESSIBLE.WHEN_UNLOCKED,
+          .then((response) => {
+            // Store the token and id
+            dispatch({type: 'SIGN_UP', token: response.token, id: response.id});
+            RNSecureKeyStore.set('orange_user_token', response.token, {
+              accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+            });
+            RNSecureKeyStore.set('orange_user_id', response.id.toString(), {
+              accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
             });
           })
           .catch((err) => {

@@ -6,12 +6,8 @@ export interface SearchedUser {
   surname: string;
 }
 
-// Get the list of countries from the api
-const getUsersSearch = async (
-  query: string,
-  limit: number = 20,
-  token: string,
-): Promise<SearchedUser[]> => {
+// Get the list of users from the api
+const getUsersSearch = async (query: string, limit: number = 20, token: string): Promise<SearchedUser[]> => {
   const url = `${BACKEND_BASE_URL}/users/search?query=${query}&limit=${limit}`;
 
   // Make the request with the token

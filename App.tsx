@@ -10,11 +10,15 @@ import AuthContext, {useAuth} from './src/context/AuthContext';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import PasswordScreen from './src/screens/signup/PasswordScreen';
 
+import MainScreen from "./src/screens/MainScreen";
 import FriendFindScreen from './src/screens/FriendFindScreen';
 
 import GameList from './src/screens/GameList';
+import GameInviteFriends from './src/screens/GameInviteFriends';
 import Chess from './src/screens/Chess';
 import TicTacToe from './src/screens/TicTacToe';
+import BioScreen from "./src/screens/BioScreen";
+import EditBio from "./src/screens/EditBio";
 import VideoChat from "./src/screens/VideoChat";
 
 const Stack = createStackNavigator();
@@ -30,8 +34,12 @@ export type StackParamList = {
   TempLoggedIn: undefined;
   FriendFind: undefined;
   GameList: undefined;
+  GameInviteFriends: {game: string};
   TicTacToe: undefined;
   Chess: undefined;
+  MainScreen: undefined,
+  Bio: undefined,
+  EditBio: undefined
 };
 
 // Create a placeholder stack navigator for now
@@ -81,13 +89,15 @@ const RootStack = (loggedIn: boolean) => {
       ) : (
           // The video chat screen should be later moved to an appropriate place.
         <>
-          {/*<Stack.Screen name="FriendFind" component={FriendFindScreen} />*/}
+          <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"User"}} />
+          <Stack.Screen name="FriendFind" component={FriendFindScreen} />
           <Stack.Screen name="GameList" component={GameList} />
+          <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} />
           <Stack.Screen name="TicTacToe" component={TicTacToe} />
           <Stack.Screen name="Chess" component={Chess} />
-
-          <Stack.Screen name="VideoChat" component={VideoChat} />
-
+        //   <Stack.Screen name="VideoChat" component={VideoChat} />
+          <Stack.Screen name="Bio" component={BioScreen} />
+          <Stack.Screen name="EditBio" component={EditBio} />
         </>
       )}
     </Stack.Navigator>
@@ -101,13 +111,15 @@ const App: React.FC = () => {
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
     const loadKeyFromStore = async () => {
-      let token;
+      let token = null;
+      let id = -1;
       try {
         token = await RNSecureKeyStore.get('orange_user_token');
+        id = parseInt(await RNSecureKeyStore.get('orange_user_id'), 10);
 
-        if (token !== null) {
+        if (token && id !== -1) {
           // TODO: Validate the token with the server
-          dispatch({type: 'RESTORE_TOKEN', token});
+          dispatch({type: 'RESTORE_TOKEN', token, id});
         }
       } catch (e) {
         // Failed to log the user in
@@ -118,7 +130,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{token: state.token, ...actions}}>
+    <AuthContext.Provider value={{token: state.token, id: state.id, ...actions}}>
       <NavigationContainer>
         {RootStack(state.token !== null)}
       </NavigationContainer>
