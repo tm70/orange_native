@@ -1,6 +1,6 @@
 import {BACKEND_BASE_URL} from "./endpoints";
 
-interface Relationship {
+export interface Relationship {
     user_first_id: number,
     user_second_id: number,
     relationship: string
@@ -21,7 +21,7 @@ const getRelationships = async (id: number, token: string): Promise<Relationship
         if (data.status !== 200) {
             throw new Error(data.message)
         }
-        return data.info;
+        return data.relationships;
     })
 };
 

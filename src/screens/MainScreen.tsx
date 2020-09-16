@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {StyleSheet, Text, ImageBackground, ScrollView, View, FlatList, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from "@react-navigation/stack/lib/typescript/src/types";
 import {StackParamList} from "../../App";
 import {RouteProp} from "@react-navigation/native";
 import fontScaler from "../util/fontScaler";
+import getId from "../api/getId";
+import AuthContext from '../context/AuthContext';
 
 type MainScreenNavigationProp = StackNavigationProp<StackParamList, 'MainScreen'>
 type MainScreenRouteProp = RouteProp<StackParamList, 'MainScreen'>
@@ -46,8 +48,8 @@ const Item = ({ title, onPress, icon }) => (
     </TouchableOpacity>
 );
 
-const Main: React.FC<Props> = ({navigation, route}) => {
-    const name = route.params.firstname;
+const Main: React.FC<Props> = ({route, navigation}) => {
+    const {id} = React.useContext(AuthContext);
     
     const renderItem = ({ item }) => (
         <Item
@@ -61,7 +63,7 @@ const Main: React.FC<Props> = ({navigation, route}) => {
         <View style={styles.container}>
             <FlatList style={styles.list}
                 ListHeaderComponent={<>
-                    <Text style={styles.header}>Hello {name}, what would you like to do?</Text>
+                    <Text style={styles.header}>Hello {id}, what would you like to do?</Text>
                 </>}
                 data={DATA}
                 renderItem={renderItem}

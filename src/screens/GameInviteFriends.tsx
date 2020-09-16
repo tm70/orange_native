@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-import getRelationships from "../api/GetRelationships";
+import useGetRelationships from "../hooks/useGetRelationships";
 import ArrowButton, {Direction} from '../components/ArrowButton';
+import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed
 type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'GameInviteFriends'>;
@@ -17,11 +18,13 @@ const Item = ({ firstname, id }) => (
             <View style={styles.tile} />
         </ImageBackground>  
         <Text style={styles.title}>{firstname}</Text>
+        <Text style={styles.title}>{id}</Text>
     </TouchableOpacity>
 );
 
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
+    const {id} = React.useContext(AuthContext);
     
     const renderItem = ({ item }) => (
         <Item

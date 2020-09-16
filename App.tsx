@@ -89,7 +89,7 @@ const RootStack = (loggedIn: boolean) => {
         <>{welcomeScreens()}</>
       ) : (
         <>
-          <Stack.Screen name='MainScreen' component={MainScreen} initialParams={{firstname:"User"}} />
+          <Stack.Screen name='MainScreen' component={MainScreen} />
           <Stack.Screen name="FriendFind" component={FriendFindScreen} />
           <Stack.Screen name="GameMenu" component={GameMenu} />
           <Stack.Screen name="GameList" component={GameList} />
