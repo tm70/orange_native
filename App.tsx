@@ -19,6 +19,7 @@ import Chess from './src/screens/Chess';
 import TicTacToe from './src/screens/TicTacToe';
 import BioScreen from "./src/screens/BioScreen";
 import EditBio from "./src/screens/EditBio";
+import FriendList from "./src/screens/FriendList";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +39,8 @@ export type StackParamList = {
   Chess: undefined;
   MainScreen: undefined,
   Bio: undefined,
-  EditBio: undefined
+  EditBio: undefined,
+  FriendList: undefined,
 };
 
 // Create a placeholder stack navigator for now
@@ -95,6 +97,7 @@ const RootStack = (loggedIn: boolean) => {
           <Stack.Screen name="Chess" component={Chess} />
           <Stack.Screen name="Bio" component={BioScreen} />
           <Stack.Screen name="EditBio" component={EditBio} />
+          <Stack.Screen name="FriendList" component={FriendList} />
         </>
       )}
     </Stack.Navigator>
