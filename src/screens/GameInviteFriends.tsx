@@ -4,6 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/ty
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import useGetRelationships from "../hooks/useGetRelationships";
+import sendGameRequest from "../api/sendGameRequest";
 import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
 
@@ -12,24 +13,24 @@ type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'Game
 type GameInviteFriendsRouteProp = RouteProp<StackParamList, 'GameInviteFriends'>
 type Props = { navigation: GameInviteFriendsNavigationProp; route: GameInviteFriendsRouteProp };
 
-const Item = ({ firstname, id }) => (
-    <TouchableOpacity style={styles.item}> // add onpress that sends a game request to the api
+const Item = ({ firstname, id, onPress }) => (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
         <ImageBackground source={require('../../assets/person.png')} style={{}}>
-            <View style={styles.tile} />
+            <View style={styles.tile}/>
         </ImageBackground>  
         <Text style={styles.title}>{firstname}</Text>
-        <Text style={styles.title}>{id}</Text>
     </TouchableOpacity>
 );
 
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
-    const params = route.params;
-    const {id} = React.useContext(AuthContext);
+    const game = route.params.game;
+    const {token, id: userid} = React.useContext(AuthContext);
     
     const renderItem = ({ item }) => (
         <Item
             firstname={item.firstname}
             id={item.id}
+            onPress={sendGameRequest(userid, id, game, token)}
         />
     );
     
@@ -41,7 +42,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
                 text="Start Game"
                 color="#94d361"
                 direction={Direction.Right}
-                onPress={() => navigation.navigate(params.game)}
+                onPress={() => navigation.navigate(game)}
             />
         </View>
     );
