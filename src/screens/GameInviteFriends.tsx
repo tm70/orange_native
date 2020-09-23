@@ -10,7 +10,7 @@ import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed
 type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'GameInviteFriends'>;
-type GameInviteFriendsRouteProp = RouteProp<StackParamList, 'GameInviteFriends'>
+type GameInviteFriendsRouteProp = RouteProp<StackParamList, 'GameInviteFriends'>;
 type Props = { navigation: GameInviteFriendsNavigationProp; route: GameInviteFriendsRouteProp };
 
 const Item = ({ firstname, id, onPress }) => (
@@ -64,6 +64,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
+    },
+    item: {
+        padding: '2%',
+        marginVertical: '1%',
+        backgroundColor: 'white',
+        marginHorizontal: '5%',
+        flex: 1/3,
+        maxWidth: '23.5%'
     },
 });
 

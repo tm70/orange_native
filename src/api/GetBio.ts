@@ -1,6 +1,6 @@
 import {BACKEND_BASE_URL} from "./endpoints";
 
-interface Bio {
+export interface Bio {
     id: number,
     bio: string,
     country: string,
