@@ -30,7 +30,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
         <Item
             firstname={item.firstname}
             id={item.id}
-            onPress={sendGameRequest(userid, id, game, token)}
+            onPress={() => sendGameRequest(userid, item.id, game, token)}
         />
     );
     

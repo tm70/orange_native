@@ -10,8 +10,8 @@ const sendGameRequest = async (id: number, oppid: number, game: string, token: s
     
     let response = await fetch(url, {
         method: 'POST',
-        headers: {Authorization: `Bearer ${token}`},
-        body: {"game_type": {game}, "opponent_id": {oppid}},
+        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify({'game_type': game, 'opponent_id': oppid}),
     });
     
     console.log(response)
