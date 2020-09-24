@@ -11,8 +11,8 @@ const respondGameRequest = async (id: number, gameid: number, action: string, to
     
     let response = await fetch(url, {
         method: 'PATCH',
-        headers: {Authorization: `Bearer ${token}`},
-        body: action,
+        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify(action),
     });
     
     if (!response.ok) {

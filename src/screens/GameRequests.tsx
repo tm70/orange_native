@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     item: {
         padding: '2%',
         marginVertical: '2%',
-        backgroundColor: 'white',
+        backgroundColor: '#3498DB',
         marginHorizontal: '5%',
         flex: 1,
     },
