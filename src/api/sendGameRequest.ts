@@ -14,14 +14,11 @@ const sendGameRequest = async (id: number, oppid: number, game: string, token: s
         body: JSON.stringify({'game_type': game, 'opponent_id': oppid}),
     });
     
-    console.log(response)
-    
     if (!response.ok) {
         throw new Error('Failed to connect');
     }
     
     return await response.json().then((data) => {
-        console.log("a")
         if (data.status !== 200) {
             throw new Error(data)
         }

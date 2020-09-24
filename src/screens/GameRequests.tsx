@@ -50,6 +50,13 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         marginBottom: '5%',
     },
+    item: {
+        padding: '2%',
+        marginVertical: '2%',
+        backgroundColor: 'white',
+        marginHorizontal: '5%',
+        flex: 1,
+    },
 });
 
 export default GameRequests;
