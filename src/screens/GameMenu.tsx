@@ -19,7 +19,7 @@ const DATA = [
     {
         key: 'existinggames',
         title: 'Current games and requests',
-        screen: '',
+        screen: 'GameRequests',
         icon: require('../../assets/existinggamesicon.png'),
     },
 ];
