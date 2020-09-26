@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    Image,
-    FlatList,
-    TouchableOpacity,
-    ImageBackground,
-} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React, {useState} from 'react';
+import {FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import useUserSearch from '../hooks/useUserSearch';
 

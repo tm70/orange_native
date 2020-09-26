@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    ImageBackground,
-    ScrollView,
-    View,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
-import { RouteProp } from '@react-navigation/native';
+import {FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
+import {RouteProp} from '@react-navigation/native';
 import fontScaler from '../util/fontScaler';
 
 type GameMenuNavigationProp = StackNavigationProp<StackParamList, 'GameMenu'>;

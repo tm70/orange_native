@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
-import { RouteProp } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
+import {RouteProp} from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
 import BasicButton from '../components/BasicButton';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import {Modal, StyleSheet, Text, View} from 'react-native';
 import fontScaler from '../util/fontScaler';
 
 type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>;

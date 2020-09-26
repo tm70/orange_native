@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal } from 'react-native';
+import React, {useState} from 'react';
+import {Modal, StyleSheet, Text, View} from 'react-native';
 import fontScaler from '../util/fontScaler';
 import BasicButton from '../components/BasicButton';
 import BioInformation from '../components/BioInformation';

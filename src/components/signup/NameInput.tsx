@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import fontScaler from '../../util/fontScaler';
 
 interface Props {

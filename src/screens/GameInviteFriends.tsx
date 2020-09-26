@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    FlatList,
-} from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import {StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-import useGetRelationships from '../hooks/useGetRelationships';
-import ArrowButton, { Direction } from '../components/ArrowButton';
+import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed
