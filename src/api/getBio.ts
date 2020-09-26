@@ -1,16 +1,16 @@
 import { BACKEND_BASE_URL } from './endpoints';
 
-export interface Relationship {
-    user_first_id: number;
-    user_second_id: number;
-    relationship: string;
+export interface Bio {
+    id: number;
+    bio: string;
+    country: string;
+    firstname: string;
+    hobbies: string[];
+    surname: string;
 }
 
-const getRelationships = async (
-    id: number,
-    token: string,
-): Promise<Relationship[]> => {
-    const url = `${BACKEND_BASE_URL}/${id}/relationships`;
+const getBio = async (id: number, token: string): Promise<Bio> => {
+    const url = `${BACKEND_BASE_URL}/users/${id}`;
 
     let response = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
@@ -24,8 +24,9 @@ const getRelationships = async (
         if (data.status !== 200) {
             throw new Error(data.message);
         }
-        return data.relationships;
+
+        return data.info;
     });
 };
 
-export default getRelationships;
+export default getBio;

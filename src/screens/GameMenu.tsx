@@ -1,12 +1,20 @@
-import React from 'react'
-import {StyleSheet, Text, ImageBackground, ScrollView, View, FlatList, TouchableOpacity} from 'react-native';
-import {StackNavigationProp} from "@react-navigation/stack/lib/typescript/src/types";
-import {StackParamList} from "../../App";
-import {RouteProp} from "@react-navigation/native";
-import fontScaler from "../util/fontScaler";
+import React from 'react';
+import {
+    StyleSheet,
+    Text,
+    ImageBackground,
+    ScrollView,
+    View,
+    FlatList,
+    TouchableOpacity,
+} from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
+import { RouteProp } from '@react-navigation/native';
+import fontScaler from '../util/fontScaler';
 
-type GameMenuNavigationProp = StackNavigationProp<StackParamList, 'GameMenu'>
-type GameMenuRouteProp = RouteProp<StackParamList, 'GameMenu'>
+type GameMenuNavigationProp = StackNavigationProp<StackParamList, 'GameMenu'>;
+type GameMenuRouteProp = RouteProp<StackParamList, 'GameMenu'>;
 type Props = { navigation: GameMenuNavigationProp; route: GameMenuRouteProp };
 
 const DATA = [
@@ -34,7 +42,7 @@ const Item = ({ title, onPress, icon }) => (
     </TouchableOpacity>
 );
 
-const GameMenu: React.FC<Props> = ({navigation, route}) => {
+const GameMenu: React.FC<Props> = ({ navigation, route }) => {
     const renderItem = ({ item }) => (
         <Item
             title={item.title}
@@ -42,13 +50,16 @@ const GameMenu: React.FC<Props> = ({navigation, route}) => {
             icon={item.icon}
         />
     );
-    
+
     return (
         <View style={styles.container}>
-            <FlatList style={styles.list}
-                ListHeaderComponent={<>
-                    <Text style={styles.header}>Start a new game?</Text>
-                </>}
+            <FlatList
+                style={styles.list}
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.header}>Start a new game?</Text>
+                    </>
+                }
                 data={DATA}
                 renderItem={renderItem}
                 numColumns={2}
@@ -68,7 +79,7 @@ const styles = StyleSheet.create({
     },
     list: {
         width: '100%',
-        flexGrow:0,
+        flexGrow: 0,
     },
     header: {
         fontSize: fontScaler(25),
