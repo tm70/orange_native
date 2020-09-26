@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
-import getBio, {Bio} from '../api/getBio';
+import getBio, { Bio } from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
 interface Props {

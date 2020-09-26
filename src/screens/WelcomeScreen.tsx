@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import BasicButton from '../components/BasicButton';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 
 // To get the navigation prop typed
 type WelcomeScreenNavigationProp = StackNavigationProp<

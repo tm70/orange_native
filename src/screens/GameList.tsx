@@ -1,7 +1,14 @@
 import React from 'react';
-import {FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
+import {
+    FlatList,
+    ImageBackground,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
 
 // To get the navigation prop typed

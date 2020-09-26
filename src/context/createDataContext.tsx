@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useReducer} from 'react';
+import React, { FunctionComponent, useReducer } from 'react';
 
 // Types for the inputs to create a context
 type ReducerFunction<State, Action> = (state: State, action: Action) => State;

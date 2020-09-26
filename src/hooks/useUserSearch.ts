@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import getUserSearch, {SearchedUser} from '../api/getUsersSearch';
+import React, { useEffect, useState } from 'react';
+import getUserSearch, { SearchedUser } from '../api/getUsersSearch';
 import AuthContext from '../context/AuthContext';
 
 const useUserSearch: (

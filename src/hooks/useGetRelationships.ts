@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import getRelationships, {Relationship} from '../api/getRelationships';
+import React, { useEffect, useState } from 'react';
+import getRelationships, { Relationship } from '../api/getRelationships';
 import AuthContext from '../context/AuthContext';
 
 const useGetRelationships: (

@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import ArrowButton, {Direction} from '../ArrowButton';
+import { StyleSheet } from 'react-native';
+import ArrowButton, { Direction } from '../ArrowButton';
 
 interface Props {
     onBack: () => void;

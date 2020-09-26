@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {RouteProp} from '@react-navigation/native';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { RouteProp } from '@react-navigation/native';
 import fontScaler from '../../util/fontScaler';
-import {StackParamList} from '../../../App';
-import ArrowButton, {Direction} from '../../components/ArrowButton';
+import { StackParamList } from '../../../App';
+import ArrowButton, { Direction } from '../../components/ArrowButton';
 import AuthContext from '../../context/AuthContext';
 
 // To get the navigation prop typed

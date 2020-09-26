@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import { StyleSheet, Text, View } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 import fontScaler from '../../util/fontScaler';
 
 interface PickerValue {

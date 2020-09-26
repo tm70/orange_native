@@ -1,5 +1,11 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {
+    FlatList,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import fontScaler from '../util/fontScaler';
 
 // probably a nicer way to do it

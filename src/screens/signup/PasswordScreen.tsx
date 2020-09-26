@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../../App';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../../App';
 import NameInput from '../../components/signup/NameInput';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
 
 // To get the navigation prop typed

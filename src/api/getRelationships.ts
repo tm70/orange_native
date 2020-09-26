@@ -1,4 +1,4 @@
-import {BACKEND_BASE_URL} from './endpoints';
+import { BACKEND_BASE_URL } from './endpoints';
 
 export interface Relationship {
     user_first_id: number;

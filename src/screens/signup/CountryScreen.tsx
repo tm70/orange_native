@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../../App';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { RouteProp } from '@react-navigation/native';
+import { StackParamList } from '../../../App';
 import getCountries from '../../api/getCountries';
 import PickerInput from '../../components/signup/PickerInput';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
