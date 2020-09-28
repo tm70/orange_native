@@ -1,40 +1,26 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {StyleSheet, Text, ImageBackground, ScrollView, View, FlatList, TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from "@react-navigation/stack/lib/typescript/src/types";
 import {StackParamList} from "../../App";
 import {RouteProp} from "@react-navigation/native";
 import fontScaler from "../util/fontScaler";
-import getId from "../api/getId";
-import AuthContext from '../context/AuthContext';
 
-type MainScreenNavigationProp = StackNavigationProp<StackParamList, 'MainScreen'>
-type MainScreenRouteProp = RouteProp<StackParamList, 'MainScreen'>
-type Props = { navigation: MainScreenNavigationProp; route: MainScreenRouteProp };
+type GameMenuNavigationProp = StackNavigationProp<StackParamList, 'GameMenu'>
+type GameMenuRouteProp = RouteProp<StackParamList, 'GameMenu'>
+type Props = { navigation: GameMenuNavigationProp; route: GameMenuRouteProp };
 
 const DATA = [
     {
-        key: 'friends',
-        title: 'View friends list',
-        screen: 'FriendList',
-        icon: require('../../assets/friendslisticon.png'),
+        key: 'newgame',
+        title: 'New game',
+        screen: 'GameList',
+        icon: require('../../assets/newgameicon.png'),
     },
     {
-        key: 'friendfind',
-        title: 'Make new friends',
-        screen: 'FriendFind',
-        icon: require('../../assets/friendfindicon.png'),
-    },
-    {
-        key: 'games',
-        title: 'Play Games',
-        screen: 'GameMenu',
-        icon: require('../../assets/gameslisticon.png'),
-    },
-    {
-        key: 'profile',
-        title: 'Edit my Details',
-        screen: 'EditBio',
-        icon: require('../../assets/profileicon.png'),
+        key: 'existinggames',
+        title: 'Current games and requests',
+        screen: '',
+        icon: require('../../assets/existinggamesicon.png'),
     },
 ];
 
@@ -48,9 +34,7 @@ const Item = ({ title, onPress, icon }) => (
     </TouchableOpacity>
 );
 
-const Main: React.FC<Props> = ({route, navigation}) => {
-    const {id} = React.useContext(AuthContext);
-    
+const GameMenu: React.FC<Props> = ({navigation, route}) => {
     const renderItem = ({ item }) => (
         <Item
             title={item.title}
@@ -63,7 +47,7 @@ const Main: React.FC<Props> = ({route, navigation}) => {
         <View style={styles.container}>
             <FlatList style={styles.list}
                 ListHeaderComponent={<>
-                    <Text style={styles.header}>Hello {id}, what would you like to do?</Text>
+                    <Text style={styles.header}>Start a new game?</Text>
                 </>}
                 data={DATA}
                 renderItem={renderItem}
@@ -79,12 +63,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '20%',
         fontWeight: 'bold',
     },
     list: {
+        width: '100%',
         flexGrow:0,
-        width:'100%',
     },
     header: {
         fontSize: fontScaler(25),
@@ -113,4 +97,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Main;
+export default GameMenu;

@@ -5,7 +5,7 @@ interface Bio {
     bio: string,
     country: string,
     firstname: string,
-    hibbies: string[],
+    hobbies: string[],
     surname: string
 }
 

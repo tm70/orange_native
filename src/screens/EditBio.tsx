@@ -27,7 +27,7 @@ const BioScreen: React.FC<Props> = ({navigation}) => {
            >
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.header}>Profile edit sucessful</Text>
+                    <Text style={styles.header}>Profile edit successful</Text>
                     <BasicButton color='#bbbde0' text="Ok" onPress={() => {setModalVisible(!modalVisible);}}/>
                   </View>
                 </View>
