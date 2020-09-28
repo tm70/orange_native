@@ -7,6 +7,7 @@ import BasicButton from "../components/BasicButton";
 import {RouteProp} from "@react-navigation/native";
 import getBio from "../api/GetBio";
 import AuthContext from '../context/AuthContext';
+import setRelationships from "../api/setRelationships";
 
 type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>
 type BioScreenRouteProp = RouteProp<StackParamList, 'Bio'>
@@ -17,12 +18,13 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp};
 const BioScreen: React.FC<Props> = ({route, navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [bio, setBio] = useState(null);
+    const [Relationship, setRelationship] = useState('');
 
-    const {token} = React.useContext(AuthContext);
-
+    // get user id // get token
+    const {token, id: userid} = React.useContext(AuthContext);
     // get data from frindfindscreen
     const { id } = route.params;
-    
+
     // get data from api ()
     useEffect(() => {
         const b = getBio(id, token).catch(console.log).then(setBio);
@@ -30,6 +32,7 @@ const BioScreen: React.FC<Props> = ({route, navigation}) => {
     if (bio === null) {
         return <Text>Loading</Text>;
     }
+
     return (
         <View style={styles.container}>
             <View style={styles.rowdisplay}>
@@ -53,7 +56,9 @@ const BioScreen: React.FC<Props> = ({route, navigation}) => {
             <Text style={styles.header}>Game</Text>
             
 
-            <BasicButton color='#bbbde0' text="Send friend request" onPress={() => {setModalVisible(true);}}/>
+            <BasicButton color='#bbbde0' text="Send friend request" onPress={() => setRelationships(userid, id, token).catch(console.log).then(setRelationship)}/>
+            
+            
             <Modal
                 animationType="slide"
                 transparent={true}
