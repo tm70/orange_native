@@ -6,17 +6,20 @@ export interface Relationship {
     relationship: string
 }
 
-const getRelationships = async (id: number, token: string): Promise<Relationship[]> => {
-    const url = `${BACKEND_BASE_URL}/${id}/relationships`;
+const setRelationships = async (userid: number, id:number, token: string): Promise<Relationship[]> => {
+    const url = `${BACKEND_BASE_URL}/users/${userid}/relationships/${id}`;
 
     let response = await fetch(url, {
-        headers: {Authorization: `Bearer ${token}`},
+        method: 'PUT',
+        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',},
+        body: JSON.stringify("SendFriendRequest"),
     });
+    console.log(response)
     
     if (!response.ok) {
         throw new Error('Failed to connect');
     }
-    
+
     return await response.json().then((data) => {
         if (data.status !== 200) {
             throw new Error(data.message)
@@ -25,4 +28,4 @@ const getRelationships = async (id: number, token: string): Promise<Relationship
     })
 };
 
-export default getRelationships;
+export default setRelationships;
