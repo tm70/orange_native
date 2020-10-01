@@ -22,6 +22,8 @@ import BioScreen from "./src/screens/BioScreen";
 import EditBio from "./src/screens/EditBio";
 import FriendList from "./src/screens/FriendList";
 import VideoChat from "./src/screens/VideoChat";
+import AuthScreen from './src/components/AuthScreen';
+import VideoScreen from './src/components/VideoScreen';
 
 const Stack = createStackNavigator();
 
@@ -88,11 +90,12 @@ const RootStack = (loggedIn: boolean) => {
   return (
     // Display the signup and welcome if the user isn't logged in otherwise normal screens
     <Stack.Navigator screenOptions={{headerShown: true}}>
-      {!loggedIn ? (
+      {loggedIn ? (
         <>{welcomeScreens()}</>
       ) : (
           // The video chat screen should be later moved to an appropriate place.
         <>
+          <Stack.Screen name="VideoChat" component={VideoChat} />
           <Stack.Screen name='MainScreen' component={MainScreen} />
           <Stack.Screen name="FriendFind" component={FriendFindScreen} />
           <Stack.Screen name="GameMenu" component={GameMenu} />
@@ -100,7 +103,6 @@ const RootStack = (loggedIn: boolean) => {
           <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} initialParams={{game: "error"}} />
           <Stack.Screen name="TicTacToe" component={TicTacToe} />
           <Stack.Screen name="Chess" component={Chess} />
-        //   <Stack.Screen name="VideoChat" component={VideoChat} />
           <Stack.Screen name="Bio" component={BioScreen} />
           <Stack.Screen name="EditBio" component={EditBio} />
           <Stack.Screen name="FriendList" component={FriendList} />
