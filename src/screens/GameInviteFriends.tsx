@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
@@ -24,7 +24,11 @@ const Item = ({ firstname, id, onPress }) => (
 
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const game = route.params.game;
-    const {token, id: userid} = React.useContext(AuthContext);
+    const {token, id: userid} = useContext(AuthContext);
+    
+    // TODO make this friends and not relationships so its actually useful
+    const [searchAPI, friends, errorMessage] = useGetRelationships(userid, token);
+    console.log(friends)
     
     const renderItem = ({ item }) => (
         <Item
@@ -37,6 +41,12 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Invite Friend</Text>
+            
+            <FlatList
+                data={friends}
+                renderItem={renderItem}
+                numColumns={3}
+            />
             
             <ArrowButton
                 text="Start Game"
@@ -72,6 +82,13 @@ const styles = StyleSheet.create({
         marginHorizontal: '5%',
         flex: 1/3,
         maxWidth: '23.5%'
+    },
+    tile: {
+        aspectRatio: 1,
+    },
+    title: {
+        fontSize: fontScaler(10),
+        textAlign: 'center',
     },
 });
 
