@@ -16,7 +16,7 @@ const BioInformation: React.FC<Props> = ({ id }) => {
     // Get data from api
     useEffect(() => {
         getBio(id, token).catch(console.log).then(setBio);
-    }, [id, token]);
+    }, []);
 
     if (Object.keys(bio).length === 0) {
         return <Text>Loading</Text>;

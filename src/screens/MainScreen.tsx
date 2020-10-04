@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '5%',
         fontWeight: 'bold',
     },
     list: {

@@ -4,15 +4,33 @@ import fontScaler from '../util/fontScaler';
 import BasicButton from '../components/BasicButton';
 import BioInformation from '../components/BioInformation';
 import AuthContext from '../context/AuthContext';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 
-const BioScreen: React.FC = () => {
+type EditBioScreenNavigationProp = StackNavigationProp<
+    StackParamList,
+    'EditBio'
+>;
+type Props = {
+    navigation: EditBioScreenNavigationProp;
+};
+
+const BioScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const { id } = React.useContext(AuthContext);
+    const { id, logout } = React.useContext(AuthContext);
+
+    // TODO: Functionality and remove temp signout button
 
     return (
         <View style={styles.container}>
             <BioInformation id={id} />
+
+            <BasicButton
+                text="Temp Signout Button"
+                color="#94d361"
+                onPress={logout}
+            />
 
             <Modal
                 animationType="slide"

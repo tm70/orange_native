@@ -18,31 +18,34 @@ import GameList from './src/screens/GameList';
 import GameInviteFriends from './src/screens/GameInviteFriends';
 import Chess from './src/screens/Chess';
 import TicTacToe from './src/screens/TicTacToe';
-import BioScreen from "./src/screens/BioScreen";
-import EditBio from "./src/screens/EditBio";
-import FriendList from "./src/screens/FriendList";
+import BioScreen from './src/screens/BioScreen';
+import EditBio from './src/screens/EditBio';
+import FriendList from './src/screens/FriendList';
+import checkToken from './src/api/checkToken';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
 // These are used whenever when we need to type the navigation and route props into our components
 export type StackParamList = {
-  Welcome: SignUpParams;
-  Name: SignUpParams;
-  Country: SignUpParams;
-  Complete: SignUpParams;
-  Password: SignUpParams;
-  Temp: undefined;
-  TempLoggedIn: undefined;
-  FriendFind: undefined;
-  GameMenu: undefined;
-  GameList: undefined;
-  GameInviteFriends: {game: string};
-  TicTacToe: undefined;
-  Chess: undefined;
-  MainScreen: undefined,
-  Bio: undefined,
-  EditBio: undefined,
-  FriendList: undefined,
+    Welcome: SignUpParams;
+    Name: SignUpParams;
+    Country: SignUpParams;
+    Complete: SignUpParams;
+    Password: SignUpParams;
+    Temp: undefined;
+    Login: undefined;
+    TempLoggedIn: undefined;
+    FriendFind: undefined;
+    GameMenu: undefined;
+    GameList: undefined;
+    GameInviteFriends: { game: string };
+    TicTacToe: undefined;
+    Chess: undefined;
+    MainScreen: undefined;
+    Bio: undefined;
+    EditBio: undefined;
+    FriendList: undefined;
 };
 
 // Create a placeholder stack navigator for now
@@ -79,32 +82,44 @@ const welcomeScreens = () => {
                 initialParams={{ password: '', hobbies: [] }}
             />
             <Stack.Screen name="Complete" component={SignUpCompleteScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
         </>
     );
 };
 
-const RootStack = (loggedIn: boolean) => {
-  return (
-    // Display the signup and welcome if the user isn't logged in otherwise normal screens
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      {!loggedIn ? (
-        <>{welcomeScreens()}</>
-      ) : (
-        <>
-          <Stack.Screen name='MainScreen' component={MainScreen} />
-          <Stack.Screen name="FriendFind" component={FriendFindScreen} />
-          <Stack.Screen name="GameMenu" component={GameMenu} />
-          <Stack.Screen name="GameList" component={GameList} />
-          <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} initialParams={{game: "error"}} />
-          <Stack.Screen name="TicTacToe" component={TicTacToe} />
-          <Stack.Screen name="Chess" component={Chess} />
-          <Stack.Screen name="Bio" component={BioScreen} />
-          <Stack.Screen name="EditBio" component={EditBio} />
-          <Stack.Screen name="FriendList" component={FriendList} />
-        </>
-      )}
-    </Stack.Navigator>
-  );
+interface RootStackProps {
+    loggedIn: boolean;
+}
+
+const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
+    return (
+        // Display the signup and welcome if the user isn't logged in otherwise normal screens
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {!loggedIn ? (
+                <>{welcomeScreens()}</>
+            ) : (
+                <>
+                    <Stack.Screen name="MainScreen" component={MainScreen} />
+                    <Stack.Screen
+                        name="FriendFind"
+                        component={FriendFindScreen}
+                    />
+                    <Stack.Screen name="GameMenu" component={GameMenu} />
+                    <Stack.Screen name="GameList" component={GameList} />
+                    <Stack.Screen
+                        name="GameInviteFriends"
+                        component={GameInviteFriends}
+                        initialParams={{ game: 'error' }}
+                    />
+                    <Stack.Screen name="TicTacToe" component={TicTacToe} />
+                    <Stack.Screen name="Chess" component={Chess} />
+                    <Stack.Screen name="Bio" component={BioScreen} />
+                    <Stack.Screen name="EditBio" component={EditBio} />
+                    <Stack.Screen name="FriendList" component={FriendList} />
+                </>
+            )}
+        </Stack.Navigator>
+    );
 };
 
 const App: React.FC = () => {
@@ -121,8 +136,14 @@ const App: React.FC = () => {
                 id = parseInt(await RNSecureKeyStore.get('orange_user_id'), 10);
 
                 if (token !== '' && id !== -1) {
-                    // TODO: Validate the token with the server
-                    dispatch({ type: 'RESTORE_TOKEN', token, id });
+                    // Validate the token with the server
+                    checkToken(token)
+                        .catch(() => {
+                            dispatch({ type: 'CLEAR_TOKEN' });
+                        })
+                        .then(() => {
+                            dispatch({ type: 'RESTORE_TOKEN', token, id });
+                        });
                 }
             } catch (e) {
                 // Failed to log the user in
@@ -132,12 +153,14 @@ const App: React.FC = () => {
         loadKeyFromStore();
     }, []);
 
+    console.log("Token is: " + (state.token !== ''));
+
     return (
         <AuthContext.Provider
             value={{ token: state.token, id: state.id, ...actions }}
         >
             <NavigationContainer>
-                {RootStack(state.token !== '')}
+                <RootStack loggedIn={state.token !== ''} />
             </NavigationContainer>
         </AuthContext.Provider>
     );
