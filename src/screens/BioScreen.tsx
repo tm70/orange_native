@@ -5,15 +5,18 @@ import { RouteProp } from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
 import BasicButton from '../components/BasicButton';
 import { Modal, StyleSheet, Text, View } from 'react-native';
+import setRelationship, { FriendRequestAction } from '../api/setRelationship';
 import fontScaler from '../util/fontScaler';
+import AuthContext from '../context/AuthContext';
 
 type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>;
 type BioScreenRouteProp = RouteProp<StackParamList, 'Bio'>;
 type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp };
 
 const BioScreen: React.FC<Props> = ({ route, navigation }) => {
+    const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);
-    const [Relationship, setRelationship] = useState('');
+
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
@@ -25,9 +28,20 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                     setFriendModalVisible(true);
                 }}
             />
-        
-            <BasicButton color='#bbbde0' text="Send friend request" onPress={() => setRelationships(userid, id, token).catch(console.log).then(setRelationship)}/>
-        
+
+            <BasicButton
+                color="#bbbde0"
+                text="Send friend request"
+                onPress={() =>
+                    setRelationship(
+                        id,
+                        route.params.id,
+                        token,
+                        FriendRequestAction.SendFriendRequest,
+                    ).catch(console.log)
+                }
+            />
+
             <Modal
                 animationType="slide"
                 transparent={true}
