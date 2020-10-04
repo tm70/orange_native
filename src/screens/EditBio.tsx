@@ -1,54 +1,41 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text, View, TextInput, Image, FlatList, TouchableOpacity, Alert, Modal} from 'react-native';
-import {StackNavigationProp} from "@react-navigation/stack/lib/typescript/src/types";
-import {StackParamList} from "../../App";
-import fontScaler from "../util/fontScaler";
-import BasicButton from "../components/BasicButton";
+import { Modal, StyleSheet, Text, View } from 'react-native';
+import fontScaler from '../util/fontScaler';
+import BasicButton from '../components/BasicButton';
+import BioInformation from '../components/BioInformation';
+import AuthContext from '../context/AuthContext';
 
-type IndexScreenNavigationProp = StackNavigationProp<StackParamList, 'EditBio'>
-type Props = { navigation: IndexScreenNavigationProp; };
-
-const BioScreen: React.FC<Props> = ({navigation}) => {
-
+const BioScreen: React.FC = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
-
+    const { id } = React.useContext(AuthContext);
 
     return (
-        
         <View style={styles.container}>
-           <Modal
+            <BioInformation id={id} />
+
+            <Modal
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert("Modal has been closed.");
-                }}
-           >
+                onRequestClose={() => setModalVisible(false)}
+            >
                 <View style={styles.centeredView}>
-                  <View style={styles.modalView}>
-                    <Text style={styles.header}>Profile edit successful</Text>
-                    <BasicButton color='#bbbde0' text="Ok" onPress={() => {setModalVisible(!modalVisible);}}/>
-                  </View>
+                    <View style={styles.modalView}>
+                        <Text style={styles.header}>
+                            Profile edit successful
+                        </Text>
+                        <BasicButton
+                            color="#bbbde0"
+                            text="Ok"
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                            }}
+                        />
+                    </View>
                 </View>
             </Modal>
-            <View style={styles.rowdisplay}>
-                <Image 
-                    style={{width:'30%',height:'130%'}}
-                    source={require('../../assets/person.png')}
-                />
-                <View style={styles.columndisplay}>
-                    <Text style={styles.subheader}>Name</Text>
-                    <Text style={styles.subheader}>Country</Text>
-                </View>
-            </View>
-            <Text style={styles.header}>Bio</Text>
-            <Text style={styles.header}>Hobbies</Text>
-            <Text style={styles.header}>Game</Text>
-            <BasicButton color='#bbbde0' text="Save" onPress={() => {setModalVisible(true);}}/>
-
         </View>
-
     );
 };
 
@@ -58,17 +45,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '10%',
 
         fontWeight: 'bold',
-        flex:1,
-    },
-
-    rowdisplay: {
-        flexDirection:"row",
-        marginBottom: '10%',
-    },
-    columndisplay: {
-        marginTop: '9%',
-        marginLeft: '20%',
-        flexDirection:"column",
+        flex: 1,
     },
 
     header: {
@@ -77,44 +54,28 @@ const styles = StyleSheet.create({
         marginTop: '5%',
     },
 
-    subheader: {
-        fontSize: fontScaler(15),
-        textAlign: 'center',       
-    },
-
-    info: {
-        fontSize: fontScaler(15),    
-    },
     centeredView: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-      },
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
 
     modalView: {
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
+        alignItems: 'center',
+        shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
-      },
-
-      textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-      },
-
+        elevation: 5,
+    },
 });
-
 
 export default BioScreen;

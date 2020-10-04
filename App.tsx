@@ -1,16 +1,16 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import NameScreen from './src/screens/signup/NameScreen';
 import CountryScreen from './src/screens/signup/CountryScreen';
 import SignUpCompleteScreen from './src/screens/signup/SignUpCompleteScreen';
-import {SignUpParams} from './src/api/signup';
-import AuthContext, {useAuth} from './src/context/AuthContext';
+import { SignUpParams } from './src/api/signup';
+import AuthContext, { useAuth } from './src/context/AuthContext';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import PasswordScreen from './src/screens/signup/PasswordScreen';
 
-import MainScreen from "./src/screens/MainScreen";
+import MainScreen from './src/screens/MainScreen';
 import FriendFindScreen from './src/screens/FriendFindScreen';
 
 import GameMenu from './src/screens/GameMenu';
@@ -47,40 +47,40 @@ export type StackParamList = {
 
 // Create a placeholder stack navigator for now
 const welcomeScreens = () => {
-  const defaultParams = {
-    email: '',
-    firstname: '',
-    surname: '',
-    country_code: '',
-    password: '',
-    hobbies: [],
-  };
+    const defaultParams = {
+        email: '',
+        firstname: '',
+        surname: '',
+        country_code: '',
+        password: '',
+        hobbies: [],
+    };
 
-  return (
-    <>
-      <Stack.Screen
-        name="Welcome"
-        component={WelcomeScreen}
-        initialParams={defaultParams}
-      />
-      <Stack.Screen
-        name="Name"
-        component={NameScreen}
-        initialParams={defaultParams}
-      />
-      <Stack.Screen
-        name="Country"
-        component={CountryScreen}
-        initialParams={{country_code: '', password: '', hobbies: []}}
-      />
-      <Stack.Screen
-        name="Password"
-        component={PasswordScreen}
-        initialParams={{password: '', hobbies: []}}
-      />
-      <Stack.Screen name="Complete" component={SignUpCompleteScreen} />
-    </>
-  );
+    return (
+        <>
+            <Stack.Screen
+                name="Welcome"
+                component={WelcomeScreen}
+                initialParams={defaultParams}
+            />
+            <Stack.Screen
+                name="Name"
+                component={NameScreen}
+                initialParams={defaultParams}
+            />
+            <Stack.Screen
+                name="Country"
+                component={CountryScreen}
+                initialParams={{ country_code: '', password: '', hobbies: [] }}
+            />
+            <Stack.Screen
+                name="Password"
+                component={PasswordScreen}
+                initialParams={{ password: '', hobbies: [] }}
+            />
+            <Stack.Screen name="Complete" component={SignUpCompleteScreen} />
+        </>
+    );
 };
 
 const RootStack = (loggedIn: boolean) => {
@@ -108,37 +108,39 @@ const RootStack = (loggedIn: boolean) => {
 };
 
 const App: React.FC = () => {
-  const {state, dispatch, actions} = useAuth();
+    const { state, dispatch, actions } = useAuth();
 
-  // Attempt to load a saved token
-  React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
-    const loadKeyFromStore = async () => {
-      let token = null;
-      let id = -1;
-      try {
-        token = await RNSecureKeyStore.get('orange_user_token');
-        id = parseInt(await RNSecureKeyStore.get('orange_user_id'), 10);
+    // Attempt to load a saved token
+    React.useEffect(() => {
+        // Fetch the token from storage then navigate to our appropriate place
+        const loadKeyFromStore = async () => {
+            let token = '';
+            let id = -1;
+            try {
+                token = await RNSecureKeyStore.get('orange_user_token');
+                id = parseInt(await RNSecureKeyStore.get('orange_user_id'), 10);
 
-        if (token && id !== -1) {
-          // TODO: Validate the token with the server
-          dispatch({type: 'RESTORE_TOKEN', token, id});
-        }
-      } catch (e) {
-        // Failed to log the user in
-      }
-    };
+                if (token !== '' && id !== -1) {
+                    // TODO: Validate the token with the server
+                    dispatch({ type: 'RESTORE_TOKEN', token, id });
+                }
+            } catch (e) {
+                // Failed to log the user in
+            }
+        };
 
-    loadKeyFromStore();
-  }, []);
+        loadKeyFromStore();
+    }, []);
 
-  return (
-    <AuthContext.Provider value={{token: state.token, id: state.id, ...actions}}>
-      <NavigationContainer>
-        {RootStack(state.token !== null)}
-      </NavigationContainer>
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider
+            value={{ token: state.token, id: state.id, ...actions }}
+        >
+            <NavigationContainer>
+                {RootStack(state.token !== '')}
+            </NavigationContainer>
+        </AuthContext.Provider>
+    );
 };
 
 export default App;
