@@ -17,18 +17,11 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);
 
+    // TODO: Display error on error
+
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
-
-            <BasicButton
-                color="#bbbde0"
-                text="Send friend request"
-                onPress={() => {
-                    setFriendModalVisible(true);
-                }}
-            />
-
             <BasicButton
                 color="#bbbde0"
                 text="Send friend request"
@@ -38,10 +31,11 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                         route.params.id,
                         token,
                         FriendRequestAction.SendFriendRequest,
-                    ).catch(console.log)
+                    )
+                        .then(() => setFriendModalVisible(true))
+                        .catch(console.log)
                 }
             />
-
             <Modal
                 animationType="slide"
                 transparent={true}

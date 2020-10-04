@@ -40,7 +40,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation, route }) => {
                 <BasicButton
                     color="#62bdd0"
                     text="I already have an account"
-                    onPress={() => navigation.navigate('Temp')}
+                    onPress={() => navigation.navigate('Login')}
                 />
             </View>
         </View>
