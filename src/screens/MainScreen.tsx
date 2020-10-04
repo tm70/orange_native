@@ -27,7 +27,7 @@ const DATA = [
     {
         key: 'friends',
         title: 'View friends list',
-        screen: '',
+        screen: 'FriendList',
         icon: require('../../assets/friendslisticon.png'),
     },
     {

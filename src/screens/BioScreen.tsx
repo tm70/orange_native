@@ -13,7 +13,7 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp };
 
 const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const [friendModalVisible, setFriendModalVisible] = useState(false);
-
+    const [Relationship, setRelationship] = useState('');
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
@@ -25,6 +25,9 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                     setFriendModalVisible(true);
                 }}
             />
+        
+            <BasicButton color='#bbbde0' text="Send friend request" onPress={() => setRelationships(userid, id, token).catch(console.log).then(setRelationship)}/>
+        
             <Modal
                 animationType="slide"
                 transparent={true}

@@ -18,29 +18,31 @@ import GameList from './src/screens/GameList';
 import GameInviteFriends from './src/screens/GameInviteFriends';
 import Chess from './src/screens/Chess';
 import TicTacToe from './src/screens/TicTacToe';
-import BioScreen from './src/screens/BioScreen';
-import EditBio from './src/screens/EditBio';
+import BioScreen from "./src/screens/BioScreen";
+import EditBio from "./src/screens/EditBio";
+import FriendList from "./src/screens/FriendList";
 
 const Stack = createStackNavigator();
 
 // These are used whenever when we need to type the navigation and route props into our components
 export type StackParamList = {
-    Welcome: SignUpParams;
-    Name: SignUpParams;
-    Country: SignUpParams;
-    Complete: SignUpParams;
-    Password: SignUpParams;
-    Temp: undefined;
-    TempLoggedIn: undefined;
-    FriendFind: undefined;
-    GameMenu: undefined;
-    GameList: undefined;
-    GameInviteFriends: { game: string };
-    TicTacToe: undefined;
-    Chess: undefined;
-    MainScreen: undefined;
-    Bio: undefined;
-    EditBio: undefined;
+  Welcome: SignUpParams;
+  Name: SignUpParams;
+  Country: SignUpParams;
+  Complete: SignUpParams;
+  Password: SignUpParams;
+  Temp: undefined;
+  TempLoggedIn: undefined;
+  FriendFind: undefined;
+  GameMenu: undefined;
+  GameList: undefined;
+  GameInviteFriends: {game: string};
+  TicTacToe: undefined;
+  Chess: undefined;
+  MainScreen: undefined,
+  Bio: undefined,
+  EditBio: undefined,
+  FriendList: undefined,
 };
 
 // Create a placeholder stack navigator for now
@@ -82,33 +84,27 @@ const welcomeScreens = () => {
 };
 
 const RootStack = (loggedIn: boolean) => {
-    return (
-        // Display the signup and welcome if the user isn't logged in otherwise normal screens
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {!loggedIn ? (
-                <>{welcomeScreens()}</>
-            ) : (
-                <>
-                    <Stack.Screen name="MainScreen" component={MainScreen} />
-                    <Stack.Screen
-                        name="FriendFind"
-                        component={FriendFindScreen}
-                    />
-                    <Stack.Screen name="GameMenu" component={GameMenu} />
-                    <Stack.Screen name="GameList" component={GameList} />
-                    <Stack.Screen
-                        name="GameInviteFriends"
-                        component={GameInviteFriends}
-                        initialParams={{ game: 'error' }}
-                    />
-                    <Stack.Screen name="TicTacToe" component={TicTacToe} />
-                    <Stack.Screen name="Chess" component={Chess} />
-                    <Stack.Screen name="Bio" component={BioScreen} />
-                    <Stack.Screen name="EditBio" component={EditBio} />
-                </>
-            )}
-        </Stack.Navigator>
-    );
+  return (
+    // Display the signup and welcome if the user isn't logged in otherwise normal screens
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      {!loggedIn ? (
+        <>{welcomeScreens()}</>
+      ) : (
+        <>
+          <Stack.Screen name='MainScreen' component={MainScreen} />
+          <Stack.Screen name="FriendFind" component={FriendFindScreen} />
+          <Stack.Screen name="GameMenu" component={GameMenu} />
+          <Stack.Screen name="GameList" component={GameList} />
+          <Stack.Screen name="GameInviteFriends" component={GameInviteFriends} initialParams={{game: "error"}} />
+          <Stack.Screen name="TicTacToe" component={TicTacToe} />
+          <Stack.Screen name="Chess" component={Chess} />
+          <Stack.Screen name="Bio" component={BioScreen} />
+          <Stack.Screen name="EditBio" component={EditBio} />
+          <Stack.Screen name="FriendList" component={FriendList} />
+        </>
+      )}
+    </Stack.Navigator>
+  );
 };
 
 const App: React.FC = () => {
