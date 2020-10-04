@@ -22,7 +22,7 @@ import BioScreen from './src/screens/BioScreen';
 import EditBio from './src/screens/EditBio';
 import FriendList from './src/screens/FriendList';
 import checkToken from './src/api/checkToken';
-import LoginScreen from "./src/screens/LoginScreen";
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -87,7 +87,11 @@ const welcomeScreens = () => {
     );
 };
 
-const RootStack = (loggedIn: boolean) => {
+interface RootStackProps {
+    loggedIn: boolean;
+}
+
+const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
     return (
         // Display the signup and welcome if the user isn't logged in otherwise normal screens
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -140,7 +144,6 @@ const App: React.FC = () => {
                         .then(() => {
                             dispatch({ type: 'RESTORE_TOKEN', token, id });
                         });
-
                 }
             } catch (e) {
                 // Failed to log the user in
@@ -150,12 +153,14 @@ const App: React.FC = () => {
         loadKeyFromStore();
     }, []);
 
+    console.log("Token is: " + (state.token !== ''));
+
     return (
         <AuthContext.Provider
             value={{ token: state.token, id: state.id, ...actions }}
         >
             <NavigationContainer>
-                {RootStack(state.token !== '')}
+                <RootStack loggedIn={state.token !== ''} />
             </NavigationContainer>
         </AuthContext.Provider>
     );
