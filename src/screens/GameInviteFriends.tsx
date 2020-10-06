@@ -3,7 +3,8 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} fro
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-import useGetRelationships from "../hooks/useGetRelationships";
+import getFriends from "../hooks/getFriends";
+import getBio from "../api/GetBio";
 import sendGameRequest from "../api/sendGameRequest";
 import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
@@ -27,16 +28,18 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = useContext(AuthContext);
     
     // TODO make this friends and not relationships so its actually useful
-    const [searchAPI, friends, errorMessage] = useGetRelationships(userid, token);
-    console.log(friends)
+    const [searchAPI, friends, errorMessage] = getFriends(userid, token);
+    console.log(friends);
     
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }) => {
+        return (
         <Item
             firstname={item.firstname}
             id={item.id}
             onPress={() => sendGameRequest(userid, item.id, game, token)}
         />
-    );
+        );
+    };
     
     return (
         <View style={styles.container}>

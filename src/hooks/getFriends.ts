@@ -3,12 +3,7 @@ import getRelationships, {Relationship} from '../api/getRelationships';
 import getBio, {Bio} from '../api/GetBio';
 import AuthContext from '../context/AuthContext';
 
-export interface Friend {
-    id: number,
-    info: Bio,
-}
-
-const getFriends: (id: number) => [() => void, Relationship[], string] = (id: number) => {
+const getFriends: (userid: number) => [() => void, Bio[], string] = (id: number) => {
     const [relationships, setRelationships] = useState([] as Relationship[]);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,7 +12,7 @@ const getFriends: (id: number) => [() => void, Relationship[], string] = (id: nu
 
     const searchAPI = async () => {
         try {
-            const results = await getRelationships(id, token);
+            const results = await getRelationships(userid, token);
             setRelationships(results);
         } catch (err) {
             setErrorMessage('Something went wrong');
@@ -28,10 +23,17 @@ const getFriends: (id: number) => [() => void, Relationship[], string] = (id: nu
         searchAPI('');
     }, []);
     
-    // get only friends and get their bios
-    // make a list of Friend
+    const friends = [];
+    
+    for (r in relationships) {
+        if (r.relationship == "Friends") {
+            let bio = await ((r.user_first_id == userid) ? getBio(r.user_second_id, token) : getBio(r.user_first_id, token));
+            
+            friends.push(bio);
+        }
+    }
 
-    return [searchAPI, relationships, errorMessage];
+    return [searchAPI, friends, errorMessage];
 };
 
 export default getFriends;
