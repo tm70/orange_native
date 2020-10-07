@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import getRelationships, {Relationship} from '../api/getRelationships';
-//import getBio, {Bio} from '../api/GetBio';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
@@ -14,18 +13,19 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
     const searchAPI = async () => {
         try {
             const relationships = await getRelationships(userid, token);
-            console.log("rels", relationships);
             const ids = [];
+            //console.log("rels", relationships);
+            
             for (r of relationships) {
-                console.log("r", r);
-                //if (r.relationship == "Friends") {
+                //console.log("r", r);
+                if (r.relationship == "Friends") {
                     let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
                     ids.push(id);
-                //}
+                }
             }
-            console.log(ids);
+            
             const results = await getBios(ids, token);
-            console.log("bbb", results);
+            //console.log("friends", results);
             setFriends(results);
             
         } catch (err) {
@@ -37,8 +37,6 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
         searchAPI('');
     }, []);
     
-    console.log(friends);
-
     return [searchAPI, friends, errorMessage];
 };
 

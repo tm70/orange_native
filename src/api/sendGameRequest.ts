@@ -13,6 +13,7 @@ const sendGameRequest = async (id: number, oppid: number, game: string, token: s
         headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
         body: JSON.stringify({'game_type': game, 'opponent_id': oppid}),
     });
+    console.log("Send game request", response);
     
     if (!response.ok) {
         throw new Error('Failed to connect');

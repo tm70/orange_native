@@ -13,7 +13,6 @@ const getBios = async (ids: number[], token: string): Promise<Bio[]> => {
     const bios = [];
     
     for (id of ids) {
-        console.log(id);
         let url = `${BACKEND_BASE_URL}/users/${id}`;
 
         let response = await fetch(url, {
@@ -23,10 +22,8 @@ const getBios = async (ids: number[], token: string): Promise<Bio[]> => {
         if (!response.ok) {
             throw new Error('Failed to connect');
         }
-        console.log(response);
         
         let js = await response.json();
-        console.log("wat", js.info);
         bios.push(js.info);
     }
     

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     list: {
         width: '100%',
-        flexGrow:0,
+        flexGrow: 0,
     },
     header: {
         fontSize: fontScaler(25),

@@ -14,7 +14,7 @@ const setRelationships = async (userid: number, id:number, token: string): Promi
         headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',},
         body: JSON.stringify("SendFriendRequest"),
     });
-    console.log(response)
+    console.log("Send friend request", response)
     
     if (!response.ok) {
         throw new Error('Failed to connect');
