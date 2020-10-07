@@ -22,7 +22,7 @@ const getBio = async (
     if (!response.ok) {
         throw new Error('Failed to connect');
     }
-
+    
     return await response
         .json()
         .then((data) => {

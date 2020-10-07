@@ -1,37 +1,43 @@
 import React, {useEffect, useState} from 'react';
 import getRelationships, {Relationship} from '../api/getRelationships';
-import getBio, {Bio} from '../api/GetBio';
+//import getBio, {Bio} from '../api/GetBio';
+import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
-const getFriends: (userid: number) => [() => void, Bio[], string] = (id: number) => {
-    const [relationships, setRelationships] = useState([] as Relationship[]);
+const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: number) => {
     const [errorMessage, setErrorMessage] = useState('');
+    const [friends, setFriends] = useState([] as Bio[]);
 
     // Get the user token
     const {token} = React.useContext(AuthContext);
 
     const searchAPI = async () => {
         try {
-            const results = await getRelationships(userid, token);
-            setRelationships(results);
+            const relationships = await getRelationships(userid, token);
+            console.log("rels", relationships);
+            const ids = [];
+            for (r of relationships) {
+                console.log("r", r);
+                //if (r.relationship == "Friends") {
+                    let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
+                    ids.push(id);
+                //}
+            }
+            console.log(ids);
+            const results = await getBios(ids, token);
+            console.log("bbb", results);
+            setFriends(results);
+            
         } catch (err) {
             setErrorMessage('Something went wrong');
         }
     };
-
+    
     useEffect(() => {
         searchAPI('');
     }, []);
     
-    const friends = [];
-    
-    for (r in relationships) {
-        if (r.relationship == "Friends") {
-            let bio = await ((r.user_first_id == userid) ? getBio(r.user_second_id, token) : getBio(r.user_first_id, token));
-            
-            friends.push(bio);
-        }
-    }
+    console.log(friends);
 
     return [searchAPI, friends, errorMessage];
 };
