@@ -1,9 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React, {useState, useContext, useEffect} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-import ArrowButton, { Direction } from '../components/ArrowButton';
+import getFriends from "../hooks/getFriends";
+import sendGameRequest from "../api/sendGameRequest";
+import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed
@@ -20,35 +22,46 @@ type Props = {
     route: GameInviteFriendsRouteProp;
 };
 
-const Item = ({ firstname, id }) => (
-    <TouchableOpacity style={styles.item}>
-        {' '}
-        // add onpress that sends a game request to the api
+const Item = ({ firstname, id, onPress }) => (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
         <ImageBackground source={require('../../assets/person.png')} style={{}}>
-            <View style={styles.tile} />
-        </ImageBackground>
+            <View style={styles.tile}/>
+        </ImageBackground>  
         <Text style={styles.title}>{firstname}</Text>
-        <Text style={styles.title}>{id}</Text>
     </TouchableOpacity>
 );
 
-const GameInviteFriends: React.FC<Props> = ({ navigation, route }) => {
-    const params = route.params;
-    const { id } = React.useContext(AuthContext);
-
-    const renderItem = ({ item }) => (
-        <Item firstname={item.firstname} id={item.id} />
-    );
-
+const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
+    const game = route.params.game;
+    const {token, id: userid} = useContext(AuthContext);
+    
+    const [searchAPI, friends, errorMessage] = getFriends(userid, token);
+    
+    const renderItem = ({ item }) => {
+        return (
+        <Item
+            firstname={item.firstname}
+            id={item.id}
+            onPress={() => sendGameRequest(userid, item.id, game, token)}
+        />
+        );
+    };
+    
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Invite Friend</Text>
-
+            
+            <FlatList style={styles.list}
+                data={friends}
+                renderItem={renderItem}
+                numColumns={3}
+            />
+            
             <ArrowButton
                 text="Start Game"
                 color="#94d361"
                 direction={Direction.Right}
-                onPress={() => navigation.navigate(params.game)}
+                onPress={() => navigation.navigate(game)}
             />
         </View>
     );
@@ -60,7 +73,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '10%',
         fontWeight: 'bold',
     },
     header: {
@@ -70,6 +83,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
+    },
+    list: {
+        width: '100%',
+    },
+    item: {
+        padding: '2%',
+        marginVertical: '1%',
+        backgroundColor: 'white',
+        marginHorizontal: '5%',
+        flex: 1/3,
+        maxWidth: '23.5%'
+    },
+    tile: {
+        aspectRatio: 1,
+    },
+    title: {
+        fontSize: fontScaler(10),
+        textAlign: 'center',
     },
 });
 

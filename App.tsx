@@ -14,6 +14,7 @@ import MainScreen from './src/screens/MainScreen';
 import FriendFindScreen from './src/screens/FriendFindScreen';
 
 import GameMenu from './src/screens/GameMenu';
+import GameRequests from './src/screens/GameRequests';
 import GameList from './src/screens/GameList';
 import GameInviteFriends from './src/screens/GameInviteFriends';
 import Chess from './src/screens/Chess';
@@ -100,11 +101,9 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
             ) : (
                 <>
                     <Stack.Screen name="MainScreen" component={MainScreen} />
-                    <Stack.Screen
-                        name="FriendFind"
-                        component={FriendFindScreen}
-                    />
+                    <Stack.Screen name="FriendFind" component={FriendFindScreen} />
                     <Stack.Screen name="GameMenu" component={GameMenu} />
+                    <Stack.Screen name="GameRequests" component={GameRequests} />
                     <Stack.Screen name="GameList" component={GameList} />
                     <Stack.Screen
                         name="GameInviteFriends"

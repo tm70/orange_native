@@ -6,12 +6,9 @@ export interface Relationship {
     relationship: string;
 }
 
-const getRelationships = async (
-    id: number,
-    token: string,
-): Promise<Relationship[]> => {
-    const url = `${BACKEND_BASE_URL}/${id}/relationships`;
-
+const getRelationships = async (id: number, token: string): Promise<Relationship[]> => {
+    const url = `${BACKEND_BASE_URL}/users/${id}/relationships`;
+    
     let response = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
     });
