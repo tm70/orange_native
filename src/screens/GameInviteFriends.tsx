@@ -9,9 +9,18 @@ import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed
-type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'GameInviteFriends'>;
-type GameInviteFriendsRouteProp = RouteProp<StackParamList, 'GameInviteFriends'>;
-type Props = { navigation: GameInviteFriendsNavigationProp; route: GameInviteFriendsRouteProp };
+type GameInviteFriendsNavigationProp = StackNavigationProp<
+    StackParamList,
+    'GameInviteFriends'
+>;
+type GameInviteFriendsRouteProp = RouteProp<
+    StackParamList,
+    'GameInviteFriends'
+>;
+type Props = {
+    navigation: GameInviteFriendsNavigationProp;
+    route: GameInviteFriendsRouteProp;
+};
 
 const Item = ({ firstname, id, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>

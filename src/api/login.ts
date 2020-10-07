@@ -1,26 +1,19 @@
 import { BACKEND_BASE_URL } from './endpoints';
 
-export interface SignUpParams {
+export interface LoginParams {
     email: string;
-    firstname: string;
-    surname: string;
-    country_code: string;
     password: string;
-    hobbies: string[];
 }
 
-export interface SignUpResponse {
+export interface LoginResponse {
     token: string;
     id: number;
-    status: number;
 }
 
-const signup: (userInfo: SignUpParams) => Promise<SignUpResponse> = async (
+const login: (userInfo: LoginParams) => Promise<LoginResponse> = async (
     userInfo,
 ) => {
-    const url = `${BACKEND_BASE_URL}/signup`;
-
-    console.log(JSON.stringify(userInfo));
+    const url = `${BACKEND_BASE_URL}/signin`;
 
     const response = await fetch(url, {
         method: 'POST',
@@ -43,4 +36,4 @@ const signup: (userInfo: SignUpParams) => Promise<SignUpResponse> = async (
     });
 };
 
-export default signup;
+export default login;
