@@ -4,8 +4,6 @@ import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/ty
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import getFriends from "../hooks/getFriends";
-//import getBio from "../api/GetBio";
-//import useGetRelationships from '../hooks/useGetRelationships';
 import sendGameRequest from "../api/sendGameRequest";
 import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
@@ -44,7 +42,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
         <View style={styles.container}>
             <Text style={styles.header}>Invite Friend</Text>
             
-            <FlatList
+            <FlatList style={styles.list}
                 data={friends}
                 renderItem={renderItem}
                 numColumns={3}
@@ -66,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '10%',
         fontWeight: 'bold',
     },
     header: {
@@ -76,6 +74,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
+    },
+    list: {
+        width: '100%',
     },
     item: {
         padding: '2%',
