@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-import getRelationships from "../api/getRelationships";
+//import getRelationships from "../api/getRelationships";
+import useGetRelationships from "../hooks/useGetRelationships";
 import AuthContext from '../context/AuthContext';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
@@ -11,42 +12,39 @@ type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
 
 // item prefer to display
-const Item = ({ firstname, id }) => (
+const Item = ({ firstname, id, relationship }) => (
     <TouchableOpacity style={styles.item}>
         <ImageBackground source={require('../../assets/person.png')} style={{}}>
             <View style={styles.tile} />
         </ImageBackground>  
         <Text style={styles.title}>{firstname}</Text>
+        <Text style={styles.title}>{relationship}</Text>
     </TouchableOpacity>
 );
 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
-    const [friendList, setfriendList] = useState(null);
     // not sure which should be use here to get token
-    const {token} = React.useContext(AuthContext);
-    const {id} = React.useContext(AuthContext);
+    const {token,id} = React.useContext(AuthContext);
     // get data from api ()
-    useEffect(() => {
-        const b = getRelationships(id, token).catch(console.log).then(setfriendList);
-    }, []);
-    if (friendList === null) {
-        return <Text>Loading</Text>;
-    }
+    const [s, friendList, e] = useGetRelationships(id);
+    console.log("sss", friendList);
 
     const renderItem = ({ item }) => (
         <Item
-            firstname={item.firstname}
+            firstname={item.bio.firstname}
+            id={item.bio.id}
+            relationship={item.relationship}
         />
     );
 
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <FlatList style={styles.list}
                 data={friendList}
                 renderItem={renderItem}
-                keyExtractor={({ id }, _index) => id.toString()}
+                numColumns={3}
             />
         </View>
     );
@@ -68,6 +66,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
+    },
+    list: {
+        width: '100%',
     },
     item: {
         padding: '2%',

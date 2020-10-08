@@ -1,30 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import getRelationships, { Relationship } from '../api/getRelationships';
+import React, {useEffect, useState} from 'react';
+import getRelationships, {Relationship} from '../api/getRelationships';
+import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
-const useGetRelationships: (
-    id: number,
-) => [() => void, Relationship[], string] = (id: number) => {
-    const [relationships, setRelationships] = useState([] as Relationship[]);
+export interface Relation {
+    bio: Bio;
+    relationship: string;
+}
+
+const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: number) => {
     const [errorMessage, setErrorMessage] = useState('');
+    const [relations, setRelations] = useState([] as Relation[]);
 
     // Get the user token
-    const { token } = React.useContext(AuthContext);
+    const {token} = React.useContext(AuthContext);
 
     const searchAPI = async () => {
         try {
-            const results = await getRelationships(id, token);
-            setRelationships(results);
+            const relationships = await getRelationships(userid, token);
+            const ids = [];
+            
+            for (r of relationships) {
+                let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
+                ids.push(id);
+            }
+            
+            const bios = await getBios(ids, token);
+            
+            const results = [];
+            for (i in ids) {
+                results.push({bio:bios[i], relationship:relationships[i].relationship});
+            }
+            results.shift();
+            setRelations(results);
+            
         } catch (err) {
             setErrorMessage('Something went wrong');
         }
     };
-
+    
     useEffect(() => {
         searchAPI('');
     }, []);
-
-    return [searchAPI, relationships, errorMessage];
+    
+    return [searchAPI, relations, errorMessage];
 };
 
-export default useGetRelationships;
+export default getFriends;
