@@ -31,7 +31,7 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
             for (i in ids) {
                 results.push({bio:bios[i], relationship:relationships[i].relationship});
             }
-            results.shift();
+            //results.shift();
             setRelations(results);
             
         } catch (err) {
