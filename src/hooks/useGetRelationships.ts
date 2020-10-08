@@ -21,6 +21,10 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
             const ids = [];
             
             for (r of relationships) {
+                // check if blocked
+                if (["BlockFirstSecond", "BlockSecondFirst", "BlockBoth"].includes(r.relationship)){
+                    continue;
+                }
                 let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
                 ids.push(id);
             }
@@ -31,7 +35,7 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
             for (i in ids) {
                 results.push({bio:bios[i], relationship:relationships[i].relationship});
             }
-            //results.shift();
+            
             setRelations(results);
             
         } catch (err) {

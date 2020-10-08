@@ -24,6 +24,7 @@ const getBios = async (ids: number[], token: string): Promise<Bio[]> => {
         }
         
         let js = await response.json();
+        //console.log(js);
         bios.push(js.info);
     }
     
