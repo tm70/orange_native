@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} fro
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
-//import getRelationships from "../api/getRelationships";
 import useGetRelationships from "../hooks/useGetRelationships";
 import AuthContext from '../context/AuthContext';
 
@@ -28,8 +27,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
     const {token,id} = React.useContext(AuthContext);
     // get data from api ()
     const [s, friendList, e] = useGetRelationships(id);
-    console.log("sss", friendList);
-
+    
     const renderItem = ({ item }) => (
         <Item
             firstname={item.bio.firstname}
