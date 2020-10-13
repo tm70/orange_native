@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import getGames from "../api/getGames";
+import useGetGames from "../hooks/useGetGames";
 import AuthContext from '../context/AuthContext';
 import fontScaler from "../util/fontScaler";
 
@@ -9,37 +10,36 @@ type Props = { navigation: GameRequestsNavigationProp };
 
 const states = {
     "Finished": "Finished",
-    "InProgress": "In Progress",
+    "Cancelled": "Cancelled",
+    "InProgress": "Game in Progress",
     "RequestSent": "Request Sent",
-    "RequestReceived": "",
-    "Cancelled": "Cancelled"
+    "RequestReceived": "Accept Request?",
 }
 
-const Item = ({ oppid, game, status, onPress }) => (
+const Item = ({ game, oppid, oppname, status, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text>{game} with {oppid}</Text>
-        <Text>Status: {states[status]}</Text>
+        <Text>{game} with {oppname}</Text>
+        <Text>{states[status]}</Text>
     </TouchableOpacity>
 );
 
 const GameRequests: React.FC = () => {
-    const [games, setGames] = useState(null)
     const {token, id} = React.useContext(AuthContext);
+    
+    const [searchAPI, games, errorMessage] = useGetGames(id);
     
     const renderItem = ({ item }) => {
         if (item.status == "Finished" || item.status == "Cancelled") {
             return null
         } else {
-            return <Item oppid={item.opponent_id} game={item.game_type} status={item.status}/>
+            return <Item
+                    game={item.game_type}
+                    oppid={item.opponent_id}
+                    oppname={item.opponent_name}
+                    status={item.status}
+                />
         }
     };
-    
-    useEffect(() => {
-        const b = getGames(id, token).catch(console.log).then(setGames);
-    }, []);
-    if (games === null) {
-        return <Text style={styles.loadtext}>Loading</Text>;
-    }
     
     return (
         <View>
