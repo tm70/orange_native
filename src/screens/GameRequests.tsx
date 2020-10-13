@@ -32,11 +32,17 @@ const GameRequests: React.FC = () => {
         if (item.status == "Finished" || item.status == "Cancelled") {
             return null
         } else {
+            // onpress
+            // in progress -> go to game
+            // requestsent -> prompt to cancel game
+            // requestreceived -> prompt to accept or decline request
+            const onPress = null
             return <Item
                     game={item.game_type}
                     oppid={item.opponent_id}
                     oppname={item.opponent_name}
                     status={item.status}
+                    onpress={onPress}
                 />
         }
     };
