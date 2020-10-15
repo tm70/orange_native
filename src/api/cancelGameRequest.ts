@@ -5,14 +5,12 @@ export interface Response {
     status: number,
 }
 
-// action = 'Accept' or 'Decline'
-const respondGameRequest = async (userid: number, gameid: number, action: string, token: string): Promise<Response> => {
+const deleteGameRequest = async (userid: number, gameid: number, token: string): Promise<Response> => {
     const url = `${BACKEND_BASE_URL}/users/${userid}/games/${gameid}`;
     
     let response = await fetch(url, {
-        method: 'PATCH',
+        method: 'DELETE',
         headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
-        body: JSON.stringify(action),
     });
     
     if (!response.ok) {
@@ -27,4 +25,4 @@ const respondGameRequest = async (userid: number, gameid: number, action: string
     })
 };
 
-export default respondGameRequest;
+export default deleteGameRequest;

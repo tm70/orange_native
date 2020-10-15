@@ -1,6 +1,6 @@
 import {BACKEND_BASE_URL} from "./endpoints";
 
-export interface Game {
+export interface GameRequest {
     game_type: string,
     id: number,
     opponent_id: number,
