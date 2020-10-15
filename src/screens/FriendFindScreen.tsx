@@ -1,54 +1,43 @@
 import React, { useState } from 'react';
 import {
     FlatList,
-    ImageBackground,
     StyleSheet,
     Text,
     TextInput,
-    TouchableOpacity,
     View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
 import useUserSearch from '../hooks/useUserSearch';
+import ProfileButton from '../components/ProfileIcon';
+import { SearchedUser } from '../api/getUsersSearch';
 
-type IndexScreenNavigationProp = StackNavigationProp<
+type FriendFindScreenNavigationProp = StackNavigationProp<
     StackParamList,
     'FriendFind'
 >;
-type Props = { navigation: IndexScreenNavigationProp };
+type Props = { navigation: FriendFindScreenNavigationProp };
 
 const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
-    const [searchAPI, users, errorMessage] = useUserSearch(20);
+    // TODO: Error
+    const [searchAPI, users, errorMessage] = useUserSearch(40);
     const [searchText, setSearchText] = useState('');
 
     interface ItemProps {
-        firstname: string;
-        id: number;
+        item: SearchedUser;
     }
 
-    // item prefer to display
-
-    const Item: React.FC<ItemProps> = ({ firstname, id }) => (
-        <TouchableOpacity
-            style={styles.item}
-            onPress={() => navigation.navigate('Bio', { id })}
-        >
-            <ImageBackground
-                source={require('../../assets/person.png')}
-                style={{}}
-            >
-                <View style={styles.tile} />
-            </ImageBackground>
-            <Text style={styles.title}>{firstname}</Text>
-        </TouchableOpacity>
-    );
-
     // render item
-    const renderItem = ({ item }) => (
-        <Item firstname={item.firstname} id={item.id} />
-    );
+    const renderItem: React.FC<ItemProps> = ({ item }) => {
+        return (
+            <ProfileButton
+                text={item.firstname + ' ' + item.surname}
+                onPress={() => navigation.navigate('Bio', { id: item.id })}
+                image_url={item.image_url}
+            />
+        );
+    };
 
     return (
         <View style={styles.container}>
