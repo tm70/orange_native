@@ -78,14 +78,25 @@ const GameRequests: React.FC = () => {
                     );
             }
             
-            return <Item
+            return (
+                <Item
                     game={item.game_type}
                     oppname={item.opponent_name}
                     status={item.status}
                     onPress={onPress}
                 />
+            );
         }
     };
+    console.log(games);
+    
+    if (games.length == 0) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.loadtext}>Loading</Text>
+            </View>
+        );
+    }
     
     return (
         <View style={styles.container}>
@@ -108,7 +119,8 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 8,
         marginHorizontal: 8,
-        fontWeight: 'bold',
+        justifyContent: 'center',
+        flex: 1,
     },
     header: {
         fontSize: fontScaler(25),
@@ -124,7 +136,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: '10%',
         marginTop: '5%',
-        marginBottom: '5%',
+        marginBottom: '15%',
     },
     item: {
         padding: '2%',
