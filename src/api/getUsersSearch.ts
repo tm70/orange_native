@@ -4,6 +4,7 @@ export interface SearchedUser {
     id: number;
     firstname: string;
     surname: string;
+    image_url: string | null;
 }
 
 // Get the list of users from the api
