@@ -6,8 +6,8 @@ export interface Response {
 }
 
 // action = 'Accept' or 'Decline'
-const respondGameRequest = async (id: number, gameid: number, action: string, token: string): Promise<Response> => {
-    const url = `${BACKEND_BASE_URL}/users/${id}/games/${gameid}`;
+const respondGameRequest = async (userid: number, gameid: number, action: string, token: string): Promise<Response> => {
+    const url = `${BACKEND_BASE_URL}/users/${userid}/games/${gameid}`;
     
     let response = await fetch(url, {
         method: 'PATCH',

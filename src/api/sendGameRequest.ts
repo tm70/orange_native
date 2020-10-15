@@ -5,8 +5,8 @@ export interface Response {
     status: number,
 }
 
-const sendGameRequest = async (id: number, oppid: number, game: string, token: string): Promise<Response> => {
-    const url = `${BACKEND_BASE_URL}/users/${id}/games`;
+const sendGameRequest = async (userid: number, oppid: number, game: string, token: string): Promise<Response> => {
+    const url = `${BACKEND_BASE_URL}/users/${userid}/games`;
     
     let response = await fetch(url, {
         method: 'POST',
