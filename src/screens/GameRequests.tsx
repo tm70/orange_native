@@ -38,6 +38,7 @@ const GameRequests: React.FC = () => {
             
             if (item.status == "InProgress") {
                 // in progress -> go to game
+                // TODO
                 onPress = null;
             } else if (item.status == "RequestSent") {
                 // requestsent -> prompt to cancel game
@@ -63,11 +64,11 @@ const GameRequests: React.FC = () => {
                         [
                             {
                                 text: "Accept",
-                                onPress: () => respondGameRequest(userid, "Accept", item.id, token),
+                                onPress: () => respondGameRequest(userid, item.id, "Accept", token),
                             },
                             {
                                 text: "Decline",
-                                onPress: () => respondGameRequest(userid, "Decline", item.id, token),
+                                onPress: () => respondGameRequest(userid, item.id, "Decline", token),
                             },
                             {
                                 text: "Back",
@@ -87,8 +88,13 @@ const GameRequests: React.FC = () => {
     };
     
     return (
-        <View>
+        <View style={styles.container}>
             <FlatList
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.header}>Game Requests</Text>
+                    </>
+                }
                 data={games}
                 renderItem={renderItem}
                 keyExtractor={({ id }, _index) => id.toString()}
@@ -99,6 +105,19 @@ const GameRequests: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 8,
+        marginHorizontal: 8,
+        fontWeight: 'bold',
+    },
+    header: {
+        fontSize: fontScaler(25),
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingHorizontal: '10%',
+        marginTop: '5%',
+        marginBottom: '5%',
+    },
     loadtext: {
         fontSize: fontScaler(25),
         fontWeight: 'bold',

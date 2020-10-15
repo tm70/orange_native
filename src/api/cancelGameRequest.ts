@@ -5,8 +5,8 @@ export interface Response {
     status: number,
 }
 
-const deleteGameRequest = async (id: number, gameid: number, token: string): Promise<Response> => {
-    const url = `${BACKEND_BASE_URL}/users/${id}/games/${gameid}`;
+const deleteGameRequest = async (userid: number, gameid: number, token: string): Promise<Response> => {
+    const url = `${BACKEND_BASE_URL}/users/${userid}/games/${gameid}`;
     
     let response = await fetch(url, {
         method: 'DELETE',
