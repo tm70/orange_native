@@ -21,13 +21,11 @@ type Props = { navigation: GameListNavigationProp };
 // 'icon' is the image source for the background image on its button
 const DATA = [
     {
-        key: 'game1',
         title: 'Tic Tac Toe',
         game: 'TicTacToe',
         icon: require('../../assets/tictactoeicon.png'),
     },
     {
-        key: 'game2',
         title: 'Chess',
         game: 'Chess',
         icon: require('../../assets/chessicon.png'),
@@ -66,6 +64,7 @@ const GameList: React.FC<Props> = ({ navigation }) => {
                 data={DATA}
                 renderItem={renderItem}
                 numColumns={2}
+                keyExtractor={(item, index) => item.game}
             />
         </View>
     );
