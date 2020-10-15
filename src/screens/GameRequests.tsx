@@ -88,7 +88,6 @@ const GameRequests: React.FC = () => {
             );
         }
     };
-    console.log(games);
     
     if (games.length == 0) {
         return (
