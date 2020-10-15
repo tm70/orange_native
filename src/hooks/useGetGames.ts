@@ -31,7 +31,7 @@ const useGetGames: (userid: number) => [() => void, Bio[], string] = (userid: nu
             for (i in bios) {
                 requests[i].opponent_name = bios[i].firstname;
             }
-            
+            console.log(requests);
             setGames(requests);
         } catch (err) {
             setErrorMessage('Something went wrong');
