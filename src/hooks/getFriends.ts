@@ -3,12 +3,12 @@ import getRelationships, {Relationship} from '../api/getRelationships';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
-const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: number) => {
+const getFriends: () => [() => void, Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [friends, setFriends] = useState([] as Bio[]);
 
     // Get the user token
-    const {token} = React.useContext(AuthContext);
+    const {token, id: userid} = React.useContext(AuthContext);
 
     const searchAPI = async () => {
         try {
@@ -18,10 +18,10 @@ const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: num
             
             for (r of relationships) {
                 //console.log("r", r);
-                if (r.relationship == "Friends") {
+                //if (r.relationship == "Friends") {
                     let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
                     ids.push(id);
-                }
+                //}
             }
             
             const results = await getBios(ids, token);

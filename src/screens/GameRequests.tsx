@@ -28,7 +28,7 @@ const Item = ({ game, oppname, status, onPress }) => (
 const GameRequests: React.FC = () => {
     const {token, id: userid} = React.useContext(AuthContext);
     
-    const [searchAPI, games, errorMessage] = useGetGames(userid);
+    const [searchAPI, games, errorMessage] = useGetGames();
     
     const renderItem = ({ item }) => {
         if (item.status == "Finished" || item.status == "Cancelled") {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
         padding: '2%',
         marginVertical: '2%',
         backgroundColor: '#3498DB',
-        marginHorizontal: '5%',
+        marginHorizontal: '2%',
         flex: 1,
     },
 });
