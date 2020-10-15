@@ -18,10 +18,10 @@ const getFriends: () => [() => void, Bio[], string] = () => {
             
             for (r of relationships) {
                 //console.log("r", r);
-                //if (r.relationship == "Friends") {
+                if (r.relationship == "Friends") {
                     let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
                     ids.push(id);
-                //}
+                }
             }
             
             const results = await getBios(ids, token);

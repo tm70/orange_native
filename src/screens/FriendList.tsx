@@ -43,6 +43,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                 data={friendList}
                 renderItem={renderItem}
                 numColumns={3}
+                keyExtractor={(item, index) => item.id}
             />
         </View>
     );

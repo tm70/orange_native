@@ -55,6 +55,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
                 data={friends}
                 renderItem={renderItem}
                 numColumns={3}
+                keyExtractor={(item, index) => item.id}
             />
             
             <ArrowButton
