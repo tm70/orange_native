@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 const useUserSearch: (
     limit: number,
 ) => [(query: string) => void, SearchedUser[], string] = (
-    limit: number = 20,
+    limit: number = 40,
 ) => {
     const [users, setUsers] = useState([] as SearchedUser[]);
     const [errorMessage, setErrorMessage] = useState('');

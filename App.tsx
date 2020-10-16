@@ -44,7 +44,7 @@ export type StackParamList = {
     TicTacToe: undefined;
     Chess: undefined;
     MainScreen: undefined;
-    Bio: undefined;
+    Bio: { id: number };
     EditBio: undefined;
     FriendList: undefined;
 };
@@ -151,8 +151,6 @@ const App: React.FC = () => {
 
         loadKeyFromStore();
     }, []);
-
-    console.log("Token is: " + (state.token !== ''));
 
     return (
         <AuthContext.Provider

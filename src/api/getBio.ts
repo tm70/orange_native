@@ -7,6 +7,7 @@ export interface Bio {
     firstname: string;
     hobbies: string[];
     surname: string;
+    image_url: string | null;
 }
 
 const getBio = async (id: number, token: string): Promise<Bio> => {

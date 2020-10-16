@@ -114,7 +114,7 @@ export const useAuth = () => {
                     })
                     .catch((err) => {
                         // TODO: Login failed we should display an error
-                        console.log(err.toString());
+                        console.log('Login Error ' + err.toString());
                     });
             },
         }),
