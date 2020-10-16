@@ -8,12 +8,12 @@ export interface Relation {
     relationship: string;
 }
 
-const getFriends: (userid: number) => [() => void, Bio[], string] = (userid: number) => {
+const getFriends: () => [() => void, Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [relations, setRelations] = useState([] as Relation[]);
 
     // Get the user token
-    const {token} = React.useContext(AuthContext);
+    const {token, id:userid} = React.useContext(AuthContext);
 
     const searchAPI = async () => {
         try {

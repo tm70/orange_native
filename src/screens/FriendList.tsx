@@ -26,7 +26,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
     // not sure which should be use here to get token
     const {token,id} = React.useContext(AuthContext);
     // get data from api ()
-    const [s, friendList, e] = useGetRelationships(id);
+    const [s, friendList, e] = useGetRelationships();
     
     const renderItem = ({ item }) => (
         <Item
@@ -43,6 +43,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                 data={friendList}
                 renderItem={renderItem}
                 numColumns={3}
+                keyExtractor={(item, index) => item.id}
             />
         </View>
     );

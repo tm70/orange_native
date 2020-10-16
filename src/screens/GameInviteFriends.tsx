@@ -35,7 +35,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const game = route.params.game;
     const {token, id: userid} = useContext(AuthContext);
     
-    const [searchAPI, friends, errorMessage] = getFriends(userid, token);
+    const [searchAPI, friends, errorMessage] = getFriends();
     
     const renderItem = ({ item }) => {
         return (
@@ -55,6 +55,7 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
                 data={friends}
                 renderItem={renderItem}
                 numColumns={3}
+                keyExtractor={(item, index) => item.id}
             />
             
             <ArrowButton

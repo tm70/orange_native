@@ -11,12 +11,12 @@ export interface Game {
     status: string,
 }
 
-const useGetGames: (userid: number) => [() => void, Bio[], string] = (userid: number) => {
+const useGetGames: () => [() => void, Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [games, setGames] = useState([] as Game[]);
 
     // Get the user token
-    const {token} = React.useContext(AuthContext);
+    const {token, id:userid} = React.useContext(AuthContext);
 
     const searchAPI = async () => {
         try {
