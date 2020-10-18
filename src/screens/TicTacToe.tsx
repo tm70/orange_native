@@ -29,7 +29,7 @@ const DATA = [
 const Item = ({}) => <TouchableOpacity style={styles.item} />;
 
 const TicTacToe: React.FC<Props> = ({navigation, route}) => {
-    const {game_id, opponent_id} = route.params;
+    const {game_id, opponent_id, opponent_name} = route.params;
     
     const renderItem = () => <Item />;
     

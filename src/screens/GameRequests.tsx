@@ -44,6 +44,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
                     {
                         game_id: item.id,
                         opponent_id: item.opponent_id,
+                        opponent_name: item.opponent_name,
                     });
             } else if (item.status == "RequestSent") {
                 // requestsent -> prompt to cancel game

@@ -92,7 +92,7 @@ const Item = ({ row, column, t }) => (
 );
 
 const Chess: React.FC<Props> = ({navigation, route}) => {
-    const {game_id, opponent_id} = route.params;
+    const {game_id, opponent_id, opponent_name} = route.params;
     
     const renderItem = ({ item }) => (
         <Item row={item.row} column={item.column} t={item.key} />
