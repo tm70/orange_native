@@ -1,13 +1,5 @@
-import {BACKEND_BASE_URL} from "./endpoints";
-
-export interface Bio {
-    id: number,
-    bio: string,
-    country: string,
-    firstname: string,
-    hobbies: string[],
-    surname: string
-}
+import { BACKEND_BASE_URL } from "./endpoints";
+import {Bio} from "./getBio";
 
 const getBios = async (ids: number[], token: string): Promise<Bio[]> => {
     const bios = [];

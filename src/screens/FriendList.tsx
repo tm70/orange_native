@@ -3,23 +3,13 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} fro
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
+import ProfileButton from '../components/ProfileIcon';
 import useGetRelationships from "../hooks/useGetRelationships";
 import AuthContext from '../context/AuthContext';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
 type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
-
-// item prefer to display
-const Item = ({ firstname, id, relationship }) => (
-    <TouchableOpacity style={styles.item}>
-        <ImageBackground source={require('../../assets/person.png')} style={{}}>
-            <View style={styles.tile} />
-        </ImageBackground>  
-        <Text style={styles.title}>{firstname}</Text>
-        <Text style={styles.title}>{relationship}</Text>
-    </TouchableOpacity>
-);
 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
@@ -29,10 +19,10 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
     const [s, friendList, e] = useGetRelationships();
     
     const renderItem = ({ item }) => (
-        <Item
-            firstname={item.bio.firstname}
-            id={item.bio.id}
-            relationship={item.relationship}
+        <ProfileButton
+            text={item.bio.firstname + ' ' + item.bio.surname}
+            onPress={() => navigation.navigate('Bio', { id: item.bio.id })}
+            image_url={item.bio.image_url}
         />
     );
 
