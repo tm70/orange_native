@@ -20,7 +20,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
     
     const renderItem = ({ item }) => (
         <ProfileButton
-            text={item.bio.firstname + ' ' + item.bio.surname}
+            text={item.bio.firstname + ' ' + item.bio.surname + ' ' + item.relationship}
             onPress={() => navigation.navigate('Bio', { id: item.bio.id })}
             image_url={item.bio.image_url}
         />
