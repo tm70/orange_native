@@ -6,7 +6,13 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
+
+type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>
+type TicTacToeRouteProp = RouteProp<StackParamList, 'TicTacToe'>
+type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
 
 // probably a nicer way to do it
 const DATA = [
@@ -85,7 +91,9 @@ const Item = ({ row, column, t }) => (
     </TouchableOpacity>
 );
 
-const Chess: React.FC = () => {
+const Chess: React.FC<Props> = ({navigation, route}) => {
+    const {game_id, opponent_id} = route.params;
+    
     const renderItem = ({ item }) => (
         <Item row={item.row} column={item.column} t={item.key} />
     );

@@ -6,43 +6,33 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 
+type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>
+type TicTacToeRouteProp = RouteProp<StackParamList, 'TicTacToe'>
+type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
+
 const DATA = [
-    {
-        key: '1',
-    },
-    {
-        key: '2',
-    },
-    {
-        key: '3',
-    },
-    {
-        key: '4',
-    },
-    {
-        key: '5',
-    },
-    {
-        key: '6',
-    },
-    {
-        key: '7',
-    },
-    {
-        key: '8',
-    },
-    {
-        key: '9',
-    },
+    { key: '1', },
+    { key: '2', },
+    { key: '3', },
+    { key: '4', },
+    { key: '5', },
+    { key: '6', },
+    { key: '7', },
+    { key: '8', },
+    { key: '9', },
 ];
 
 const Item = ({}) => <TouchableOpacity style={styles.item} />;
 
-const TicTacToe: React.FC = () => {
+const TicTacToe: React.FC<Props> = ({navigation, route}) => {
+    const {game_id, opponent_id} = route.params;
+    
     const renderItem = () => <Item />;
-
+    
     return (
         <View style={styles.container}>
             <FlatList data={DATA} renderItem={renderItem} numColumns={3} />

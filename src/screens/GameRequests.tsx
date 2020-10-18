@@ -40,8 +40,11 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
             
             if (item.status == "InProgress") {
                 // in progress -> go to game
-                // TODO
-                onPress = () => navigation.navigate(item.game_type);
+                onPress = () => navigation.navigate(item.game_type,
+                    {
+                        game_id: item.id,
+                        opponent_id: item.opponent_id,
+                    });
             } else if (item.status == "RequestSent") {
                 // requestsent -> prompt to cancel game
                 onPress = () => Alert.alert(
