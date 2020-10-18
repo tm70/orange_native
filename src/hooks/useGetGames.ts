@@ -4,7 +4,7 @@ import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
 export interface Game {
-    game: string,
+    game_type: string,
     id: number,
     opponent_id: number,
     opponent_name: string,

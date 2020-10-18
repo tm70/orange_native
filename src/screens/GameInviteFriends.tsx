@@ -59,10 +59,10 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
             />
             
             <ArrowButton
-                text="Start Game"
+                text="Game Requests"
                 color="#94d361"
                 direction={Direction.Right}
-                onPress={() => navigation.navigate(game)}
+                onPress={() => navigation.navigate("GameRequests")}
             />
         </View>
     );

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import getGames from "../api/getGames";
 import useGetGames from "../hooks/useGetGames";
 import cancelGameRequest from "../api/cancelGameRequest";
@@ -8,7 +9,8 @@ import AuthContext from '../context/AuthContext';
 import fontScaler from "../util/fontScaler";
 
 type GameRequestsNavigationProp = StackNavigationProp<StackParamList, 'GameRequests'>
-type Props = { navigation: GameRequestsNavigationProp };
+type GameRequestsRouteProp = RouteProp<StackParamList, 'GameRequests'>
+type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
 
 const states = {
     "Finished": "Finished",
@@ -25,7 +27,7 @@ const Item = ({ game, oppname, status, onPress }) => (
     </TouchableOpacity>
 );
 
-const GameRequests: React.FC = () => {
+const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
     
     const [searchAPI, games, errorMessage] = useGetGames();
@@ -39,7 +41,7 @@ const GameRequests: React.FC = () => {
             if (item.status == "InProgress") {
                 // in progress -> go to game
                 // TODO
-                onPress = null;
+                onPress = () => navigation.navigate(item.game_type);
             } else if (item.status == "RequestSent") {
                 // requestsent -> prompt to cancel game
                 onPress = () => Alert.alert(
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginHorizontal: 8,
         justifyContent: 'center',
+        paddingBottom: "10%",
         flex: 1,
     },
     header: {
