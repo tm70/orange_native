@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     FlatList,
     ImageBackground,
@@ -12,6 +12,7 @@ import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
+import getBio from '../api/getBio';
 
 type MainScreenNavigationProp = StackNavigationProp<
     StackParamList,
@@ -61,7 +62,11 @@ const Item = ({ title, onPress, icon }) => (
 );
 
 const Main: React.FC<Props> = ({ route, navigation }) => {
-    const { id } = React.useContext(AuthContext);
+    const { id, token } = React.useContext(AuthContext);
+    const [bio, setBio] = useState("")
+    useEffect(() => {
+        getBio(id, token).catch(console.log).then(setBio);
+    }, []);
 
     const renderItem = ({ item }) => (
         <Item
@@ -78,7 +83,7 @@ const Main: React.FC<Props> = ({ route, navigation }) => {
                 ListHeaderComponent={
                     <>
                         <Text style={styles.header}>
-                            Hello {id}, what would you like to do?
+                            Hello {bio.firstname}, what would you like to do?
                         </Text>
                     </>
                 }
