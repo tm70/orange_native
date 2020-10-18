@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} fro
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
+import ProfileButton from '../components/ProfileIcon';
 import getFriends from "../hooks/getFriends";
 import sendGameRequest from "../api/sendGameRequest";
 import ArrowButton, {Direction} from '../components/ArrowButton';
@@ -39,11 +40,11 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     
     const renderItem = ({ item }) => {
         return (
-        <Item
-            firstname={item.firstname}
-            id={item.id}
-            onPress={() => sendGameRequest(userid, item.id, game, token)}
-        />
+            <ProfileButton
+                text={item.firstname + ' ' + item.surname}
+                onPress={() => sendGameRequest(userid, item.id, game, token)}
+                image_url={item.image_url}
+            />
         );
     };
     
