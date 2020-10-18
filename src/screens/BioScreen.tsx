@@ -4,7 +4,7 @@ import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
 import BasicButton from '../components/BasicButton';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import setRelationship, { FriendRequestAction } from '../api/setRelationship';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
@@ -22,9 +22,8 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
-            <BasicButton
-                color="#bbbde0"
-                text="Send friend request"
+            <TouchableOpacity
+                style={styles.button}
                 onPress={() =>
                     setRelationship(
                         id,
@@ -34,8 +33,9 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                     )
                         .then(() => setFriendModalVisible(true))
                         .catch(console.log)
-                }
-            />
+                }>
+                <Text style={styles.buttontext}>Send friend request</Text>
+            </TouchableOpacity>
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -45,17 +45,16 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.header}>Friend request sent!</Text>
-                        <BasicButton
-                            color="#bbbde0"
-                            text="Add more friends"
-                            onPress={() => navigation.navigate('FriendFind')}
-                        />
-                        <Text style={styles.header}>or</Text>
-                        <BasicButton
-                            color="#bbbde0"
-                            text="Go back to menu"
-                            onPress={() => navigation.navigate('MainScreen')}
-                        />
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => navigation.navigate('FriendFind')}>
+                            <Text style={styles.buttontext}>Add more friends</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => navigation.navigate('MainScreen')}>
+                            <Text style={styles.buttontext}>Go back to menu</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -67,38 +66,38 @@ const styles = StyleSheet.create({
     container: {
         marginTop: '10%',
         marginHorizontal: '10%',
-
         fontWeight: 'bold',
-        flex: 1,
+        flex: 1
     },
 
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
-        marginTop: '5%',
+        marginTop: '5%'
+    },
+
+    buttontext: {
+        fontSize: fontScaler(15)
     },
 
     centeredView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
+        justifyContent: 'center'
     },
 
     modalView: {
-        margin: 20,
+        margin: '10%',
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 35,
+        padding: '5%',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+    },
+
+    button: {
+        alignItems: "center",
+        backgroundColor: "#bbbde0",
+        padding: '5%',
+        marginTop:'10%'
     },
 });
 
