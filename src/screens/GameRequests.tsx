@@ -31,6 +31,15 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
     const [r, rerender] = React.useState(false);
     
+    // refresh on focus, for navigating back to this page
+    const [refresh, setRefresh] = React.useState(false);
+    useEffect(() => {
+        console.log("refresh");
+    }, [refresh]);
+    navigation.addListener('focus', () => {
+        setRefresh(!refresh);
+    });
+    
     const [searchAPI, games, errorMessage] = useGetGames();
     
     const renderItem = ({ item }) => {
