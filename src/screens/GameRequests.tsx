@@ -40,7 +40,8 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
         setRefresh(!refresh);
     });
     
-    const [searchAPI, games, errorMessage] = useGetGames();
+    const [searchAPI, games, bios, errorMessage] = useGetGames();
+    console.log(bios[91]);
     
     const renderItem = ({ item }) => {
         if (item.status == "Finished" || item.status == "Cancelled") {
@@ -97,7 +98,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
             return (
                 <Item
                     game={item.game_type}
-                    oppname={item.opponent_name}
+                    oppname={(bios[item.opponent_id]).firstname}
                     status={item.status}
                     onPress={onPress}
                 />

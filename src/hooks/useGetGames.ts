@@ -3,17 +3,10 @@ import getGames, {GameRequest} from '../api/getGames';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
-export interface Game {
-    game_type: string,
-    id: number,
-    opponent_id: number,
-    opponent_name: string,
-    status: string,
-}
-
 const useGetGames: () => [() => void, Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
-    const [games, setGames] = useState([] as Game[]);
+    const [games, setGames] = useState([] as GameRequest[]);
+    const [bios, setBios] = useState({});
 
     // Get the user token
     const {token, id:userid} = React.useContext(AuthContext);
@@ -26,12 +19,10 @@ const useGetGames: () => [() => void, Bio[], string] = () => {
             for (r of requests) {
                 ids.push(r.opponent_id);
             }
+            const b = await getBios(ids, token);
             
-            const bios = await getBios(ids, token);
-            for (i in bios) {
-                requests[i].opponent_name = bios[i].firstname;
-            }
-            
+            // set bios before games to guarentee that it is non-empty whenever games is
+            setBios(b);
             setGames(requests);
         } catch (err) {
             setErrorMessage('Something went wrong');
@@ -42,7 +33,7 @@ const useGetGames: () => [() => void, Bio[], string] = () => {
         searchAPI('');
     }, []);
     
-    return [searchAPI, games, errorMessage];
+    return [searchAPI, games, bios, errorMessage];
 };
 
 export default useGetGames;

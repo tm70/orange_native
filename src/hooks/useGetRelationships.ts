@@ -33,7 +33,7 @@ const getFriends: () => [() => void, Bio[], string] = () => {
             
             const results = [];
             for (i in ids) {
-                results.push({bio:bios[i], relationship:relationships[i].relationship});
+                results.push({bio:bios[ids[i]], relationship:relationships[i].relationship});
             }
             
             setRelations(results);
