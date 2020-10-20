@@ -29,6 +29,7 @@ const Item = ({ game, oppname, status, onPress }) => (
 
 const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
+    const [r, rerender] = React.useState(false);
     
     const [searchAPI, games, errorMessage] = useGetGames();
     
@@ -54,7 +55,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
                         [
                             {
                                 text: "Yes",
-                                onPress: () => cancelGameRequest(userid, item.id, token),
+                                onPress: () => { cancelGameRequest(userid, item.id, token); item.status = "Cancelled"; rerender(!r); },
                             },
                             {
                                 text: "No",
@@ -70,11 +71,11 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
                         [
                             {
                                 text: "Accept",
-                                onPress: () => respondGameRequest(userid, item.id, "Accept", token),
+                                onPress: () => { respondGameRequest(userid, item.id, "Accept", token); item.status = "InProgress"; rerender(!r); },
                             },
                             {
                                 text: "Decline",
-                                onPress: () => respondGameRequest(userid, item.id, "Decline", token),
+                                onPress: () => { respondGameRequest(userid, item.id, "Decline", token); item.status = "Cancelled"; rerender(!r); },
                             },
                             {
                                 text: "Back",
@@ -115,6 +116,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
                 renderItem={renderItem}
                 keyExtractor={({ id }, _index) => id.toString()}
                 numColumns={1}
+                extraData={r}
             />
         </View>
     );
