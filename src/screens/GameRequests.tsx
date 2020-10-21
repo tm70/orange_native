@@ -41,7 +41,6 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     });
     
     const [searchAPI, games, bios, errorMessage] = useGetGames();
-    console.log(bios[91]);
     
     const renderItem = ({ item }) => {
         if (item.status == "Finished" || item.status == "Cancelled") {
@@ -86,10 +85,6 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
                             {
                                 text: "Decline",
                                 onPress: () => { respondGameRequest(userid, item.id, "Decline", token); item.status = "Cancelled"; rerender(!r); },
-                            },
-                            {
-                                text: "Back",
-                                onPress: null,
                             },
                         ]
                     );

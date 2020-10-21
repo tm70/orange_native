@@ -24,8 +24,11 @@ const getFriends: () => [() => void, Bio[], string] = () => {
                 }
             }
             
-            const results = await getBios(ids, token);
-            //console.log("friends", results);
+            const bios = await getBios(ids, token);
+            const results = [];
+            for (i of ids) {
+                results.push(bios[i]);
+            }
             setFriends(results);
             
         } catch (err) {
