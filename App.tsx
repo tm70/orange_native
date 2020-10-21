@@ -25,6 +25,9 @@ import FriendList from './src/screens/FriendList';
 import checkToken from './src/api/checkToken';
 import LoginScreen from './src/screens/LoginScreen';
 
+import ConnectyCube from "react-native-connectycube";
+import VideoScreen from './src/screens/VideoScreen'
+
 const Stack = createStackNavigator();
 
 // These are used whenever when we need to type the navigation and route props into our components
@@ -47,6 +50,8 @@ export type StackParamList = {
     Bio: { id: number };
     EditBio: undefined;
     FriendList: undefined;
+
+    VideoScreen: undefined
 };
 
 // Create a placeholder stack navigator for now
@@ -100,6 +105,7 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
                 <>{welcomeScreens()}</>
             ) : (
                 <>
+                    <Stack.Screen name="VideoScreen" component={VideoScreen} />
                     <Stack.Screen name="MainScreen" component={MainScreen} />
                     <Stack.Screen name="FriendFind" component={FriendFindScreen} />
                     <Stack.Screen name="GameMenu" component={GameMenu} />

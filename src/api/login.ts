@@ -10,11 +10,9 @@ export interface LoginResponse {
     id: number;
 }
 
-const login: (userInfo: LoginParams) => Promise<LoginResponse> = async (
-    userInfo,
-) => {
+const login: (userInfo: LoginParams) => Promise<LoginResponse> = async (userInfo,) => {
     const url = `${BACKEND_BASE_URL}/signin`;
-
+    console.log(JSON.stringify(userInfo));
     const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(userInfo),

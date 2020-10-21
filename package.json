@@ -16,11 +16,13 @@
     "@react-navigation/stack": "^5.9.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-connectycube": "^3.7.2",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "^2.10.1",
-    "react-native-secure-key-store": "^2.0.9"
+    "react-native-secure-key-store": "^2.0.9",
+    "react-native-webrtc": "^1.84.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
