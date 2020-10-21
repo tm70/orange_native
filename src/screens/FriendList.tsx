@@ -25,11 +25,24 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
             image_url={item.bio.image_url}
         />
     );
-
-
+    
+    if (friendList.length == 0) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.loadtext}>Loading</Text>
+            </View>
+        );
+    }
+    
     return (
         <View style={styles.container}>
-            <FlatList style={styles.list}
+            <FlatList
+                style={styles.list}
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.header}>Friends</Text>
+                    </>
+                }
                 data={friendList}
                 renderItem={renderItem}
                 numColumns={3}
@@ -55,6 +68,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
+    },
+    loadtext: {
+        fontSize: fontScaler(25),
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingHorizontal: '10%',
+        marginTop: '5%',
+        marginBottom: '15%',
     },
     list: {
         width: '100%',
