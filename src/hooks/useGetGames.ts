@@ -3,7 +3,7 @@ import getGames, {GameRequest} from '../api/getGames';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
-const useGetGames: () => [() => void, Bio[], string] = () => {
+const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [games, setGames] = useState([] as GameRequest[]);
     const [bios, setBios] = useState({});

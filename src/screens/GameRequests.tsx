@@ -22,8 +22,8 @@ const states = {
 
 const Item = ({ game, oppname, status, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text>{game} with {oppname}</Text>
-        <Text>{states[status]}</Text>
+        <Text style={styles.title}>{game} with {oppname}</Text>
+        <Text style={styles.title}>{states[status]}</Text>
     </TouchableOpacity>
 );
 
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#3498DB',
         marginHorizontal: '2%',
         flex: 1,
+    },
+    title: {
+        fontSize: fontScaler(12),
     },
 });
 

@@ -8,7 +8,7 @@ export interface Relation {
     relationship: string;
 }
 
-const getFriends: () => [() => void, Bio[], string] = () => {
+const getFriends: () => [() => void, Relation[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [relations, setRelations] = useState([] as Relation[]);
 
