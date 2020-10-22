@@ -13,14 +13,23 @@ type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp 
 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
-    // not sure which should be use here to get token
     const {token,id} = React.useContext(AuthContext);
+    
+    // refresh on focus, for navigating back to this page
+    const [refresh, setRefresh] = React.useState(false);
+    useEffect(() => {
+        console.log("refresh");
+    }, [refresh]);
+    navigation.addListener('focus', () => {
+        setRefresh(!refresh);
+    });
+    
     // get data from api ()
     const [s, friendList, e] = useGetRelationships();
     
     const renderItem = ({ item }) => (
         <ProfileButton
-            text={item.bio.firstname + ' ' + item.bio.surname + ' ' + item.relationship}
+            text={item.bio.firstname + ' ' + item.bio.surname + '\n' + item.relationship}
             onPress={() => navigation.navigate('Bio', { id: item.bio.id })}
             image_url={item.bio.image_url}
         />
@@ -79,21 +88,6 @@ const styles = StyleSheet.create({
     },
     list: {
         width: '100%',
-    },
-    item: {
-        padding: '2%',
-        marginVertical: '1%',
-        backgroundColor: 'white',
-        marginHorizontal: '5%',
-        flex: 1/3,
-        maxWidth: '23.5%'
-    },
-    tile: {
-        aspectRatio: 1,
-    },
-    title: {
-        fontSize: fontScaler(10),
-        textAlign: 'center',
     },
 });
 

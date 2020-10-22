@@ -26,7 +26,23 @@ const getFriends: () => [() => void, Bio[], string] = () => {
                     continue;
                 }
                 let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
+                
                 ids.push(id);
+                
+                // make pending relationships more understandable
+                if (r.relationship == "PendingFirstSecond") {
+                    if (userid == r.user_first_id) {
+                        r.relationship = "Request Sent";
+                    } else {
+                        r.relationship = "Request Received";
+                    }
+                } else if (r.relationship == "PendingSecondFirst") {
+                    if (userid == r.user_second_id) {
+                        r.relationship = "Request Sent";
+                    } else {
+                        r.relationship = "Request Received";
+                    }
+                }
             }
             
             const bios = await getBios(ids, token);
