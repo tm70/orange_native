@@ -30,17 +30,17 @@ const Item = ({ game, oppname, status, onPress }) => (
 const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
     const [r, rerender] = React.useState(false);
-    
-    // refresh on focus, for navigating back to this page
-    const [refresh, setRefresh] = React.useState(false);
-    useEffect(() => {
-        console.log("refresh");
-    }, [refresh]);
-    navigation.addListener('focus', () => {
-        setRefresh(!refresh);
-    });
+    const [listenerAdded, addListener] = React.useState(false);
     
     const [searchAPI, games, bios, errorMessage] = useGetGames();
+    
+    if (listenerAdded == false && games.length != 0) {
+        addListener(true);
+        navigation.addListener('focus', () => {
+            searchAPI();
+            console.log("refresh");
+        });
+    }
     
     const renderItem = ({ item }) => {
         if (item.status == "Finished" || item.status == "Cancelled") {

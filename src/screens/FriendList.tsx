@@ -14,18 +14,18 @@ type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
     const {token,id} = React.useContext(AuthContext);
-    
-    // refresh on focus, for navigating back to this page
-    const [refresh, setRefresh] = React.useState(false);
-    useEffect(() => {
-        console.log("refresh");
-    }, [refresh]);
-    navigation.addListener('focus', () => {
-        setRefresh(!refresh);
-    });
+    const [listenerAdded, addListener] = React.useState(false);
     
     // get data from api ()
-    const [s, friendList, e] = useGetRelationships();
+    const [searchAPI, friendList, errorMessage] = useGetRelationships();
+    
+    if (listenerAdded == false && friendList.length != 0) {
+        addListener(true);
+        navigation.addListener('focus', () => {
+            searchAPI();
+            console.log("refresh");
+        });
+    }
     
     const renderItem = ({ item }) => (
         <ProfileButton
