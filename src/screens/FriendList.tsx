@@ -8,7 +8,7 @@ import useGetRelationships from "../hooks/useGetRelationships";
 import AuthContext from '../context/AuthContext';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
-type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>
+type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>;
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
@@ -52,7 +52,19 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                         <Text style={styles.header}>Friends</Text>
                     </>
                 }
-                data={friendList}
+                data={friendList.filter(item => item && item.relationship == "Friends")}
+                renderItem={renderItem}
+                numColumns={3}
+                keyExtractor={(item, index) => item.bio.id}
+            />
+            <FlatList
+                style={styles.list}
+                ListHeaderComponent={
+                    <>
+                        <Text style={styles.header}>Requests</Text>
+                    </>
+                }
+                data={friendList.filter(item => item && (item.relationship == "Request Sent" || item.relationship == "Request Received"))}
                 renderItem={renderItem}
                 numColumns={3}
                 keyExtractor={(item, index) => item.bio.id}
