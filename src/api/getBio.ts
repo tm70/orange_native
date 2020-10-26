@@ -1,7 +1,7 @@
 import { BACKEND_BASE_URL } from './endpoints';
 
 /**
- * A user's bio
+ * A user's information
  * @property {number} id - user id
  * @property {string} bio - bio string
  * @property {string} country - country
@@ -20,6 +20,12 @@ export interface Bio {
     image_url: string | null;
 }
 
+/**
+ * Gets the bio of a specified user
+ * @param {number} id - The user id for which to get the bio of
+ * @param {string} token - This user's token
+ * @return {Promise<Bio>} Promise of the user's bio
+ */
 const getBio = async (id: number, token: string): Promise<Bio> => {
     const url = `${BACKEND_BASE_URL}/users/${id}`;
 

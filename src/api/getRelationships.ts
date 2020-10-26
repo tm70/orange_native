@@ -14,6 +14,12 @@ export interface Relationship {
     relationship: string;
 }
 
+/**
+ * Gets all relationships for this user
+ * @param {number} id - This user's id
+ * @param {string} token - This user's token
+ * @return {Promise<Relationship[]>} Promise of all this user's relationships
+ */
 const getRelationships = async (id: number, token: string): Promise<Relationship[]> => {
     const url = `${BACKEND_BASE_URL}/users/${id}/relationships`;
     

@@ -15,7 +15,13 @@ export interface GameRequest {
     status: string,
 }
 
-const getGames = async (id: number, token: string): Promise<Game[]> => {
+/**
+ * Gets all game requests involving this user
+ * @param {number} id - This user's id
+ * @param {string} token - This user's token
+ * @return {Promise<GameRequest[]>} Promise of all this user's game requests
+ */
+const getGames = async (id: number, token: string): Promise<GameRequest[]> => {
     const url = `${BACKEND_BASE_URL}/users/${id}/games`;
     
     let response = await fetch(url, {
