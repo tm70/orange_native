@@ -1,5 +1,15 @@
 import { BACKEND_BASE_URL } from './endpoints';
 
+/**
+ * A user's bio
+ * @property {number} id - user id
+ * @property {string} bio - bio string
+ * @property {string} country - country
+ * @property {string} firstname - first name
+ * @property {string[]} hobbies - list of hobbies
+ * @property {string} surname - surname
+ * @property {string | null} image_url - profile picture url
+ */
 export interface Bio {
     id: number;
     bio: string;

@@ -1,5 +1,13 @@
 import { BACKEND_BASE_URL } from './endpoints';
 
+/**
+ * A relationship as represented by the server's raw return data
+ * @property {number} user_first_id - The lower of the two ids in the relationship
+ * @property {number} user_second_id - The higher of the two ids in the relationship
+ * @property {string} relationship - The relationship status between the two users. Possible
+ *      values are: "PendingFirstSecond", "PendingSecondFirst", "Friends", "BlockFirstSecond",
+ *      "BlockSecondFirst", "BlockBoth", "No Relationship".
+ */
 export interface Relationship {
     user_first_id: number;
     user_second_id: number;

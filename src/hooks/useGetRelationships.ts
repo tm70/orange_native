@@ -3,6 +3,13 @@ import getRelationships, {Relationship} from '../api/getRelationships';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
+/**
+ * An easier to work with representation for a relationship, with all information
+ * about the other user contained within.
+ * @property {Bio} bio - The full bio of the user
+ * @property {string} relationship - The relationship status with the other user. Possible
+ *      values are: "Request Sent", "Request Received", "Friends"
+ */
 export interface Relation {
     bio: Bio;
     relationship: string;
