@@ -1,39 +1,31 @@
-import { BACKEND_BASE_URL } from './endpoints';
+/**
+ * Then information sent to the server to login a user
+ * @property email - The user's email
+ * @property password - The user's password
+ */
+import ApiRequest, { HTTPMethod } from './ApiRequest';
 
 export interface LoginParams {
     email: string;
     password: string;
 }
 
+/**
+ * The response the server sends on a successful login
+ * @property token - The token the user will use from now on to access the API
+ * @property id - The user's id
+ */
 export interface LoginResponse {
     token: string;
     id: number;
 }
 
-const login: (userInfo: LoginParams) => Promise<LoginResponse> = async (
-    userInfo,
-) => {
-    const url = `${BACKEND_BASE_URL}/signin`;
-
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(userInfo),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to connect');
-    }
-
-    return await response.json().then((data) => {
-        if (data.status !== 200) {
-            throw new Error(data.message);
-        }
-
-        return data;
-    });
+/**
+ * Log a user in to the backend
+ * @param userInfo The login details sent with the request
+ */
+const login: (userInfo: LoginParams) => Promise<LoginResponse> = async (userInfo) => {
+    return await new ApiRequest('/signin').withMethod(HTTPMethod.POST).withBody(userInfo).send<LoginResponse>();
 };
 
 export default login;

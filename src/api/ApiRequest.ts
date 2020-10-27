@@ -10,6 +10,7 @@ export enum HTTPMethod {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
+    PATCH = 'PATCH',
     DELETE = 'DELETE',
 }
 
@@ -29,7 +30,7 @@ export default class ApiRequest {
     private url: URL; // The full url including search params
     private headers: Headers; // The headers associated with the request
     private method: HTTPMethod; // The HTTP method to use (defaults to GET)
-    private body: object | null; // The body to send with the request
+    private body: object | string | null; // The body to send with the request
 
     /**
      * Construct a new APIRequest with the given path
@@ -47,7 +48,7 @@ export default class ApiRequest {
      * Set the HTTP method that will be used to send the request
      * @param method
      */
-    withmethod(method: HTTPMethod): ApiRequest {
+    withMethod(method: HTTPMethod): ApiRequest {
         this.method = method;
         return this;
     }
@@ -63,7 +64,7 @@ export default class ApiRequest {
     /**
      * Send a JSON encoded body along with the request
      */
-    withBody(body: object): ApiRequest {
+    withBody(body: object | string): ApiRequest {
         this.body = body;
         this.headers.set('Content-Type', 'application/json');
         return this;

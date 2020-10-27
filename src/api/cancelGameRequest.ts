@@ -1,4 +1,4 @@
-import { BACKEND_BASE_URL } from './endpoints';
+import ApiRequest, { HTTPMethod } from './ApiRequest';
 
 /**
  * The response format of the server
@@ -15,33 +15,13 @@ export interface Response {
  * Delete a game request on the backend
  *
  * @param {number} userId - The id of the user sending the request (typically the user logged in)
- * @param {gameId} gameId - The id of the game to delete
+ * @param {number} gameId - The id of the game to delete
  * @param {string} token - The requesting user's API token
  */
-const deleteGameRequest = async (
-    userId: number,
-    gameId: number,
-    token: string,
-): Promise<Response> => {
-    const url = `${BACKEND_BASE_URL}/users/${userId}/games/${gameId}`;
+const deleteGameRequest = async (userId: number, gameId: number, token: string): Promise<Response> => {
+    const path = `/users/${userId}/games/${gameId}`;
 
-    let response = await fetch(url, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-
-    if (!response.ok) {
-        throw new Error('Failed to connect');
-    }
-
-    return await response.json().then((data) => {
-        if (data.status !== 200) {
-            throw new Error(data);
-        }
-        return data;
-    });
+    return await new ApiRequest(path).withMethod(HTTPMethod.DELETE).withToken(token).send<Response>();
 };
 
 export default deleteGameRequest;
