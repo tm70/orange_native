@@ -41,19 +41,12 @@ const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Choose friend to play with</Text>
-            <Text style={styles.subheader}>based on similar interests</Text>
+            <Text style={styles.header}>Search for a new friend</Text>
+            <Text style={styles.subheader}>You can search by name or email address</Text>
             <View style={styles.textinput}>
                 <TextInput
-                    style={{
-                        height: '70%',
-                        width: '80%',
-                        borderColor: 'black',
-                        borderWidth: 3,
-                        fontSize: fontScaler(13),
-                        textAlign: 'center',
-                    }}
-                    onChangeText={setSearchText}
+                    style={styles.searchBox}
+                    onChangeText={(value) => {setSearchText(value); searchAPI(value);}}
                     value={searchText}
                     onSubmitEditing={() => searchAPI(searchText)}
                 />
@@ -86,7 +79,14 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: 'center',
     },
-
+    searchBox: {
+        height: '95%',
+        width: '100%',
+        borderColor: 'black',
+        borderWidth: 2.5,
+        fontSize: fontScaler(13),
+        textAlign: 'center',
+    },
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
