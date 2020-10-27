@@ -15,22 +15,15 @@ export enum HTTPMethod {
 }
 
 /**
- * The possible headers that can be sent with a request
- */
-// interface Headers {
-//     Authorization?: string;
-//     'Content-Type'?: 'application/json';
-// }
-
-/**
  * For constructing and sending API requests to the API backend
  */
 export default class ApiRequest {
     private path: string; // The path to be appended to the base url (excluding queries)
     private url: URL; // The full url including search params
-    private headers: Headers; // The headers associated with the request
+    private readonly headers: Headers; // The headers associated with the request
     private method: HTTPMethod; // The HTTP method to use (defaults to GET)
     private body: object | string | null; // The body to send with the request
+    private params: { [key: string]: string }; // The query parameters
 
     /**
      * Construct a new APIRequest with the given path
@@ -42,6 +35,7 @@ export default class ApiRequest {
         this.headers = new Headers();
         this.method = HTTPMethod.GET;
         this.body = null;
+        this.params = {};
     }
 
     /**
@@ -77,7 +71,7 @@ export default class ApiRequest {
      * @param value - The value for the given key
      */
     withQuery(key: string, value: string | number | boolean): ApiRequest {
-        this.url.searchParams.set(key, value.toString());
+        this.params[key] = value.toString();
         return this;
     }
 
@@ -90,8 +84,19 @@ export default class ApiRequest {
      * @throws Error if the server returns an error
      */
     async send<R>(containsStatus: boolean = true): Promise<R> {
+        // Build the query parameters (hacky but url.searchParams doesn't work in React Native)
+        let url = this.url.href;
+        let searchParams = '?';
+        for (const key in this.params) {
+            searchParams += key + '=' + this.params[key] + '&';
+        }
+        if (searchParams.length > 1) {
+            searchParams = searchParams.slice(0, -1); // Remove last '&'
+            url += searchParams;
+        }
+
         // Make the request
-        const response = await fetch(this.url.href, {
+        const response = await fetch(url, {
             method: this.method,
             headers: this.headers,
             body: this.body === null ? undefined : JSON.stringify(this.body),

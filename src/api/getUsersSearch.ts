@@ -29,9 +29,7 @@ interface Response {
  * @param token The requesting user's token (to filter out blocked and blocking users from the user)
  */
 const getUsersSearch = async (query: string, limit: number = 20, token: string): Promise<SearchedUser[]> => {
-    const path = `/users/search?query=${query}&limit=${limit}`;
-
-    let response = await new ApiRequest(path)
+    const response = await new ApiRequest('/users/search')
         .withToken(token)
         .withQuery('query', query)
         .withQuery('limit', limit)
