@@ -27,15 +27,18 @@ interface Response {
  * @param query The query to search for (searches through name and email)
  * @param limit The number of results to get (the backend defaults to 20)
  * @param token The requesting user's token (to filter out blocked and blocking users from the user)
+ * @returns [The found users, abort trigger]
  */
-const getUsersSearch = async (query: string, limit: number = 20, token: string): Promise<SearchedUser[]> => {
-    const response = await new ApiRequest('/users/search')
+const getUsersSearch = (query: string, limit: number = 20, token: string): [Promise<SearchedUser[]>, ApiRequest] => {
+    const request = new ApiRequest('/users/search');
+    const response = request
         .withToken(token)
         .withQuery('query', query)
         .withQuery('limit', limit)
-        .send<Response>();
+        .sendNoWait<Response>()
+        .then((data) => data.results);
 
-    return response.results;
+    return [response, request];
 };
 
 export default getUsersSearch;

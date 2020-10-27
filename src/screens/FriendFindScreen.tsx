@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
@@ -13,12 +7,13 @@ import useUserSearch from '../hooks/useUserSearch';
 import ProfileButton from '../components/ProfileIcon';
 import { SearchedUser } from '../api/getUsersSearch';
 
-type FriendFindScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'FriendFind'
->;
+type FriendFindScreenNavigationProp = StackNavigationProp<StackParamList, 'FriendFind'>;
 type Props = { navigation: FriendFindScreenNavigationProp };
 
+/**
+ * The friend search screen (searches for new users based on name and email address)
+ * @constructor
+ */
 const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
     // TODO: Error
     const [searchAPI, users, errorMessage] = useUserSearch(40);
@@ -28,7 +23,7 @@ const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
         item: SearchedUser;
     }
 
-    // render item
+    // Render a ProfileButton for every user
     const renderItem: React.FC<ItemProps> = ({ item }) => {
         return (
             <ProfileButton
@@ -46,7 +41,10 @@ const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
             <View style={styles.textinput}>
                 <TextInput
                     style={styles.searchBox}
-                    onChangeText={(value) => {setSearchText(value); searchAPI(value);}}
+                    onChangeText={(value) => {
+                        setSearchText(value);
+                        searchAPI(value);
+                    }}
                     value={searchText}
                     onSubmitEditing={() => searchAPI(searchText)}
                 />
