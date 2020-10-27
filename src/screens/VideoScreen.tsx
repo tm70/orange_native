@@ -5,21 +5,23 @@ import ConnectyCube from "react-native-connectycube";
 import {RTCView} from 'react-native-connectycube';
 
 
-const signInCC = async (userid, token1) => {
+const signInCC = async (userid, token1, sesh_token) => {
 
     console.log(userid, token1)
     
     try {
-        let response = await fetch(`https://api.connectycube.com/login`, {
+        let response = await fetch(`https://api.connectycube.com/login?login=${userid}&password=${token1}`, {
             method: 'POST',
-            body: JSON.stringify({
-                login: userid,
-                password: token1
-            }),
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+                login: userid,
+                password: token1,
+                token: sesh_token
+            }
+            // body: JSON.stringify({
+            //     login: userid,
+            //     password: token1,
+            //     token: sesh_token
+            // })
         });
         let json = await response.json();
         console.log(json)
@@ -57,7 +59,8 @@ const createVideoChatSession = async() => {
 // Placeholder screen for now
 const VideoScreen: React.FC = () => {
 
-    const CREDENTIALS = {
+    const {token, id: userid} = useContext(AuthContext);
+    const APP_CREDENTIALS = {
         appId: 3367,
         authKey: "44He7gb23uTxg2b",
         authSecret: "36A4gRn2uSydAjR"
@@ -65,31 +68,35 @@ const VideoScreen: React.FC = () => {
       const CONFIG = {
         debug: { mode: 1 } // enable DEBUG mode (mode 0 is logs off, mode 1 -> console.log())
       };
-      ConnectyCube.init(CREDENTIALS, CONFIG);
+      ConnectyCube.init(APP_CREDENTIALS, CONFIG);
 
-    // get current ConnectyCube session token and set as user's password
-    const {token, id: userid} = useContext(AuthContext);
-    // signInCC(userid, token)
-    const url = `https://api.connectycube.com/login`;
+    ConnectyCube.createSession()
+    .then((session) => {signInCC(userid, token, session.token)})
+    .catch((error) => {});
     
-    const userCredentials = {
-        userId: 2108098,
-        password: "password",
-      };
+      // get current ConnectyCube session token and set as user's password
+    
+    
+    // const url = `https://api.connectycube.com/login`;
+    
+    // const userCredentials = {
+    //     userId: 2108098,
+    //     password: "password",
+    //   };
       
             
     // JS SDK v2+
-    localStream =  ConnectyCube.chat
-                    .connect(userCredentials)
-                    .then(() => {
-                    // connected
-                    const isConnected = ConnectyCube.chat.isConnected;
-                    console.log("################")
-                    console.log(isConnected);
-                    localStream = createVideoChatSession()
-                    return localStream
-                    })
-                    .catch((error) => {});
+    // localStream =  ConnectyCube.chat
+    //                 .connect(userCredentials)
+    //                 .then(() => {
+    //                 // connected
+    //                 const isConnected = ConnectyCube.chat.isConnected;
+    //                 console.log("################")
+    //                 console.log(isConnected);
+    //                 localStream = createVideoChatSession()
+    //                 return localStream
+    //                 })
+    //                 .catch((error) => {});
 
     // const tokenConnectyCube = ConnectyCube.service.sdkInstance.session.token;
     // console.log(tokenConnectyCube)
@@ -98,16 +105,18 @@ const VideoScreen: React.FC = () => {
     //     password: tokenConnectyCube
     // };
 
-
-
-    if (localStream) {                
-    return (
-        <View>
+    return(<View>
             <Text>How are you today?</Text>
-            <RTCView  objectFit="cover" style={styles.rtcView} key={2108098} streamURL={localStream.toURL()} />
-        </View>
-    );
-    }
+        </View>)
+
+    // if (localStream) {                
+    // return (
+    //     <View>
+    //         <Text>How are you today?</Text>
+    //         <RTCView  objectFit="cover" style={styles.rtcView} key={2108098} streamURL={localStream.toURL()} />
+    //     </View>
+    // );
+    // }
 };
 
 const styles = StyleSheet.create({});
