@@ -1,8 +1,8 @@
 export default [
   {
-    appId: 385,
-    authKey: 'DFBMs5-dKBBCXcd',
-    authSecret: 'SkCW-ThdnmRg9Za',
+    appId: 3367,
+    authKey: '44He7gb23uTxg2b',
+    authSecret: '36A4gRn2uSydAjR',
   },
   {
     debug: {mode: 1},

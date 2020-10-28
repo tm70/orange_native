@@ -6,14 +6,22 @@ import RTCViewGrid from './RTCViewGrid';
 import {CallService, AuthService} from '../../services';
 import ToolBar from './ToolBar';
 import UsersSelect from './UsersSelect';
+import {users} from '../../config';
 
 export default class VideoScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this._session = null;
-    this.opponentsIds = props.navigation.getParam('opponentsIds');
+    //this.opponentsIds = props.navigation.getParam('opponentsIds');
+    //this.opponentsIDs = [2108098]
+    
+    const opponentsIDs = users
+        //.filter(opponent => opponent.id !== currentUser.id)
+        .map(opponent => opponent.id);
 
+    this.opponentsIds = opponentsIDs
+        
     this.state = {
       localStream: null,
       remoteStreams: [],

@@ -26,7 +26,8 @@ import checkToken from './src/api/checkToken';
 import LoginScreen from './src/screens/LoginScreen';
 
 import ConnectyCube from "react-native-connectycube";
-import VideoScreen from './src/screens/VideoScreen'
+import VideoScreenContainer from './src/screens/VideoScreenContainer';
+import {AuthService} from './src/services';
 
 const Stack = createStackNavigator();
 
@@ -105,7 +106,7 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
                 <>{welcomeScreens()}</>
             ) : (
                 <>
-                    <Stack.Screen name="VideoScreen" component={VideoScreen} />
+                    <Stack.Screen name="VideoScreenContainer" component={VideoScreenContainer} />
                     <Stack.Screen name="MainScreen" component={MainScreen} />
                     <Stack.Screen name="FriendFind" component={FriendFindScreen} />
                     <Stack.Screen name="GameMenu" component={GameMenu} />
@@ -129,6 +130,9 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
 
 const App: React.FC = () => {
     const { state, dispatch, actions } = useAuth();
+
+    // ConnectyCube Initialise.
+    AuthService.init();
 
     // Attempt to load a saved token
     React.useEffect(() => {
