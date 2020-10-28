@@ -2,6 +2,7 @@ import React from 'react';
 import signup, { SignUpParams } from '../api/signup';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import login, { LoginParams } from '../api/login';
+import {AuthService} from '../services'
 
 interface ContextData {
     token: string;
@@ -42,6 +43,33 @@ const updateToken = (
         accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
     });
 };
+
+// // ConnectyCube login handling.
+//     // If you are already logged in using orange native's Authentication, only then proceed
+//     // to login into ConnectyCube.    
+//     const {token, id: userid} = React.useContext(AuthContext);
+//     console.log(currentUser);
+//     login = currentUser => {
+//         const _onSuccessLogin = () => {
+//             const {navigation} = this.props;
+//             const opponentsIds = users
+//             .filter(opponent => opponent.id !== currentUser.id)
+//             .map(opponent => opponent.id);
+    
+//             navigation.push('VideoScreen', {opponentsIds});
+//         };
+    
+//         const _onFailLogin = (error = {}) => {
+//             alert(`Error.\n\n${JSON.stringify(error)}`);
+//         };
+    
+//         this.setIsLogging(true);
+    
+//         AuthService.login(currentUser)
+//             .then(_onSuccessLogin)
+//             .catch(_onFailLogin)
+//             .then(() => this.setIsLogging(false));
+//         };
 
 export const useAuth = () => {
     const [state, dispatch] = React.useReducer(
@@ -111,7 +139,8 @@ export const useAuth = () => {
                             response.token,
                             response.id,
                         );
-                    })
+                    }
+                    )
                     .catch((err) => {
                         // TODO: Login failed we should display an error
                         console.log('Login Error ' + err.toString());
