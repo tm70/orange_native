@@ -8,6 +8,12 @@ interface Props {
     id: number;
 }
 
+/**
+ * Component for displaying a user's basic information. Displays profile image, name, bio
+ * and hobbies
+ * @constructor
+ * @param id - The id of the user for which to display information for
+ */
 const BioInformation: React.FC<Props> = ({ id }) => {
     const [bio, setBio] = useState({} as Bio);
 

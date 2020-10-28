@@ -15,7 +15,10 @@ export interface Relation {
     relationship: string;
 }
 
-const getFriends: () => [() => void, Relation[], string] = () => {
+/**
+ * Gets all relationships for this user and returns them in a more useable format
+ */
+const useGetRelationships: () => [() => void, Relation[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [relations, setRelations] = useState([] as Relation[]);
 
@@ -73,4 +76,4 @@ const getFriends: () => [() => void, Relation[], string] = () => {
     return [searchAPI, relations, errorMessage];
 };
 
-export default getFriends;
+export default useGetRelationships;
