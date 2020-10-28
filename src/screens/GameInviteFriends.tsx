@@ -33,7 +33,10 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
         return (
             <ProfileButton
                 text={item.firstname + ' ' + item.surname}
-                onPress={() => sendGameRequest(userid, item.id, game, token)}
+                onPress={() => {
+                        sendGameRequest(userid, item.id, game, token);
+                        Alert.alert("Request Sent!");
+                    }}
                 image_url={item.image_url}
             />
         );
