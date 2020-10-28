@@ -20,7 +20,6 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     
     const [searchAPI, games, bios, errorMessage] = useGetGames();
     
-    // TODO: check that the user doesn't just have no games
     if (listenerAdded == false && games.length != 0) {
         addListener(true);
         navigation.addListener('focus', () => {
@@ -31,7 +30,6 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     
     const renderItem = ({ item }) => {
         var onPress = null;
-        
         if (item.status == "InProgress") {
             // in progress -> go to game
             onPress = () => navigation.navigate(item.game_type,
@@ -83,6 +81,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
         );
     };
     
+    // TODO: check that the user doesn't just have no games
     if (games.length == 0) {
         return (
             <View style={styles.container}>
