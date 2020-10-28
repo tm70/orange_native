@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
 import BasicButton from '../components/BasicButton';
 import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import getRelationship from '../api/getRelationship';
 import setRelationship, { FriendRequestAction } from '../api/setRelationship';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
@@ -16,9 +17,39 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp };
 const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);
-
+    
     // TODO: Display error on error
-
+    
+    // Using string "Getting" as a sentinel value as null is a possible return value
+    const [rel, setRel] = useState("Getting");
+    
+    useEffect(() => {
+        getRelationship(id, route.params.id, token).catch(console.log).then(setRel);
+    }, []);
+    
+    if (rel == "Friends") {
+        return (
+            <View style={styles.container}>
+                <BioInformation id={route.params.id} />
+                <View style={styles.inactivebutton}>
+                    <Text style={styles.buttontext}>Friends</Text>
+                </View>
+            </View>
+        );
+    } else if (
+            (rel == "PendingFirstSecond" && id < route.params.id) ||
+            (rel == "PendingSecondFirst" && id > route.params.id)
+            ) {
+        return (
+            <View style={styles.container}>
+                <BioInformation id={route.params.id} />
+                <View style={styles.inactivebutton}>
+                    <Text style={styles.buttontext}>Request Sent</Text>
+                </View>
+            </View>
+        );
+    }
+    
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
@@ -94,6 +125,13 @@ const styles = StyleSheet.create({
     },
 
     button: {
+        alignItems: "center",
+        backgroundColor: "#32CD32",
+        padding: '5%',
+        marginTop:'10%'
+    },
+
+    inactivebutton: {
         alignItems: "center",
         backgroundColor: "#bbbde0",
         padding: '5%',
