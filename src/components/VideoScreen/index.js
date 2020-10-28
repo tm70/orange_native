@@ -1,269 +1,250 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, route, navigation} from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import ConnectyCube from 'react-native-connectycube';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import RTCViewGrid from './RTCViewGrid';
-import {CallService, AuthService} from '../../services';
+import { CallService, AuthService } from '../../services';
 import ToolBar from './ToolBar';
 import UsersSelect from './UsersSelect';
-import {users} from '../../config';
 
 export default class VideoScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props)
-    this._session = null;
-    const opponentsIDs = this.props.route.params.opponentsIds;
-    this.opponentsIds = opponentsIDs;
-    console.log("#################################")
-    console.log(this.opponentsIds)
-    //this.opponentsIDs = [2108098]
-    
-    // const opponentsIDs = users
-    //     .filter(opponent => opponent.id !== currentUser.id)
-    //     .map(opponent => opponent.id);
+    constructor(props) {
+        super(props);
 
-    // this.opponentsIds = opponentsIDs
-        
-    this.state = {
-      localStream: null,
-      remoteStreams: [],
-      selectedUsersIds: [],
-      isActiveSelect: true,
-      isActiveCall: false,
-      isIncomingCall: false,
+        this._session = null;
+        const opponentsIDs = this.props.route.params.opponentsIds;
+        this.opponentsIds = opponentsIDs;
+
+        this.state = {
+            localStream: null,
+            remoteStreams: [],
+            selectedUsersIds: [],
+            isActiveSelect: true,
+            isActiveCall: false,
+            isIncomingCall: false,
+        };
+
+        this._setUpListeners();
+    }
+
+    componentWillUnmount() {
+        CallService.stopCall();
+        AuthService.logout();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const currState = this.state;
+
+        if (prevState.remoteStreams.length === 1 && currState.remoteStreams.length === 0) {
+            CallService.stopCall();
+            this.resetState();
+        }
+    }
+
+    showInomingCallModal = (session) => {
+        this._session = session;
+        this.setState({ isIncomingCall: true });
     };
 
-    this._setUpListeners();
-  }
+    hideInomingCallModal = () => {
+        this._session = null;
+        this.setState({ isIncomingCall: false });
+    };
 
-  componentWillUnmount() {
-    CallService.stopCall();
-    AuthService.logout();
-  }
+    selectUser = (userId) => {
+        this.setState((prevState) => ({
+            selectedUsersIds: [...prevState.selectedUsersIds, userId],
+        }));
+    };
 
-  componentDidUpdate(prevProps, prevState) {
-    const currState = this.state;
+    unselectUser = (userId) => {
+        this.setState((prevState) => ({
+            selectedUsersIds: prevState.selectedUsersIds.filter((id) => userId !== id),
+        }));
+    };
 
-    if (
-      prevState.remoteStreams.length === 1 &&
-      currState.remoteStreams.length === 0
-    ) {
-      CallService.stopCall();
-      this.resetState();
+    closeSelect = () => {
+        this.setState({ isActiveSelect: false });
+    };
+
+    setOnCall = () => {
+        this.setState({ isActiveCall: true });
+    };
+
+    initRemoteStreams = (opponentsIds) => {
+        const emptyStreams = opponentsIds.map((userId) => ({
+            userId,
+            stream: null,
+        }));
+
+        this.setState({ remoteStreams: emptyStreams });
+    };
+
+    updateRemoteStream = (userId, stream) => {
+        this.setState(({ remoteStreams }) => {
+            const updatedRemoteStreams = remoteStreams.map((item) => {
+                if (item.userId === userId) {
+                    return { userId, stream };
+                }
+
+                return { userId: item.userId, stream: item.stream };
+            });
+
+            return { remoteStreams: updatedRemoteStreams };
+        });
+    };
+
+    removeRemoteStream = (userId) => {
+        this.setState(({ remoteStreams }) => ({
+            remoteStreams: remoteStreams.filter((item) => item.userId !== userId),
+        }));
+    };
+
+    setLocalStream = (stream) => {
+        this.setState({ localStream: stream });
+    };
+
+    resetState = () => {
+        this.setState({
+            localStream: null,
+            remoteStreams: [],
+            selectedUsersIds: [],
+            isActiveSelect: true,
+            isActiveCall: false,
+        });
+    };
+
+    _setUpListeners() {
+        ConnectyCube.videochat.onCallListener = this._onCallListener;
+        ConnectyCube.videochat.onAcceptCallListener = this._onAcceptCallListener;
+        ConnectyCube.videochat.onRejectCallListener = this._onRejectCallListener;
+        ConnectyCube.videochat.onStopCallListener = this._onStopCallListener;
+        ConnectyCube.videochat.onUserNotAnswerListener = this._onUserNotAnswerListener;
+        ConnectyCube.videochat.onRemoteStreamListener = this._onRemoteStreamListener;
     }
-  }
 
-  showInomingCallModal = session => {
-    this._session = session;
-    this.setState({isIncomingCall: true});
-  };
+    _onPressAccept = () => {
+        CallService.acceptCall(this._session).then((stream) => {
+            const { opponentsIDs, initiatorID, currentUserID } = this._session;
+            const opponentsIds = [initiatorID, ...opponentsIDs].filter((userId) => currentUserID !== userId);
 
-  hideInomingCallModal = () => {
-    this._session = null;
-    this.setState({isIncomingCall: false});
-  };
+            this.initRemoteStreams(opponentsIds);
+            this.setLocalStream(stream);
+            this.closeSelect();
+            this.hideInomingCallModal();
+        });
+    };
 
-  selectUser = userId => {
-    this.setState(prevState => ({
-      selectedUsersIds: [...prevState.selectedUsersIds, userId],
-    }));
-  };
+    _onPressReject = () => {
+        CallService.rejectCall(this._session);
+        this.hideInomingCallModal();
+    };
 
-  unselectUser = userId => {
-    this.setState(prevState => ({
-      selectedUsersIds: prevState.selectedUsersIds.filter(id => userId !== id),
-    }));
-  };
+    _onCallListener = (session, extension) => {
+        CallService.processOnCallListener(session)
+            .then(() => this.showInomingCallModal(session))
+            .catch(this.hideInomingCallModal);
+    };
 
-  closeSelect = () => {
-    this.setState({isActiveSelect: false});
-  };
+    _onAcceptCallListener = (session, userId, extension) => {
+        CallService.processOnAcceptCallListener(session, userId, extension)
+            .then(this.setOnCall)
+            .catch(this.hideInomingCallModal);
+    };
 
-  setOnCall = () => {
-    this.setState({isActiveCall: true});
-  };
+    _onRejectCallListener = (session, userId, extension) => {
+        CallService.processOnRejectCallListener(session, userId, extension)
+            .then(() => this.removeRemoteStream(userId))
+            .catch(this.hideInomingCallModal);
+    };
 
-  initRemoteStreams = opponentsIds => {
-    const emptyStreams = opponentsIds.map(userId => ({
-      userId,
-      stream: null,
-    }));
+    _onStopCallListener = (session, userId, extension) => {
+        const isStoppedByInitiator = session.initiatorID === userId;
 
-    this.setState({remoteStreams: emptyStreams});
-  };
+        CallService.processOnStopCallListener(userId, isStoppedByInitiator)
+            .then(() => {
+                if (isStoppedByInitiator) {
+                    this.resetState();
+                } else {
+                    this.removeRemoteStream(userId);
+                }
+            })
+            .catch(this.hideInomingCallModal);
+    };
 
-  updateRemoteStream = (userId, stream) => {
-    this.setState(({remoteStreams}) => {
-      const updatedRemoteStreams = remoteStreams.map(item => {
-        if (item.userId === userId) {
-          return {userId, stream};
-        }
+    _onUserNotAnswerListener = (session, userId) => {
+        CallService.processOnUserNotAnswerListener(userId)
+            .then(() => this.removeRemoteStream(userId))
+            .catch(this.hideInomingCallModal);
+    };
 
-        return {userId: item.userId, stream: item.stream};
-      });
+    _onRemoteStreamListener = (session, userId, stream) => {
+        CallService.processOnRemoteStreamListener(userId)
+            .then(() => {
+                this.updateRemoteStream(userId, stream);
+                this.setOnCall();
+            })
+            .catch(this.hideInomingCallModal);
+    };
 
-      return {remoteStreams: updatedRemoteStreams};
-    });
-  };
+    render() {
+        const {
+            localStream,
+            remoteStreams,
+            selectedUsersIds,
+            isActiveSelect,
+            isActiveCall,
+            isIncomingCall,
+        } = this.state;
 
-  removeRemoteStream = userId => {
-    this.setState(({remoteStreams}) => ({
-      remoteStreams: remoteStreams.filter(item => item.userId !== userId),
-    }));
-  };
+        const initiatorName = isIncomingCall ? CallService.getUserById(this._session.initiatorID, 'name') : '';
+        const localStreamItem = localStream ? [{ userId: 'localStream', stream: localStream }] : [];
+        const streams = [...remoteStreams, ...localStreamItem];
 
-  setLocalStream = stream => {
-    this.setState({localStream: stream});
-  };
+        CallService.setSpeakerphoneOn(remoteStreams.length > 0);
 
-  resetState = () => {
-    this.setState({
-      localStream: null,
-      remoteStreams: [],
-      selectedUsersIds: [],
-      isActiveSelect: true,
-      isActiveCall: false,
-    });
-  };
-
-  _setUpListeners() {
-    ConnectyCube.videochat.onCallListener = this._onCallListener;
-    ConnectyCube.videochat.onAcceptCallListener = this._onAcceptCallListener;
-    ConnectyCube.videochat.onRejectCallListener = this._onRejectCallListener;
-    ConnectyCube.videochat.onStopCallListener = this._onStopCallListener;
-    ConnectyCube.videochat.onUserNotAnswerListener = this._onUserNotAnswerListener;
-    ConnectyCube.videochat.onRemoteStreamListener = this._onRemoteStreamListener;
-  }
-
-  _onPressAccept = () => {
-    CallService.acceptCall(this._session).then(stream => {
-      const {opponentsIDs, initiatorID, currentUserID} = this._session;
-      const opponentsIds = [initiatorID, ...opponentsIDs].filter(
-        userId => currentUserID !== userId,
-      );
-
-      this.initRemoteStreams(opponentsIds);
-      this.setLocalStream(stream);
-      this.closeSelect();
-      this.hideInomingCallModal();
-    });
-  };
-
-  _onPressReject = () => {
-    CallService.rejectCall(this._session);
-    this.hideInomingCallModal();
-  };
-
-  _onCallListener = (session, extension) => {
-    CallService.processOnCallListener(session)
-      .then(() => this.showInomingCallModal(session))
-      .catch(this.hideInomingCallModal);
-  };
-
-  _onAcceptCallListener = (session, userId, extension) => {
-    CallService.processOnAcceptCallListener(session, userId, extension)
-      .then(this.setOnCall)
-      .catch(this.hideInomingCallModal);
-  };
-
-  _onRejectCallListener = (session, userId, extension) => {
-    CallService.processOnRejectCallListener(session, userId, extension)
-      .then(() => this.removeRemoteStream(userId))
-      .catch(this.hideInomingCallModal);
-  };
-
-  _onStopCallListener = (session, userId, extension) => {
-    const isStoppedByInitiator = session.initiatorID === userId;
-
-    CallService.processOnStopCallListener(userId, isStoppedByInitiator)
-      .then(() => {
-        if (isStoppedByInitiator) {
-          this.resetState();
-        } else {
-          this.removeRemoteStream(userId);
-        }
-      })
-      .catch(this.hideInomingCallModal);
-  };
-
-  _onUserNotAnswerListener = (session, userId) => {
-    CallService.processOnUserNotAnswerListener(userId)
-      .then(() => this.removeRemoteStream(userId))
-      .catch(this.hideInomingCallModal);
-  };
-
-  _onRemoteStreamListener = (session, userId, stream) => {
-    CallService.processOnRemoteStreamListener(userId)
-      .then(() => {
-        this.updateRemoteStream(userId, stream);
-        this.setOnCall();
-      })
-      .catch(this.hideInomingCallModal);
-  };
-
-  render() {
-    const {
-      localStream,
-      remoteStreams,
-      selectedUsersIds,
-      isActiveSelect,
-      isActiveCall,
-      isIncomingCall,
-    } = this.state;
-
-    const initiatorName = isIncomingCall
-      ? CallService.getUserById(this._session.initiatorID, 'name')
-      : '';
-    const localStreamItem = localStream
-      ? [{userId: 'localStream', stream: localStream}]
-      : [];
-    const streams = [...remoteStreams, ...localStreamItem];
-
-    CallService.setSpeakerphoneOn(remoteStreams.length > 0);
-
-    return (
-      <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
-        <StatusBar backgroundColor="black" barStyle="light-content" />
-        <RTCViewGrid streams={streams} />
-        <UsersSelect
-          isActiveSelect={isActiveSelect}
-          opponentsIds={this.opponentsIds}
-          selectedUsersIds={selectedUsersIds}
-          selectUser={this.selectUser}
-          unselectUser={this.unselectUser}
-        />
-        <ToolBar
-          selectedUsersIds={selectedUsersIds}
-          localStream={localStream}
-          isActiveSelect={isActiveSelect}
-          isActiveCall={isActiveCall}
-          closeSelect={this.closeSelect}
-          initRemoteStreams={this.initRemoteStreams}
-          setLocalStream={this.setLocalStream}
-          resetState={this.resetState}
-        />
-        <AwesomeAlert
-          show={isIncomingCall}
-          showProgress={false}
-          title={`Incoming call from ${initiatorName}`}
-          closeOnTouchOutside={false}
-          closeOnHardwareBackPress={true}
-          showCancelButton={true}
-          showConfirmButton={true}
-          cancelText="Reject"
-          confirmText="Accept"
-          cancelButtonColor="red"
-          confirmButtonColor="green"
-          onCancelPressed={this._onPressReject}
-          onConfirmPressed={this._onPressAccept}
-          onDismiss={this.hideInomingCallModal}
-          alertContainerStyle={{zIndex: 1}}
-          titleStyle={{fontSize: 21}}
-          cancelButtonTextStyle={{fontSize: 18}}
-          confirmButtonTextStyle={{fontSize: 18}}
-        />
-      </SafeAreaView>
-    );
-  }
+        return (
+            <SafeAreaView style={{ flex: 1, backgroundColor: 'black' }}>
+                <StatusBar backgroundColor="black" barStyle="light-content" />
+                <RTCViewGrid streams={streams} />
+                <UsersSelect
+                    isActiveSelect={isActiveSelect}
+                    opponentsIds={this.opponentsIds}
+                    selectedUsersIds={selectedUsersIds}
+                    selectUser={this.selectUser}
+                    unselectUser={this.unselectUser}
+                />
+                <ToolBar
+                    selectedUsersIds={selectedUsersIds}
+                    localStream={localStream}
+                    isActiveSelect={isActiveSelect}
+                    isActiveCall={isActiveCall}
+                    closeSelect={this.closeSelect}
+                    initRemoteStreams={this.initRemoteStreams}
+                    setLocalStream={this.setLocalStream}
+                    resetState={this.resetState}
+                />
+                <AwesomeAlert
+                    show={isIncomingCall}
+                    showProgress={false}
+                    title={`Incoming call from ${initiatorName}`}
+                    closeOnTouchOutside={false}
+                    closeOnHardwareBackPress={true}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="Reject"
+                    confirmText="Accept"
+                    cancelButtonColor="red"
+                    confirmButtonColor="green"
+                    onCancelPressed={this._onPressReject}
+                    onConfirmPressed={this._onPressAccept}
+                    onDismiss={this.hideInomingCallModal}
+                    alertContainerStyle={{ zIndex: 1 }}
+                    titleStyle={{ fontSize: 21 }}
+                    cancelButtonTextStyle={{ fontSize: 18 }}
+                    confirmButtonTextStyle={{ fontSize: 18 }}
+                />
+            </SafeAreaView>
+        );
+    }
 }

@@ -14,6 +14,11 @@ export enum HTTPMethod {
     DELETE = 'DELETE',
 }
 
+class AbortController {
+    constructor() {
+    }
+}
+
 /**
  * For constructing and sending API requests to the API backend
  */
@@ -108,13 +113,10 @@ export default class ApiRequest {
 
     /**
      * Send the constructed query and get the JSON response from the server
-     *
-     * @param containsStatus - Almost all the backend API requests contain a status property to indicate result.
-     *                               Set to false if the one you are sending does not.
      * @type R - The type of the expected response from the server (in case of success)
      * @throws Error if the server returns an error
      */
-    async send<R>(containsStatus: boolean = true): Promise<R> {
+    async send<R>(): Promise<R> {
         // Make the request
         this.abortController = new AbortController();
         const response = await fetch(this.getUrl(), {
@@ -138,7 +140,7 @@ export default class ApiRequest {
         }
 
         // Check the result from the server
-        if (containsStatus && data.status !== 200) {
+        if (data.status !== 200) {
             throw new Error(data.message);
         }
 
