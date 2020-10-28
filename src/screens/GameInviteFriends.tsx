@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
@@ -22,15 +22,6 @@ type Props = {
     navigation: GameInviteFriendsNavigationProp;
     route: GameInviteFriendsRouteProp;
 };
-
-const Item = ({ firstname, id, onPress }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <ImageBackground source={require('../../assets/person.png')} style={{}}>
-            <View style={styles.tile}/>
-        </ImageBackground>  
-        <Text style={styles.title}>{firstname}</Text>
-    </TouchableOpacity>
-);
 
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const game = route.params.game;
