@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
@@ -23,15 +23,6 @@ type Props = {
     route: GameInviteFriendsRouteProp;
 };
 
-const Item = ({ firstname, id, onPress }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <ImageBackground source={require('../../assets/person.png')} style={{}}>
-            <View style={styles.tile}/>
-        </ImageBackground>  
-        <Text style={styles.title}>{firstname}</Text>
-    </TouchableOpacity>
-);
-
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const game = route.params.game;
     const {token, id: userid} = useContext(AuthContext);
@@ -42,7 +33,10 @@ const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
         return (
             <ProfileButton
                 text={item.firstname + ' ' + item.surname}
-                onPress={() => sendGameRequest(userid, item.id, game, token)}
+                onPress={() => {
+                        sendGameRequest(userid, item.id, game, token);
+                        Alert.alert("Request Sent!");
+                    }}
                 image_url={item.image_url}
             />
         );
