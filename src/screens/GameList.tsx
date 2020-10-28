@@ -1,14 +1,13 @@
 import React from 'react';
 import {
     FlatList,
-    ImageBackground,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
+import MenuButton from '../components/MenuButton';
 import fontScaler from '../util/fontScaler';
 
 // To get the navigation prop typed
@@ -32,19 +31,9 @@ const DATA = [
     },
 ];
 
-const Item = ({ title, onPress, icon }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <ImageBackground source={icon} style={{}}>
-            <View style={styles.tile}>
-                <Text style={styles.title}>{title}</Text>
-            </View>
-        </ImageBackground>
-    </TouchableOpacity>
-);
-
 const GameList: React.FC<Props> = ({ navigation }) => {
     const renderItem = ({ item }) => (
-        <Item
+        <MenuButton
             title={item.title}
             onPress={() =>
                 navigation.navigate('GameInviteFriends', { game: item.game })
@@ -83,24 +72,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
-    },
-    item: {
-        backgroundColor: '#3498DB',
-        flex: 1,
-        padding: 10,
-        marginVertical: 8,
-        marginHorizontal: 8,
-    },
-    tile: {
-        flex: 1,
-        justifyContent: 'center',
-        width: '100%',
-        aspectRatio: 1,
-    },
-    title: {
-        color: 'white',
-        fontSize: fontScaler(22),
-        textAlign: 'center',
     },
 });
 
