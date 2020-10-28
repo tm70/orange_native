@@ -28,6 +28,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import ConnectyCube from "react-native-connectycube";
 import VideoScreenContainer from './src/screens/VideoScreenContainer';
 import {AuthService} from './src/services';
+import AuthScreen from './src/components/AuthScreen';
+import VideoScreen from './src/components/VideoScreen';
 
 const Stack = createStackNavigator();
 
@@ -52,7 +54,8 @@ export type StackParamList = {
     EditBio: undefined;
     FriendList: undefined;
 
-    VideoScreen: undefined
+    AuthScreen: undefined;
+    VideoScreen: undefined;
 };
 
 // Create a placeholder stack navigator for now
@@ -106,8 +109,18 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
                 <>{welcomeScreens()}</>
             ) : (
                 <>
-                    <Stack.Screen name="VideoScreenContainer" component={VideoScreenContainer} />
+                    
+                    {/* <Stack.Screen name="VideoScreenContainer" component={VideoScreenContainer} /> */}
                     <Stack.Screen name="MainScreen" component={MainScreen} />
+                    <Stack.Screen
+                        name="AuthScreen"
+                        component={AuthScreen}
+                        options={{ title: 'My app' }}
+                    />
+                    <Stack.Screen
+                        name="VideoScreen"
+                        component={VideoScreen}
+                    />
                     <Stack.Screen name="FriendFind" component={FriendFindScreen} />
                     <Stack.Screen name="GameMenu" component={GameMenu} />
                     <Stack.Screen name="GameRequests" component={GameRequests} />
@@ -161,7 +174,7 @@ const App: React.FC = () => {
 
         loadKeyFromStore();
     }, []);
-
+    AuthService.init();
     return (
         <AuthContext.Provider
             value={{ token: state.token, id: state.id, ...actions }}
@@ -174,3 +187,30 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+// const Stack1 = createStackNavigator();
+
+// function RootStack1() {
+//     return (
+//       <Stack1.Navigator
+//         initialRouteName="AuthScreen"
+//         screenOptions={{ gestureEnabled: false }}
+//       >
+//         <Stack1.Screen
+//           name="AuthScreen"
+//           component={AuthScreen}
+//           options={{ title: 'My app' }}
+//         />
+//         <Stack1.Screen
+//           name="VideoScreen"
+//           component={VideoScreen}
+//         />
+//       </Stack1.Navigator>
+//     );
+//   }
+
+// export default function App2 () {
+    
+//     AuthService.init();
+//     return <NavigationContainer><RootStack1/></NavigationContainer>
+// }

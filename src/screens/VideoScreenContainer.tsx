@@ -1,75 +1,45 @@
-import React, {useContext} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AuthContext from '../context/AuthContext';
-import ConnectyCube from "react-native-connectycube";
-import {RTCView} from 'react-native-connectycube';
-import {AuthService} from '../services';
-import VideoScreen from '../components/VideoScreen';
-
-// const signInCC = async (userid, token1, sesh_token) => {
-
-//     console.log(userid, token1)  
-//     try {
-//         let response = await fetch(`https://api.connectycube.com/login?login=${userid}&password=${token1}`, {
-//             method: 'POST',
-//             headers: {
-//                 login: userid,
-//                 password: token1,
-//                 token: sesh_token
-//             }
-//             // body: JSON.stringify({
-//             //     login: userid,
-//             //     password: token1,
-//             //     token: sesh_token
-//             // })
-//         });
-//         let json = await response.json();
-//         console.log("Response is: ");
-//         console.log(json);
-//         return response;
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
+// import React, {useContext} from 'react';
+// import { StyleSheet, Text, View } from 'react-native';
+// import AuthContext from '../context/AuthContext';
+// import ConnectyCube from "react-native-connectycube";
+// import {RTCView} from 'react-native-connectycube';
+// import {AuthService} from '../services';
+// import VideoScreen from '../components/VideoScreen';
+// import AuthScreen from '../components/AuthScreen';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
 
 
-const loginWithToken = (token: string, userid: number) => {
-  const _onSuccessLogin = () => {
-    // const {navigation} = this.props;
-    // const opponentsIds = users
-    //   .filter(opponent => opponent.id !== currentUser.id)
-    //   .map(opponent => opponent.id);
+// //const StackVideoCall = createStackNavigator();
 
-    // navigation.push('VideoScreen', {opponentsIds});
-    console.log("Auth Service login succesful.")
-  };
+// function RootStackVideoCall() {
+//     return (
+//       <Stack.Navigator
+//         initialRouteName="AuthScreen"
+//         screenOptions={{ gestureEnabled: false }}
+//       >
+//         <Stack.Screen
+//           name="AuthScreen"
+//           component={AuthScreen}
+//           options={{ title: 'My app' }}
+//         />
+//         <Stack.Screen
+//           name="VideoScreen"
+//           component={VideoScreen}
+//         />
+//       </Stack.Navigator>
+//     );
+//   }
 
-  const _onFailLogin = (error = {}) => {
-    console.log(`Error.\n\n${JSON.stringify(error)}`);
-  };
+// // Placeholder screen for now
+// const VideoScreenContainer: React.FC = () => {
 
-  // this.setIsLogging(true);
+//     // const {token, id: userid} = React.useContext(AuthContext);
+//     // loginWithToken(token, userid);
 
-  AuthService.loginWithToken(token, userid)
-    .then(() => console.log("authenticating connectycube..."))
-    .then(_onSuccessLogin)
-    .catch(_onFailLogin)
-    .then(() => console.log("authentication tried!"));
-};
+//   return (<NavigationContainer><RootStackVideoCall/></NavigationContainer>)
+// };
 
-// Placeholder screen for now
-const VideoScreenContainer: React.FC = () => {
+// const styles = StyleSheet.create({});
 
-    const {token, id: userid} = React.useContext(AuthContext);
-    loginWithToken(token, userid);
-
-    return(<View>
-
-            {/* <Text>How are you today?</Text> */}
-            <VideoScreen></VideoScreen>
-        </View>)
-};
-
-const styles = StyleSheet.create({});
-
-export default VideoScreenContainer;
+// export default VideoScreenContainer;

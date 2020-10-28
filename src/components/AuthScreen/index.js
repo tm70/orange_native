@@ -23,8 +23,8 @@ export default class AuthScreen extends PureComponent {
       const opponentsIds = users
         .filter(opponent => opponent.id !== currentUser.id)
         .map(opponent => opponent.id);
-
-      navigation.push('VideoScreen', {opponentsIds});
+      console.log(opponentsIds);
+      this.props.navigation.push('VideoScreen', {opponentsIds});
     };
 
     const _onFailLogin = (error = {}) => {

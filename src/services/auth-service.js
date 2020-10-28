@@ -54,6 +54,8 @@ export default class AuthService {
   };
 
   login = user => {
+    console.log("userId: ", user.id)
+    console.log("User Password: ", user.password)
     return new Promise((resolve, reject) => {
       ConnectyCube.createSession(user)
         .then(() =>

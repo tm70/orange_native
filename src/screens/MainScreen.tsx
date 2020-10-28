@@ -49,6 +49,12 @@ const DATA = [
         screen: 'EditBio',
         icon: require('../../assets/profileicon.png'),
     },
+    {
+        key: 'videoCall',
+        title: 'Start Video Call',
+        screen: 'AuthScreen',
+        icon: require('../../assets/videocall.png'),
+    },
 ];
 
 const Item = ({ title, onPress, icon }) => (

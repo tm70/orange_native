@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar, route, navigation} from 'react-native';
 import ConnectyCube from 'react-native-connectycube';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import RTCViewGrid from './RTCViewGrid';
@@ -11,16 +11,19 @@ import {users} from '../../config';
 export default class VideoScreen extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log(props)
     this._session = null;
-    //this.opponentsIds = props.navigation.getParam('opponentsIds');
+    const opponentsIDs = this.props.route.params.opponentsIds;
+    this.opponentsIds = opponentsIDs;
+    console.log("#################################")
+    console.log(this.opponentsIds)
     //this.opponentsIDs = [2108098]
     
-    const opponentsIDs = users
-        //.filter(opponent => opponent.id !== currentUser.id)
-        .map(opponent => opponent.id);
+    // const opponentsIDs = users
+    //     .filter(opponent => opponent.id !== currentUser.id)
+    //     .map(opponent => opponent.id);
 
-    this.opponentsIds = opponentsIDs
+    // this.opponentsIds = opponentsIDs
         
     this.state = {
       localStream: null,
