@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
     FlatList,
-    ImageBackground,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
+import MenuButton from '../components/MenuButton';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
 import getBio from '../api/getBio';
@@ -57,16 +56,6 @@ const DATA = [
     },
 ];
 
-const Item = ({ title, onPress, icon }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <ImageBackground source={icon} style={{}}>
-            <View style={styles.tile}>
-                <Text style={styles.title}>{title}</Text>
-            </View>
-        </ImageBackground>
-    </TouchableOpacity>
-);
-
 const Main: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [bio, setBio] = useState("")
@@ -75,7 +64,7 @@ const Main: React.FC<Props> = ({ route, navigation }) => {
     }, []);
 
     const renderItem = ({ item }) => (
-        <Item
+        <MenuButton
             title={item.title}
             onPress={() => navigation.navigate(item.screen)}
             icon={item.icon}
@@ -121,23 +110,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '5%',
         marginBottom: '5%',
-    },
-    item: {
-        backgroundColor: '#3498DB',
-        flex: 1,
-        padding: '2%',
-        marginVertical: '2%',
-        marginHorizontal: '2%',
-    },
-    tile: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        aspectRatio: 1,
-    },
-    title: {
-        color: 'white',
-        fontSize: fontScaler(16),
-        textAlign: 'center',
     },
 });
 

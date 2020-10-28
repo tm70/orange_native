@@ -33,11 +33,10 @@ interface Response {
 }
 
 /**
- * Alter a relationship between users
- * @param fromUser The user making the request to alter the relationship (this user)
+ * Get the relationship between users
+ * @param fromUser This user
  * @param toUser The user that is being targeted
  * @param token The API token of this user
- * @param action The way in which the relationship should be altered
  */
 const getRelationship = async (
     fromUser: number,

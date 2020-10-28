@@ -11,21 +11,18 @@ type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'
 type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>;
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
 
-const FriendList: React.FC<Props> = ({navigation, route}) => {
-    const params = route.params;
-    const {token,id} = React.useContext(AuthContext);
+const FriendList: React.FC<Props> = ({navigation, route}) => { 
+    const {token, id} = React.useContext(AuthContext);
     const [showFriends, switchList] = React.useState(true);
     const [listenerAdded, addListener] = React.useState(false);
     
-    // get data from api ()
+    // get data from api
     const [searchAPI, friendList, errorMessage] = useGetRelationships();
     
+    // refresh page on refocusing for navigating backwards
     if (listenerAdded == false && friendList.length != 0) {
         addListener(true);
-        navigation.addListener('focus', () => {
-            searchAPI();
-            console.log("refresh");
-        });
+        navigation.addListener('focus', () => { searchAPI(); });
     }
     
     const renderItem = ({ item }) => (
@@ -36,6 +33,8 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
         />
     );
     
+    // Loading screen before friends list is loaded
+    // TODO: check that the user doesn't just have no relationships
     if (friendList.length == 0) {
         return (
             <View style={styles.container}>
