@@ -26,9 +26,6 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     useEffect(() => {
         getRelationship(id, route.params.id, token).catch(console.log).then(setRel);
     }, []);
-    if (rel == "Getting") {
-        return <Text style={styles.loadtext}>Loading</Text>;
-    }
     
     if (rel == "Friends") {
         return (
@@ -139,15 +136,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#bbbde0",
         padding: '5%',
         marginTop:'10%'
-    },
-
-    loadtext: {
-        fontSize: fontScaler(25),
-        fontWeight: 'bold',
-        textAlign: 'center',
-        paddingHorizontal: '10%',
-        marginTop: '5%',
-        marginBottom: '15%',
     },
 });
 
