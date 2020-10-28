@@ -45,7 +45,7 @@ export type StackParamList = {
     GameMenu: undefined;
     GameList: undefined;
     GameInviteFriends: { game: string };
-    TicTacToe: undefined;
+    TicTacToe: { game_id: number; opponent_id: number; opponent_name: string };
     Chess: undefined;
     MainScreen: undefined;
     Bio: { id: number };

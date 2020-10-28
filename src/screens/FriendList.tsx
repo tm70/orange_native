@@ -8,19 +8,29 @@ import useGetRelationships from "../hooks/useGetRelationships";
 import AuthContext from '../context/AuthContext';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
-type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>
+type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>;
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
-    // not sure which should be use here to get token
     const {token,id} = React.useContext(AuthContext);
+    const [showFriends, switchList] = React.useState(true);
+    const [listenerAdded, addListener] = React.useState(false);
+    
     // get data from api ()
-    const [s, friendList, e] = useGetRelationships();
+    const [searchAPI, friendList, errorMessage] = useGetRelationships();
+    
+    if (listenerAdded == false && friendList.length != 0) {
+        addListener(true);
+        navigation.addListener('focus', () => {
+            searchAPI();
+            console.log("refresh");
+        });
+    }
     
     const renderItem = ({ item }) => (
         <ProfileButton
-            text={item.bio.firstname + ' ' + item.bio.surname + ' ' + item.relationship}
+            text={item.bio.firstname + ' ' + item.bio.surname + '\n' + item.relationship}
             onPress={() => navigation.navigate('Bio', { id: item.bio.id })}
             image_url={item.bio.image_url}
         />
@@ -40,14 +50,22 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                 style={styles.list}
                 ListHeaderComponent={
                     <>
-                        <Text style={styles.header}>Friends</Text>
+                        <Text style={styles.header}>{showFriends ? "Friends" : "Requests"}</Text>
                     </>
                 }
-                data={friendList}
+                data={
+                    showFriends ?
+                    friendList.filter(item => item && item.relationship == "Friends") :
+                    friendList.filter(item => item && (item.relationship == "Request Sent" ||
+                        item.relationship == "Request Received"))
+                    }
                 renderItem={renderItem}
                 numColumns={3}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => item.bio.id}
             />
+            <TouchableOpacity style={styles.button} onPress={() => switchList(!showFriends)}>
+                <Text>{showFriends ? "View Requests" : "View Friends"}</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -58,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '10%',
         fontWeight: 'bold',
     },
     header: {
@@ -66,8 +84,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         paddingHorizontal: '10%',
-        marginTop: '5%',
-        marginBottom: '5%',
+        marginTop: '4%',
+        marginBottom: '4%',
     },
     loadtext: {
         fontSize: fontScaler(25),
@@ -80,20 +98,11 @@ const styles = StyleSheet.create({
     list: {
         width: '100%',
     },
-    item: {
-        padding: '2%',
-        marginVertical: '1%',
-        backgroundColor: 'white',
-        marginHorizontal: '5%',
-        flex: 1/3,
-        maxWidth: '23.5%'
-    },
-    tile: {
-        aspectRatio: 1,
-    },
-    title: {
-        fontSize: fontScaler(10),
-        textAlign: 'center',
+    button: {
+        alignItems: "center",
+        backgroundColor: "#94d361",
+        padding: '5%',
+        marginTop:'10%'
     },
 });
 

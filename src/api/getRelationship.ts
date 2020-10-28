@@ -39,20 +39,15 @@ interface Response {
  * @param token The API token of this user
  * @param action The way in which the relationship should be altered
  */
-const setRelationship = async (
+const getRelationship = async (
     fromUser: number,
     toUser: number,
     token: string,
-    action: FriendRequestAction,
-): Promise<RelationshipType> => {
+): Promise<string> => {
     const path = `/users/${fromUser}/relationships/${toUser}`;
-    const response = await new ApiRequest(path)
-        .withMethod(HTTPMethod.PUT)
-        .withToken(token)
-        .withBody(action.toString())
-        .send<Response>();
-
+    const response = await new ApiRequest(path).withToken(token).send<Response>();
+    console.log(response);
     return response.relationship;
 };
 
-export default setRelationship;
+export default getRelationship;

@@ -1,30 +1,28 @@
-import {BACKEND_BASE_URL} from "./endpoints";
+import ApiRequest, { HTTPMethod } from './ApiRequest';
 
-export interface Response {
-    message: string,
-    status: number,
+/**
+ * The response from the server
+ */
+interface Response {
+    message: string;
+    status: number;
 }
 
-// action = 'Accept' or 'Decline'
-const respondGameRequest = async (userid: number, gameid: number, action: string, token: string): Promise<Response> => {
-    const url = `${BACKEND_BASE_URL}/users/${userid}/games/${gameid}`;
-    
-    let response = await fetch(url, {
-        method: 'PATCH',
-        headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
-        body: JSON.stringify(action),
-    });
-    
-    if (!response.ok) {
-        throw new Error('Failed to connect');
-    }
-    
-    return await response.json().then((data) => {
-        if (data.status !== 200) {
-            throw new Error(data)
-        }
-        return data;
-    })
+/**
+ * The possible responses a user can make to a game request
+ */
+type Action = 'Accept' | 'Decline';
+
+/**
+ * Respond to a game request
+ * @param userId The id of the user that is responding
+ * @param gameId The id of the game they are responding to
+ * @param action The action they want to take
+ * @param token The user's API token
+ */
+const respondGameRequest = async (userId: number, gameId: number, action: Action, token: string): Promise<Response> => {
+    const path = `/users/${userId}/games/${gameId}`;
+    return await new ApiRequest(path).withMethod(HTTPMethod.PATCH).withToken(token).withBody(action).send<Response>();
 };
 
 export default respondGameRequest;

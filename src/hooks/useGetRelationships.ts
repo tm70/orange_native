@@ -3,12 +3,19 @@ import getRelationships, {Relationship} from '../api/getRelationships';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
+/**
+ * An easier to work with representation for a relationship, with all information
+ * about the other user contained within.
+ * @property {Bio} bio - The full bio of the user
+ * @property {string} relationship - The relationship status with the other user. Possible
+ *      values are: "Request Sent", "Request Received", "Friends"
+ */
 export interface Relation {
     bio: Bio;
     relationship: string;
 }
 
-const getFriends: () => [() => void, Bio[], string] = () => {
+const getFriends: () => [() => void, Relation[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [relations, setRelations] = useState([] as Relation[]);
 
@@ -26,7 +33,23 @@ const getFriends: () => [() => void, Bio[], string] = () => {
                     continue;
                 }
                 let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
+                
                 ids.push(id);
+                
+                // make pending relationships more understandable
+                if (r.relationship == "PendingFirstSecond") {
+                    if (userid == r.user_first_id) {
+                        r.relationship = "Request Sent";
+                    } else {
+                        r.relationship = "Request Received";
+                    }
+                } else if (r.relationship == "PendingSecondFirst") {
+                    if (userid == r.user_second_id) {
+                        r.relationship = "Request Sent";
+                    } else {
+                        r.relationship = "Request Received";
+                    }
+                }
             }
             
             const bios = await getBios(ids, token);

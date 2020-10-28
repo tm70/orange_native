@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
@@ -13,12 +7,13 @@ import useUserSearch from '../hooks/useUserSearch';
 import ProfileButton from '../components/ProfileIcon';
 import { SearchedUser } from '../api/getUsersSearch';
 
-type FriendFindScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'FriendFind'
->;
+type FriendFindScreenNavigationProp = StackNavigationProp<StackParamList, 'FriendFind'>;
 type Props = { navigation: FriendFindScreenNavigationProp };
 
+/**
+ * The friend search screen (searches for new users based on name and email address)
+ * @constructor
+ */
 const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
     // TODO: Error
     const [searchAPI, users, errorMessage] = useUserSearch(40);
@@ -28,7 +23,7 @@ const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
         item: SearchedUser;
     }
 
-    // render item
+    // Render a ProfileButton for every user
     const renderItem: React.FC<ItemProps> = ({ item }) => {
         return (
             <ProfileButton
@@ -41,19 +36,15 @@ const FriendFindScreen: React.FC<Props> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Choose friend to play with</Text>
-            <Text style={styles.subheader}>based on similar interests</Text>
+            <Text style={styles.header}>Search for a new friend</Text>
+            <Text style={styles.subheader}>You can search by name or email address</Text>
             <View style={styles.textinput}>
                 <TextInput
-                    style={{
-                        height: '70%',
-                        width: '80%',
-                        borderColor: 'black',
-                        borderWidth: 3,
-                        fontSize: fontScaler(13),
-                        textAlign: 'center',
+                    style={styles.searchBox}
+                    onChangeText={(value) => {
+                        setSearchText(value);
+                        searchAPI(value);
                     }}
-                    onChangeText={setSearchText}
                     value={searchText}
                     onSubmitEditing={() => searchAPI(searchText)}
                 />
@@ -86,7 +77,14 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: 'center',
     },
-
+    searchBox: {
+        height: '95%',
+        width: '100%',
+        borderColor: 'black',
+        borderWidth: 2.5,
+        fontSize: fontScaler(13),
+        textAlign: 'center',
+    },
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
