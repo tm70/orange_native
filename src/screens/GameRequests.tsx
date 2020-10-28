@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import GameRequestButton from '../components/GameRequestButton';
 import getGames from "../api/getGames";
 import useGetGames from "../hooks/useGetGames";
 import cancelGameRequest from "../api/cancelGameRequest";
@@ -12,21 +13,6 @@ type GameRequestsNavigationProp = StackNavigationProp<StackParamList, 'GameReque
 type GameRequestsRouteProp = RouteProp<StackParamList, 'GameRequests'>;
 type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
 
-const states = {
-    "Finished": "Finished",
-    "Cancelled": "Cancelled",
-    "InProgress": "Game in Progress",
-    "RequestSent": "Request Sent",
-    "RequestReceived": "Accept Request?",
-}
-
-const Item = ({ game, oppname, status, onPress }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text style={styles.title}>{game} with {oppname}</Text>
-        <Text style={styles.title}>{states[status]}</Text>
-    </TouchableOpacity>
-);
-
 const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
     const [r, rerender] = React.useState(false);
@@ -34,6 +20,7 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     
     const [searchAPI, games, bios, errorMessage] = useGetGames();
     
+    // TODO: check that the user doesn't just have no games
     if (listenerAdded == false && games.length != 0) {
         addListener(true);
         navigation.addListener('focus', () => {
@@ -88,10 +75,9 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
         }
         
         return (
-            <Item
-                game={item.game_type}
-                oppname={(bios[item.opponent_id]).firstname}
-                status={item.status}
+            <GameRequestButton
+                item={item}
+                bio={bios[item.opponent_id]}
                 onPress={onPress}
             />
         );
@@ -147,6 +133,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         marginBottom: '15%',
     },
+    
     item: {
         padding: '2%',
         marginVertical: '2%',
