@@ -3,6 +3,9 @@ import getRelationships, {Relationship} from '../api/getRelationships';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
+/**
+ * Gets all friends for this user and returns a list of their bios
+ */
 const getFriends: () => [() => void, Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [friends, setFriends] = useState([] as Bio[]);

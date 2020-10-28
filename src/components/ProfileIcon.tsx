@@ -14,10 +14,10 @@ interface Props {
 
 /**
  * A button for a user. Displays their profile image and some desired text underneath.
+ * @constructor
  * @param image_url - The url for the associated users profile picture or null if there is none
  * @param onPress - Action triggered when the button is pressed
  * @param text - Text to display under the image
- * @constructor
  */
 const ProfileButton: React.FC<Props> = ({ image_url, onPress, text }) => {
     return (

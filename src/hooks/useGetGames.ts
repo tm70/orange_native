@@ -3,6 +3,9 @@ import getGames, {GameRequest} from '../api/getGames';
 import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
+/**
+ * Gets all game requests this user is involved in
+ */
 const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [games, setGames] = useState([] as GameRequest[]);

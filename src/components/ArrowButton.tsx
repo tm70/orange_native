@@ -14,6 +14,14 @@ interface Props {
     onPress: () => void;
 }
 
+/**
+ * An arrow shaped button pointing left or right
+ * @constructor
+ * @param text - Text to display on the button
+ * @param color - The colour of the button, as a string of it's hexcode
+ * @param onPress - The function which to call on pressing the button
+ * @param direction - The direction in which the button is pointing
+ */
 const ArrowButton: React.FC<Props> = ({ text, color, onPress, direction }) => {
     return (
         <TouchableOpacity onPress={onPress}>
