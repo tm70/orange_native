@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import GameRequestButton from '../components/GameRequestButton';
 import getGames from "../api/getGames";
 import useGetGames from "../hooks/useGetGames";
 import cancelGameRequest from "../api/cancelGameRequest";
@@ -11,21 +12,6 @@ import fontScaler from "../util/fontScaler";
 type GameRequestsNavigationProp = StackNavigationProp<StackParamList, 'GameRequests'>;
 type GameRequestsRouteProp = RouteProp<StackParamList, 'GameRequests'>;
 type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
-
-const states = {
-    "Finished": "Finished",
-    "Cancelled": "Cancelled",
-    "InProgress": "Game in Progress",
-    "RequestSent": "Request Sent",
-    "RequestReceived": "Accept Request?",
-}
-
-const Item = ({ game, oppname, status, onPress }) => (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Text style={styles.title}>{game} with {oppname}</Text>
-        <Text style={styles.title}>{states[status]}</Text>
-    </TouchableOpacity>
-);
 
 const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
@@ -44,7 +30,6 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
     
     const renderItem = ({ item }) => {
         var onPress = null;
-        
         if (item.status == "InProgress") {
             // in progress -> go to game
             onPress = () => navigation.navigate(item.game_type,
@@ -88,15 +73,15 @@ const GameRequests: React.FC<Props> = ({navigation, route}) => {
         }
         
         return (
-            <Item
-                game={item.game_type}
-                oppname={(bios[item.opponent_id]).firstname}
-                status={item.status}
+            <GameRequestButton
+                item={item}
+                bio={bios[item.opponent_id]}
                 onPress={onPress}
             />
         );
     };
     
+    // TODO: check that the user doesn't just have no games
     if (games.length == 0) {
         return (
             <View style={styles.container}>
@@ -147,6 +132,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         marginBottom: '15%',
     },
+    
     item: {
         padding: '2%',
         marginVertical: '2%',

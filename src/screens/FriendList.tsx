@@ -63,7 +63,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                 keyExtractor={(item, index) => item.bio.id}
             />
             <TouchableOpacity style={styles.button} onPress={() => switchList(!showFriends)}>
-                <Text>{showFriends ? "View Requests" : "View Friends"}</Text>
+                <Text style={styles.subheader}>{showFriends ? "View Requests" : "View Friends"}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: '10%',
         marginTop: '4%',
         marginBottom: '4%',
+    },
+    subheader: {
+        fontSize: fontScaler(15),
+        textAlign: 'center',
     },
     loadtext: {
         fontSize: fontScaler(25),
