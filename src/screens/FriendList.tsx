@@ -14,6 +14,7 @@ type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp 
 const FriendList: React.FC<Props> = ({navigation, route}) => {
     const params = route.params;
     const {token,id} = React.useContext(AuthContext);
+    const [showFriends, switchList] = React.useState(true);
     const [listenerAdded, addListener] = React.useState(false);
     
     // get data from api ()
@@ -49,26 +50,22 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
                 style={styles.list}
                 ListHeaderComponent={
                     <>
-                        <Text style={styles.header}>Friends</Text>
+                        <Text style={styles.header}>{showFriends ? "Friends" : "Requests"}</Text>
                     </>
                 }
-                data={friendList.filter(item => item && item.relationship == "Friends")}
+                data={
+                    showFriends ?
+                    friendList.filter(item => item && item.relationship == "Friends") :
+                    friendList.filter(item => item && (item.relationship == "Request Sent" ||
+                        item.relationship == "Request Received"))
+                    }
                 renderItem={renderItem}
                 numColumns={3}
                 keyExtractor={(item, index) => item.bio.id}
             />
-            <FlatList
-                style={styles.list}
-                ListHeaderComponent={
-                    <>
-                        <Text style={styles.header}>Requests</Text>
-                    </>
-                }
-                data={friendList.filter(item => item && (item.relationship == "Request Sent" || item.relationship == "Request Received"))}
-                renderItem={renderItem}
-                numColumns={3}
-                keyExtractor={(item, index) => item.bio.id}
-            />
+            <TouchableOpacity style={styles.button} onPress={() => switchList(!showFriends)}>
+                <Text>{showFriends ? "View Requests" : "View Friends"}</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '2%',
-        paddingBottom: '15%',
+        paddingBottom: '10%',
         fontWeight: 'bold',
     },
     header: {
@@ -87,8 +84,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         paddingHorizontal: '10%',
-        marginTop: '5%',
-        marginBottom: '5%',
+        marginTop: '4%',
+        marginBottom: '4%',
     },
     loadtext: {
         fontSize: fontScaler(25),
@@ -100,6 +97,12 @@ const styles = StyleSheet.create({
     },
     list: {
         width: '100%',
+    },
+    button: {
+        alignItems: "center",
+        backgroundColor: "#94d361",
+        padding: '5%',
+        marginTop:'10%'
     },
 });
 
