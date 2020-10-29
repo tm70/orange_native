@@ -23,7 +23,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Welcome to App Name</Text>
+            <Text style={styles.header}>Welcome to Lovejoy!</Text>
             <Text style={styles.subheader}>
                 Let's start by setting up your account
             </Text>
