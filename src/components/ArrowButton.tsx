@@ -35,9 +35,7 @@ const ArrowButton: React.FC<Props> = ({ text, color, onPress, direction }) => {
                         }}
                     />
                 ) : null}
-                <View
-                    style={{ ...styles.textContainer, backgroundColor: color }}
-                >
+                <View style={{ ...styles.textContainer, backgroundColor: color }}>
                     <Text style={styles.buttonText}>{text}</Text>
                 </View>
                 {direction === Direction.Right ? (

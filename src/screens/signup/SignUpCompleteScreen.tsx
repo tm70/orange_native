@@ -8,10 +8,7 @@ import ArrowButton, { Direction } from '../../components/ArrowButton';
 import AuthContext from '../../context/AuthContext';
 
 // To get the navigation prop typed
-type SignUpCompleteScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'Complete'
->;
+type SignUpCompleteScreenNavigationProp = StackNavigationProp<StackParamList, 'Complete'>;
 type SignUpCompleteScreenRouteProp = RouteProp<StackParamList, 'Complete'>;
 type Props = {
     navigation: SignUpCompleteScreenNavigationProp;

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import MenuButton from '../components/MenuButton';
@@ -39,9 +34,7 @@ const GameList: React.FC<Props> = ({ navigation }) => {
     const renderItem = ({ item }) => (
         <MenuButton
             title={item.title}
-            onPress={() =>
-                navigation.navigate('GameInviteFriends', { game: item.game })
-            }
+            onPress={() => navigation.navigate('GameInviteFriends', { game: item.game })}
             icon={item.icon}
         />
     );

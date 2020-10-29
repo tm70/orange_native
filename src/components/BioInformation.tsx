@@ -33,7 +33,7 @@ const BioInformation: React.FC<Props> = ({ id }) => {
             <View style={styles.rowDisplay}>
                 <Image
                     style={styles.profileImage}
-                    source={bio.image_url == null ? require('../../assets/person.png') : {uri: bio.image_url}}
+                    source={bio.image_url == null ? require('../../assets/person.png') : { uri: bio.image_url }}
                 />
                 <View style={styles.columnDisplay}>
                     <Text style={styles.subheader}>

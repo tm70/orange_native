@@ -1,21 +1,7 @@
 import React from 'react';
-import {
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import fontScaler from '../../util/fontScaler';
-import {
-    connectTTT,
-    GameResult,
-    getTicTacToeData,
-    MoveResult,
-    TTTPlayer,
-    TTTPos,
-} from '../../api/getTicTacToeData';
+import { connectTTT, GameResult, getTicTacToeData, MoveResult, TTTPlayer, TTTPos } from '../../api/getTicTacToeData';
 import AuthContext from '../../context/AuthContext';
 import Snackbar from 'react-native-snackbar';
 
@@ -74,15 +60,7 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
 
             // Connect to play the game
             const play_url = await connectTTT(game_id, token);
-            game.current = new TTTPlayer(
-                play_url,
-                id,
-                tttd,
-                setBoard,
-                st,
-                onGameComplete,
-                () => setLoading(false),
-            );
+            game.current = new TTTPlayer(play_url, id, tttd, setBoard, st, onGameComplete, () => setLoading(false));
         };
 
         connectToWS();
@@ -92,12 +70,7 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
         };
     }, []);
 
-    if (
-        loading ||
-        board.length === 0 ||
-        turn.length === 0 ||
-        game.current === null
-    ) {
+    if (loading || board.length === 0 || turn.length === 0 || game.current === null) {
         return (
             <View style={styles.loadContainer}>
                 <Text style={styles.loadText}>Loading</Text>
@@ -114,13 +87,7 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
         ]);
     }
 
-    const Item = ({
-        pos,
-        character,
-    }: {
-        pos: number;
-        character: string | null;
-    }) => {
+    const Item = ({ pos, character }: { pos: number; character: string | null }) => {
         return (
             <TouchableOpacity
                 style={styles.item}
@@ -141,24 +108,15 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
                     }
                 }}
             >
-                <Text style={styles.icon}>
-                    {character === '-' ? '' : character}
-                </Text>
+                <Text style={styles.icon}>{character === '-' ? '' : character}</Text>
             </TouchableOpacity>
         );
     };
-    const renderItem = ({ item }: { item: TTTPos }) => (
-        <Item character={item.char} pos={item.pos} />
-    );
+    const renderItem = ({ item }: { item: TTTPos }) => <Item character={item.char} pos={item.pos} />;
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={board}
-                renderItem={renderItem}
-                numColumns={3}
-                keyExtractor={({ pos }) => pos.toString()}
-            />
+            <FlatList data={board} renderItem={renderItem} numColumns={3} keyExtractor={({ pos }) => pos.toString()} />
 
             <Text style={styles.turntext}>{turn}</Text>
         </View>

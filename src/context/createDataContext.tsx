@@ -6,9 +6,7 @@ type BoundActionFunction = (...args: any[]) => void;
 export type DispatchBase<Action> = (arg0: Action) => void;
 
 // Takes a dispatch returns a bound action function which can just be any function
-type UnboundActionFunction<Action> = (
-    dispatch: (arg0: Action) => void,
-) => BoundActionFunction;
+type UnboundActionFunction<Action> = (dispatch: (arg0: Action) => void) => BoundActionFunction;
 
 // Contains multiple UnboundActionFunction that become BoundActionFunctions once bound
 interface UnboundActionFunctionRecord<A> {
@@ -16,21 +14,14 @@ interface UnboundActionFunctionRecord<A> {
 }
 
 // Mirrors UnboundActionFunctionRecord except that this stores the functions once bound
-type BoundActions<
-    Action,
-    Unbound extends UnboundActionFunctionRecord<Action>
-> = {
+type BoundActions<Action, Unbound extends UnboundActionFunctionRecord<Action>> = {
     [K in keyof Unbound]: ReturnType<Unbound[K]>;
 };
 
 // The typing to get the function to work is a bit gross but the results are really quite nice
 // The "actions" object from the useContext hook will have all of the bound action functions fully typed in an
 // editor that supports it
-function createDataContext<
-    State,
-    Action,
-    ActionFunctions extends UnboundActionFunctionRecord<Action>
->(
+function createDataContext<State, Action, ActionFunctions extends UnboundActionFunctionRecord<Action>>(
     reducer: ReducerFunction<State, Action>,
     actions: ActionFunctions,
     initialState: State,
@@ -53,11 +44,7 @@ function createDataContext<
             boundActions[key] = actions[key](dispatch);
         }
 
-        return (
-            <Context.Provider value={{ state, actions: boundActions }}>
-                {children}
-            </Context.Provider>
-        );
+        return <Context.Provider value={{ state, actions: boundActions }}>{children}</Context.Provider>;
     };
 
     return { Context, Provider };

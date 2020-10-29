@@ -50,11 +50,7 @@ const LoginScreen: React.FC<Props> = () => {
 
             <View style={styles.inputSpacer} />
 
-            <BasicButton
-                text="Login"
-                color="#94d361"
-                onPress={() => login({ email, password })}
-            />
+            <BasicButton text="Login" color="#94d361" onPress={() => login({ email, password })} />
         </ScrollView>
     );
 };

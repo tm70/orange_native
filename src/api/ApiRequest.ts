@@ -15,8 +15,7 @@ export enum HTTPMethod {
 }
 
 class AbortController {
-    constructor() {
-    }
+    constructor() {}
 }
 
 /**

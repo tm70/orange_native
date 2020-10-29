@@ -16,13 +16,7 @@ interface Props {
     enabled?: boolean;
 }
 
-const PickerInput: React.FC<Props> = ({
-    title,
-    onValueChange,
-    items,
-    selectedValue,
-    enabled = true,
-}) => {
+const PickerInput: React.FC<Props> = ({ title, onValueChange, items, selectedValue, enabled = true }) => {
     return (
         <View>
             <Text style={styles.header}>{title}</Text>
@@ -33,13 +27,7 @@ const PickerInput: React.FC<Props> = ({
                 enabled={enabled}
             >
                 {items.map((item) => {
-                    return (
-                        <Picker.Item
-                            value={item.value}
-                            label={item.label}
-                            key={item.value}
-                        />
-                    );
+                    return <Picker.Item value={item.value} label={item.label} key={item.value} />;
                 })}
             </Picker>
         </View>

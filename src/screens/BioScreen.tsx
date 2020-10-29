@@ -21,17 +21,17 @@ type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp };
 const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);
-    
+
     // TODO: Display error on error
-    
+
     // Using string "Getting" as a sentinel value as null is a possible return value
-    const [rel, setRel] = useState("Getting");
-    
+    const [rel, setRel] = useState('Getting');
+
     useEffect(() => {
         getRelationship(id, route.params.id, token).catch(console.log).then(setRel);
     }, []);
-    
-    if (rel == "Friends") {
+
+    if (rel == 'Friends') {
         return (
             <View style={styles.container}>
                 <BioInformation id={route.params.id} />
@@ -41,9 +41,9 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
             </View>
         );
     } else if (
-            (rel == "PendingFirstSecond" && id < route.params.id) ||
-            (rel == "PendingSecondFirst" && id > route.params.id)
-            ) {
+        (rel == 'PendingFirstSecond' && id < route.params.id) ||
+        (rel == 'PendingSecondFirst' && id > route.params.id)
+    ) {
         return (
             <View style={styles.container}>
                 <BioInformation id={route.params.id} />
@@ -53,22 +53,18 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
             </View>
         );
     }
-    
+
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />
             <TouchableOpacity
                 style={styles.button}
                 onPress={() =>
-                    setRelationship(
-                        id,
-                        route.params.id,
-                        token,
-                        FriendRequestAction.SendFriendRequest,
-                    )
+                    setRelationship(id, route.params.id, token, FriendRequestAction.SendFriendRequest)
                         .then(() => setFriendModalVisible(true))
                         .catch(console.log)
-                }>
+                }
+            >
                 <Text style={styles.buttontext}>Send friend request</Text>
             </TouchableOpacity>
             <Modal
@@ -80,14 +76,10 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.header}>Friend request sent!</Text>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => navigation.navigate('FriendFind')}>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FriendFind')}>
                             <Text style={styles.buttontext}>Add more friends</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => navigation.navigate('MainScreen')}>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainScreen')}>
                             <Text style={styles.buttontext}>Go back to menu</Text>
                         </TouchableOpacity>
                     </View>
@@ -102,22 +94,22 @@ const styles = StyleSheet.create({
         marginTop: '10%',
         marginHorizontal: '10%',
         fontWeight: 'bold',
-        flex: 1
+        flex: 1,
     },
 
     header: {
         fontSize: fontScaler(17),
         fontWeight: 'bold',
-        marginTop: '5%'
+        marginTop: '5%',
     },
 
     buttontext: {
-        fontSize: fontScaler(15)
+        fontSize: fontScaler(15),
     },
 
     centeredView: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     modalView: {
@@ -129,17 +121,17 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        alignItems: "center",
-        backgroundColor: "#94d361",
+        alignItems: 'center',
+        backgroundColor: '#94d361',
         padding: '5%',
-        marginTop:'10%'
+        marginTop: '10%',
     },
 
     inactivebutton: {
-        alignItems: "center",
-        backgroundColor: "#bbbde0",
+        alignItems: 'center',
+        backgroundColor: '#bbbde0',
         padding: '5%',
-        marginTop:'10%'
+        marginTop: '10%',
     },
 });
 

@@ -8,10 +8,7 @@ import PickerInput from '../../components/signup/PickerInput';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
 
 // To get the navigation prop typed
-type CountryScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'Country'
->;
+type CountryScreenNavigationProp = StackNavigationProp<StackParamList, 'Country'>;
 type CountryScreenRouteProp = RouteProp<StackParamList, 'Country'>;
 type Props = {
     navigation: CountryScreenNavigationProp;
@@ -72,9 +69,7 @@ const CountryScreen: React.FC<Props> = ({ navigation, route }) => {
 
             <View style={styles.navRow}>
                 <ArrowNavigation
-                    onBack={() =>
-                        navigation.navigate('Name', { ...params, country_code })
-                    }
+                    onBack={() => navigation.navigate('Name', { ...params, country_code })}
                     onNext={() =>
                         navigation.navigate('Password', {
                             ...params,

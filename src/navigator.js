@@ -18,28 +18,21 @@ import { NavigationContainer } from '@react-navigation/native';
 //   },
 // );
 
-
 function StackNavigator() {
-  return (
-    <Stack.Navigator
-      initialRouteName="AuthScreen"
-      screenOptions={{ gestureEnabled: false }}
-    >
-      <Stack.Screen
-        name="AuthScreen"
-        component={AuthScreen}
-        options={{ title: 'My app' }}
-      />
-      <Stack.Screen
-        name="VideoScreen"
-        component={VideoScreen}
-      />
-    </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator initialRouteName="AuthScreen" screenOptions={{ gestureEnabled: false }}>
+            <Stack.Screen name="AuthScreen" component={AuthScreen} options={{ title: 'My app' }} />
+            <Stack.Screen name="VideoScreen" component={VideoScreen} />
+        </Stack.Navigator>
+    );
 }
 
 export default function Navigator() {
-  return <NavigationContainer><StackNavigator/></NavigationContainer>;
+    return (
+        <NavigationContainer>
+            <StackNavigator />
+        </NavigationContainer>
+    );
 }
 
 //export default createAppContainer(StackNavigator);

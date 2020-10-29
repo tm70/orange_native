@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
 import ProfileButton from '../components/ProfileIcon';
-import useGetRelationships from "../hooks/useGetRelationships";
+import useGetRelationships from '../hooks/useGetRelationships';
 import AuthContext from '../context/AuthContext';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
@@ -16,20 +16,22 @@ type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp 
  * friend requests
  * @constructor
  */
-const FriendList: React.FC<Props> = ({navigation, route}) => { 
-    const {token, id} = React.useContext(AuthContext);
+const FriendList: React.FC<Props> = ({ navigation, route }) => {
+    const { token, id } = React.useContext(AuthContext);
     const [showFriends, switchList] = React.useState(true);
     const [listenerAdded, addListener] = React.useState(false);
-    
+
     // get data from api
     const [searchAPI, friendList, errorMessage] = useGetRelationships();
-    
+
     // refresh page on refocusing for navigating backwards
     if (listenerAdded == false && friendList.length != 0) {
         addListener(true);
-        navigation.addListener('focus', () => { searchAPI(); });
+        navigation.addListener('focus', () => {
+            searchAPI();
+        });
     }
-    
+
     const renderItem = ({ item }) => (
         <ProfileButton
             text={item.bio.firstname + ' ' + item.bio.surname + '\n' + item.relationship}
@@ -37,7 +39,7 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
             image_url={item.bio.image_url}
         />
     );
-    
+
     // Loading screen before friends list is loaded
     // TODO: check that the user doesn't just have no relationships
     if (friendList.length == 0) {
@@ -47,28 +49,31 @@ const FriendList: React.FC<Props> = ({navigation, route}) => {
             </View>
         );
     }
-    
+
     return (
         <View style={styles.container}>
             <FlatList
                 style={styles.list}
                 ListHeaderComponent={
                     <>
-                        <Text style={styles.header}>{showFriends ? "Friends" : "Requests"}</Text>
+                        <Text style={styles.header}>{showFriends ? 'Friends' : 'Requests'}</Text>
                     </>
                 }
                 data={
-                    showFriends ?
-                    friendList.filter(item => item && item.relationship == "Friends") :
-                    friendList.filter(item => item && (item.relationship == "Request Sent" ||
-                        item.relationship == "Request Received"))
-                    }
+                    showFriends
+                        ? friendList.filter((item) => item && item.relationship == 'Friends')
+                        : friendList.filter(
+                              (item) =>
+                                  item &&
+                                  (item.relationship == 'Request Sent' || item.relationship == 'Request Received'),
+                          )
+                }
                 renderItem={renderItem}
                 numColumns={3}
                 keyExtractor={(item, index) => item.bio.id}
             />
             <TouchableOpacity style={styles.button} onPress={() => switchList(!showFriends)}>
-                <Text style={styles.subheader}>{showFriends ? "View Requests" : "View Friends"}</Text>
+                <Text style={styles.subheader}>{showFriends ? 'View Requests' : 'View Friends'}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -107,10 +112,10 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     button: {
-        alignItems: "center",
-        backgroundColor: "#94d361",
+        alignItems: 'center',
+        backgroundColor: '#94d361',
         padding: '5%',
-        marginTop:'10%'
+        marginTop: '10%',
     },
 });
 

@@ -7,10 +7,7 @@ import { RouteProp } from '@react-navigation/native';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
 
 // To get the navigation prop typed
-type PasswordScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'Password'
->;
+type PasswordScreenNavigationProp = StackNavigationProp<StackParamList, 'Password'>;
 type PasswordScreenRouteProp = RouteProp<StackParamList, 'Password'>;
 type Props = {
     navigation: PasswordScreenNavigationProp;

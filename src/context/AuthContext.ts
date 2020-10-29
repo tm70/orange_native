@@ -2,7 +2,7 @@ import React from 'react';
 import signup, { SignUpParams } from '../api/signup';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import login, { LoginParams } from '../api/login';
-import {AuthService} from '../services'
+import { AuthService } from '../services';
 
 interface ContextData {
     token: string;
@@ -46,7 +46,7 @@ const updateToken = (
 
 // // ConnectyCube login handling.
 //     // If you are already logged in using orange native's Authentication, only then proceed
-//     // to login into ConnectyCube.    
+//     // to login into ConnectyCube.
 //     const {token, id: userid} = React.useContext(AuthContext);
 //     console.log(currentUser);
 //     login = currentUser => {
@@ -55,16 +55,16 @@ const updateToken = (
 //             const opponentsIds = users
 //             .filter(opponent => opponent.id !== currentUser.id)
 //             .map(opponent => opponent.id);
-    
+
 //             navigation.push('VideoScreen', {opponentsIds});
 //         };
-    
+
 //         const _onFailLogin = (error = {}) => {
 //             alert(`Error.\n\n${JSON.stringify(error)}`);
 //         };
-    
+
 //         this.setIsLogging(true);
-    
+
 //         AuthService.login(currentUser)
 //             .then(_onSuccessLogin)
 //             .catch(_onFailLogin)
@@ -113,12 +113,7 @@ export const useAuth = () => {
                 signup(userInfo)
                     .then((response) => {
                         // Store the token and id
-                        updateToken(
-                            dispatch,
-                            'SIGN_UP',
-                            response.token,
-                            response.id,
-                        );
+                        updateToken(dispatch, 'SIGN_UP', response.token, response.id);
                     })
                     .catch((err) => {
                         // TODO: Sign up failed we should display an error
@@ -133,14 +128,8 @@ export const useAuth = () => {
             login: async (userInfo: LoginParams) => {
                 login(userInfo)
                     .then((response) => {
-                        updateToken(
-                            dispatch,
-                            'LOGIN',
-                            response.token,
-                            response.id,
-                        );
-                    }
-                    )
+                        updateToken(dispatch, 'LOGIN', response.token, response.id);
+                    })
                     .catch((err) => {
                         // TODO: Login failed we should display an error
                         console.log('Login Error ' + err.toString());

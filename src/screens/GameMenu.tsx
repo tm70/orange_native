@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
@@ -37,11 +32,7 @@ const DATA = [
  */
 const GameMenu: React.FC<Props> = ({ navigation, route }) => {
     const renderItem = ({ item }) => (
-        <MenuButton
-            title={item.title}
-            onPress={() => navigation.navigate(item.screen)}
-            icon={item.icon}
-        />
+        <MenuButton title={item.title} onPress={() => navigation.navigate(item.screen)} icon={item.icon} />
     );
 
     return (

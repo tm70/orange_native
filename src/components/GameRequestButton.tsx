@@ -5,12 +5,12 @@ import getBio, { Bio } from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
 const states = {
-    "Finished": "Finished",
-    "Cancelled": "Cancelled",
-    "InProgress": "Game in Progress",
-    "RequestSent": "Request Sent",
-    "RequestReceived": "Accept Request?",
-}
+    Finished: 'Finished',
+    Cancelled: 'Cancelled',
+    InProgress: 'Game in Progress',
+    RequestSent: 'Request Sent',
+    RequestReceived: 'Accept Request?',
+};
 
 interface Props {
     id: number;
@@ -29,7 +29,7 @@ const GameRequestButton: React.FC<Props> = ({ item, bio, onPress }) => {
             <TouchableOpacity style={styles.rowDisplay} onPress={onPress}>
                 <Image
                     style={styles.profileImage}
-                    source={bio.image_url == null ? require('../../assets/person.png') : {uri: bio.image_url}}
+                    source={bio.image_url == null ? require('../../assets/person.png') : { uri: bio.image_url }}
                 />
                 <View style={styles.columnDisplay}>
                     <Text style={styles.subheader}>

@@ -7,10 +7,7 @@ import fontScaler from '../util/fontScaler';
 import { RouteProp } from '@react-navigation/native';
 
 // To get the navigation prop typed
-type WelcomeScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'Welcome'
->;
+type WelcomeScreenNavigationProp = StackNavigationProp<StackParamList, 'Welcome'>;
 type WelcomeScreenRouteProp = RouteProp<StackParamList, 'Welcome'>;
 type Props = {
     navigation: WelcomeScreenNavigationProp;
@@ -27,16 +24,10 @@ const WelcomeScreen: React.FC<Props> = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Welcome to Lovejoy!</Text>
-            <Text style={styles.subheader}>
-                Let's start by setting up your account
-            </Text>
+            <Text style={styles.subheader}>Let's start by setting up your account</Text>
 
             <View style={styles.buttonContainer}>
-                <BasicButton
-                    color="#94d361"
-                    text="I'm new"
-                    onPress={() => navigation.navigate('Name', params)}
-                />
+                <BasicButton color="#94d361" text="I'm new" onPress={() => navigation.navigate('Name', params)} />
 
                 <Text style={styles.orText}>or</Text>
 

@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import { StackParamList } from '../../App';
 import { RouteProp } from '@react-navigation/native';
@@ -13,10 +8,7 @@ import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
 import getBio from '../api/getBio';
 
-type MainScreenNavigationProp = StackNavigationProp<
-    StackParamList,
-    'MainScreen'
->;
+type MainScreenNavigationProp = StackNavigationProp<StackParamList, 'MainScreen'>;
 type MainScreenRouteProp = RouteProp<StackParamList, 'MainScreen'>;
 type Props = {
     navigation: MainScreenNavigationProp;
@@ -62,17 +54,13 @@ const DATA = [
  */
 const Main: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
-    const [bio, setBio] = useState("")
+    const [bio, setBio] = useState('');
     useEffect(() => {
         getBio(id, token).catch(console.log).then(setBio);
     }, []);
 
     const renderItem = ({ item }) => (
-        <MenuButton
-            title={item.title}
-            onPress={() => navigation.navigate(item.screen)}
-            icon={item.icon}
-        />
+        <MenuButton title={item.title} onPress={() => navigation.navigate(item.screen)} icon={item.icon} />
     );
 
     return (
@@ -81,9 +69,7 @@ const Main: React.FC<Props> = ({ route, navigation }) => {
                 style={styles.list}
                 ListHeaderComponent={
                     <>
-                        <Text style={styles.header}>
-                            Hello {bio.firstname}, what would you like to do?
-                        </Text>
+                        <Text style={styles.header}>Hello {bio.firstname}, what would you like to do?</Text>
                     </>
                 }
                 data={DATA}

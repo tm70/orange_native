@@ -38,11 +38,7 @@ interface Response {
  * @param toUser The user that is being targeted
  * @param token The API token of this user
  */
-const getRelationship = async (
-    fromUser: number,
-    toUser: number,
-    token: string,
-): Promise<string> => {
+const getRelationship = async (fromUser: number, toUser: number, token: string): Promise<string> => {
     const path = `/users/${fromUser}/relationships/${toUser}`;
     const response = await new ApiRequest(path).withToken(token).send<Response>();
     console.log(response);

@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
 
-type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>
-type TicTacToeRouteProp = RouteProp<StackParamList, 'TicTacToe'>
-type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
+type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>;
+type TicTacToeRouteProp = RouteProp<StackParamList, 'TicTacToe'>;
+type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp };
 
 // probably a nicer way to do it
 const DATA = [
@@ -84,19 +78,15 @@ const DATA = [
 
 // probably want to make the controls for this one drag and drop rather than tap
 const Item = ({ row, column, t }) => (
-    <TouchableOpacity
-        style={(row + column) % 2 == 0 ? styles.blacktile : styles.whitetile}
-    >
+    <TouchableOpacity style={(row + column) % 2 == 0 ? styles.blacktile : styles.whitetile}>
         <Text>{t}</Text>
     </TouchableOpacity>
 );
 
-const Chess: React.FC<Props> = ({navigation, route}) => {
-    const {game_id, opponent_id, opponent_name} = route.params;
-    
-    const renderItem = ({ item }) => (
-        <Item row={item.row} column={item.column} t={item.key} />
-    );
+const Chess: React.FC<Props> = ({ navigation, route }) => {
+    const { game_id, opponent_id, opponent_name } = route.params;
+
+    const renderItem = ({ item }) => <Item row={item.row} column={item.column} t={item.key} />;
 
     return (
         <View style={styles.container}>
