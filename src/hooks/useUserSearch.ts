@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import getUserSearch, {SearchedUser} from '../api/getUsersSearch';
+import React, { useEffect, useRef, useState } from 'react';
+import getUserSearch, { SearchedUser } from '../api/getUsersSearch';
 import AuthContext from '../context/AuthContext';
 import ApiRequest from '../api/ApiRequest';
 
@@ -26,7 +26,7 @@ class APISearcher {
      * @param query
      */
     search(query: string): Promise<SearchedUser[]> {
-        // Honestly, it works better without aborting unfinished requests
+        // Honestly, it works better without aborting unfinished requests so commenting out
         // Abort the previous search if it exists
         // if (this.request !== null) {
         //     this.request.abort();
@@ -60,6 +60,7 @@ function useUserSearch(limit: number = 40): ReturnType {
         searcher.current = new APISearcher(limit, token);
     }, []);
 
+    // Function that will trigger a new search to occur and update the state
     const searchAPI = async (query: string) => {
         try {
             searcher.current

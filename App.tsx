@@ -1,18 +1,21 @@
+// Navigation
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+
+// Auth
+import { SignUpParams } from './src/api/signup';
+import AuthContext, { useAuth } from './src/context/AuthContext';
+import RNSecureKeyStore from 'react-native-secure-key-store';
+
+// Screens
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import NameScreen from './src/screens/signup/NameScreen';
 import CountryScreen from './src/screens/signup/CountryScreen';
 import SignUpCompleteScreen from './src/screens/signup/SignUpCompleteScreen';
-import { SignUpParams } from './src/api/signup';
-import AuthContext, { useAuth } from './src/context/AuthContext';
-import RNSecureKeyStore from 'react-native-secure-key-store';
 import PasswordScreen from './src/screens/signup/PasswordScreen';
-
 import MainScreen from './src/screens/MainScreen';
 import FriendFindScreen from './src/screens/FriendFindScreen';
-
 import GameMenu from './src/screens/GameMenu';
 import GameRequests from './src/screens/GameRequests';
 import GameList from './src/screens/GameList';
@@ -25,15 +28,17 @@ import FriendList from './src/screens/FriendList';
 import checkToken from './src/api/checkToken';
 import LoginScreen from './src/screens/LoginScreen';
 
-import ConnectyCube from 'react-native-connectycube';
-import VideoScreenContainer from './src/screens/VideoScreenContainer';
+// ConnectyCube
 import { AuthService } from './src/services';
 import AuthScreen from './src/components/AuthScreen';
 import VideoScreen from './src/components/VideoScreen';
 
 const Stack = createStackNavigator();
 
-// These are used whenever when we need to type the navigation and route props into our components
+/**
+ * Used to type the route and navigation props for react-navigation
+ * Basically tells the router what params each screen requests
+ */
 export type StackParamList = {
     Welcome: SignUpParams;
     Name: SignUpParams;
@@ -53,12 +58,15 @@ export type StackParamList = {
     Bio: { id: number };
     EditBio: undefined;
     FriendList: undefined;
-
     AuthScreen: undefined;
     VideoScreen: undefined;
 };
 
-// Create a placeholder stack navigator for now
+/**
+ * Screens that welcome a user and are not blocked behind authentication
+ *
+ * Things such as login and signup etc
+ */
 const welcomeScreens = () => {
     const defaultParams = {
         email: '',
@@ -85,10 +93,21 @@ const welcomeScreens = () => {
     );
 };
 
+/**
+ * Properties passed to the RootStack components
+ *
+ * See RoostStack for more information
+ */
 interface RootStackProps {
     loggedIn: boolean;
 }
 
+/**
+ * The root navigation stack
+ *
+ * @param loggedIn Whether or not the user is logged in
+ * @constructor
+ */
 const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
     return (
         // Display the signup and welcome if the user isn't logged in otherwise normal screens
@@ -121,6 +140,10 @@ const RootStack: React.FC<RootStackProps> = ({ loggedIn }) => {
     );
 };
 
+/**
+ * Construct the app itself, define and add all contexts and initialise the authentication systems
+ * @constructor
+ */
 const App: React.FC = () => {
     const { state, dispatch, actions } = useAuth();
 
@@ -154,7 +177,11 @@ const App: React.FC = () => {
 
         loadKeyFromStore();
     }, []);
+
+    // Initialise ConnectyCube authentication
     AuthService.init();
+
+    // Return the RootStack wrapped by the authentication providers
     return (
         <AuthContext.Provider value={{ token: state.token, id: state.id, ...actions }}>
             <NavigationContainer>
@@ -165,30 +192,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// const Stack1 = createStackNavigator();
-
-// function RootStack1() {
-//     return (
-//       <Stack1.Navigator
-//         initialRouteName="AuthScreen"
-//         screenOptions={{ gestureEnabled: false }}
-//       >
-//         <Stack1.Screen
-//           name="AuthScreen"
-//           component={AuthScreen}
-//           options={{ title: 'My app' }}
-//         />
-//         <Stack1.Screen
-//           name="VideoScreen"
-//           component={VideoScreen}
-//         />
-//       </Stack1.Navigator>
-//     );
-//   }
-
-// export default function App2 () {
-
-//     AuthService.init();
-//     return <NavigationContainer><RootStack1/></NavigationContainer>
-// }

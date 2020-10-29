@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import getRelationships from '../api/getRelationships';
-import getBio, {Bio} from '../api/getBio';
+import { Bio } from '../api/getBio';
+import getBio from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
 /**
@@ -30,7 +31,7 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
             const relationships = await getRelationships(userid, token);
             const results = [];
 
-            for (r of relationships) {
+            for (const r of relationships) {
                 // check if blocked
                 if (['BlockFirstSecond', 'BlockSecondFirst', 'BlockBoth'].includes(r.relationship)) {
                     continue;

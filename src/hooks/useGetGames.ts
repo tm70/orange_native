@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import getGames, {GameRequest} from '../api/getGames';
-import getBios, {Bio} from '../api/getBios';
+import React, { useEffect, useState } from 'react';
+import getGames, { GameRequest } from '../api/getGames';
+import { Bio } from '../api/getBio';
+import getBios from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
 /**
@@ -19,7 +20,7 @@ const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
             const requests = await getGames(userid, token);
 
             const ids = [];
-            for (r of requests) {
+            for (const r of requests) {
                 ids.push(r.opponent_id);
             }
             const b = await getBios(ids, token);
