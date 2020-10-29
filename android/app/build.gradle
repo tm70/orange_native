@@ -79,6 +79,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+    entryFile: "index.js",
+    jsBundleDirRelease: "$buildDir/intermediates/merged_assets/release/mergeReleaseAssets/out",
     enableHermes: false,  // clean and rebuild if changing
 ]
 

@@ -31,6 +31,10 @@ import { AuthService } from './src/services';
 import AuthScreen from './src/components/AuthScreen';
 import VideoScreen from './src/components/VideoScreen';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 const Stack = createStackNavigator();
 
 // These are used whenever when we need to type the navigation and route props into our components
