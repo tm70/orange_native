@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext';
 /**
  * Gets all game requests this user is involved in
  */
-const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
+const useGetGames: () => [() => Promise<void>, GameRequest[], { [key: number]: Bio }, string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [games, setGames] = useState([] as GameRequest[]);
     const [bios, setBios] = useState({});
@@ -15,17 +15,22 @@ const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
     // Get the user token
     const { token, id: userid } = React.useContext(AuthContext);
 
-    const searchAPI = async () => {
+    // Triggers an update
+    const trigger = async () => {
         try {
+            // Get the games
             const requests = await getGames(userid, token);
 
+            // Get the id of the opponents
             const ids = [];
             for (const r of requests) {
                 ids.push(r.opponent_id);
             }
+
+            // Get the bio of the opponents
             const b = await getBios(ids, token);
 
-            // set bios before games to guarentee that it is non-empty whenever games is
+            // set bios before games to guarantee that it is non-empty whenever games is
             setBios(b);
             setGames(requests);
         } catch (err) {
@@ -34,10 +39,10 @@ const useGetGames: () => [() => void, GameRequest[], Bio[], string] = () => {
     };
 
     useEffect(() => {
-        searchAPI('');
+        trigger();
     }, []);
 
-    return [searchAPI, games, bios, errorMessage];
+    return [trigger, games, bios, errorMessage];
 };
 
 export default useGetGames;

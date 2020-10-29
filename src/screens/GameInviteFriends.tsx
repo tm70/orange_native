@@ -1,13 +1,14 @@
-import React, {useContext} from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
+import React, { useContext } from 'react';
+import { FlatList, Alert, StyleSheet, Text, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import fontScaler from '../util/fontScaler';
 import ProfileButton from '../components/ProfileIcon';
-import getFriends from '../hooks/getFriends';
+import useFriends from '../hooks/useFriends';
 import sendGameRequest from '../api/sendGameRequest';
-import ArrowButton, {Direction} from '../components/ArrowButton';
+import ArrowButton, { Direction } from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
+import Loading from '../components/Loading';
 
 // To get the navigation prop typed
 type GameInviteFriendsNavigationProp = StackNavigationProp<StackParamList, 'GameInviteFriends'>;
@@ -26,7 +27,7 @@ const GameInviteFriends: React.FC<Props> = ({ navigation, route }) => {
     const game = route.params.game;
     const { token, id: userid } = useContext(AuthContext);
 
-    const [searchAPI, friends, errorMessage] = getFriends();
+    const [friends, loading, errorMessage] = useFriends();
 
     const renderItem = ({ item }) => {
         return (
@@ -41,10 +42,14 @@ const GameInviteFriends: React.FC<Props> = ({ navigation, route }) => {
         );
     };
 
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Invite Friend</Text>
-
+            <FlatList
                 style={styles.list}
                 data={friends}
                 renderItem={renderItem}

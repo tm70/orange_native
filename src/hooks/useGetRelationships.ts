@@ -18,6 +18,7 @@ export interface Relation {
 
 /**
  * Gets all relationships for this user and returns them in a more useable format
+ * @returns [reload trigger, relations, error message]
  */
 const useGetRelationships: () => [() => void, Relation[], string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -26,18 +27,19 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
     // Get the user token
     const { token, id: userid } = React.useContext(AuthContext);
 
-    const searchAPI = async () => {
+    const trigger = async () => {
         try {
             const relationships = await getRelationships(userid, token);
             const results = [];
 
+            const promises = [];
             for (const r of relationships) {
                 // check if blocked
                 if (['BlockFirstSecond', 'BlockSecondFirst', 'BlockBoth'].includes(r.relationship)) {
                     continue;
                 }
 
-                // make pending relationships more understandable
+                // Convert the relationship to a more user friendly word
                 if (r.relationship == 'PendingFirstSecond') {
                     if (userid == r.user_first_id) {
                         r.relationship = 'Request Sent';
@@ -52,10 +54,16 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
                     }
                 }
 
-                let id = r.user_first_id == userid ? r.user_second_id : r.user_first_id;
-                let b = await getBio(id, token);
-                results.push({ bio: b, relationship: r.relationship });
+                // Get the bio for this user and add to results
+                const id = r.user_first_id === userid ? r.user_second_id : r.user_first_id;
+                const p = getBio(id, token).then((b) => {
+                    results.push({ bio: b, relationship: r.relationship });
+                });
+                promises.push(p);
             }
+
+            // Wait for all the promises to resolve
+            await Promise.all(promises);
 
             setRelations(results);
         } catch (err) {
@@ -64,10 +72,10 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
     };
 
     useEffect(() => {
-        searchAPI('');
+        trigger();
     }, []);
 
-    return [searchAPI, relations, errorMessage];
+    return [trigger, relations, errorMessage];
 };
 
 export default useGetRelationships;

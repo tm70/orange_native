@@ -21,12 +21,12 @@ const GameRequests: React.FC<Props> = ({ navigation, route }) => {
     const [r, rerender] = React.useState(false);
     const [listenerAdded, addListener] = React.useState(false);
 
-    const [searchAPI, games, bios, errorMessage] = useGetGames();
+    const [trigger, games, bios, errorMessage] = useGetGames();
 
     if (listenerAdded == false && games.length != 0) {
         addListener(true);
         navigation.addListener('focus', () => {
-            searchAPI();
+            trigger();
             console.log('refresh');
         });
     }

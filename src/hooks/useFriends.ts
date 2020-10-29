@@ -6,44 +6,49 @@ import AuthContext from '../context/AuthContext';
 
 /**
  * Gets all friends for this user and returns a list of their bios
+ * Returns [bio list, loading, error message]
  */
-const getFriends: () => [() => void, Bio[], string] = () => {
+const useFriends: () => [Bio[], boolean, string] = () => {
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(true);
     const [friends, setFriends] = useState([] as Bio[]);
 
     // Get the user token
     const { token, id: userid } = React.useContext(AuthContext);
 
-    const searchAPI = async () => {
+    const trigger = async () => {
         try {
             const relationships = await getRelationships(userid, token);
             const ids = [];
-            //console.log("rels", relationships);
 
-            for (r of relationships) {
-                //console.log("r", r);
-                if (r.relationship == 'Friends') {
-                    let id = r.user_first_id == userid ? r.user_second_id : r.user_first_id;
+            // Get the friend relationships
+            for (const r of relationships) {
+                if (r.relationship === 'Friends') {
+                    let id = r.user_first_id === userid ? r.user_second_id : r.user_first_id;
                     ids.push(id);
                 }
             }
 
+            // Get the bios for the friends
             const bios = await getBios(ids, token);
             const results = [];
-            for (i of ids) {
+            for (const i of ids) {
                 results.push(bios[i]);
             }
+
+            // All done
             setFriends(results);
+            setLoading(false);
         } catch (err) {
             setErrorMessage('Something went wrong');
         }
     };
 
     useEffect(() => {
-        searchAPI('');
+        trigger();
     }, []);
 
-    return [searchAPI, friends, errorMessage];
+    return [friends, loading, errorMessage];
 };
 
-export default getFriends;
+export default useFriends;
