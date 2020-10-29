@@ -12,6 +12,11 @@ type Props = {
     route: TicTacToeRouteProp;
 };
 
+/**
+ * Screen for playing Tic Tac Toe. Game id, Opponent userid and Opponent name should
+ * be passed to the route.
+ * @constructor
+ */
 const TicTacToe: React.FC<Props> = ({ route, navigation }) => {
     const { game_id, opponent_id, opponent_name } = route.params;
 

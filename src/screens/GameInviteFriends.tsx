@@ -23,6 +23,11 @@ type Props = {
     route: GameInviteFriendsRouteProp;
 };
 
+/**
+ * Screen for sending game requests to friends. The game for which to send requests for
+ * should be passed to the route.
+ * @constructor
+ */
 const GameInviteFriends: React.FC<Props> = ({navigation, route}) => {
     const game = route.params.game;
     const {token, id: userid} = useContext(AuthContext);

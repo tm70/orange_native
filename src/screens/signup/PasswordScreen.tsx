@@ -19,7 +19,10 @@ type Props = {
 
 // TODO: Prevent moving on if passwords don't match
 
-// Welcome screen placeholder
+/**
+ * Third screen in signup flow, for entering password
+ * @constructor
+ */
 const PasswordScreen: React.FC<Props> = ({ navigation, route }) => {
     const params = route.params;
     const [password1, setPassword1] = useState('');

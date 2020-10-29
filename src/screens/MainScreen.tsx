@@ -56,6 +56,10 @@ const DATA = [
     },
 ];
 
+/**
+ * Initial screen when logged in, navigates through the app
+ * @constructor
+ */
 const Main: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [bio, setBio] = useState("")

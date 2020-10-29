@@ -23,7 +23,10 @@ interface CountryOption {
     value: string;
 }
 
-// Welcome screen placeholder
+/**
+ * Second screen in signup flow, for choosing country.
+ * @constructor
+ */
 const CountryScreen: React.FC<Props> = ({ navigation, route }) => {
     const [countryOptions, setCountryOptions] = useState([] as CountryOption[]);
 

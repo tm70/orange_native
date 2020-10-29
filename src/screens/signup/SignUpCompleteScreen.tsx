@@ -18,7 +18,10 @@ type Props = {
     route: SignUpCompleteScreenRouteProp;
 };
 
-// Welcome screen placeholder
+/**
+ * Fourth (final) screen in signup flow, for confirming signup
+ * @constructor
+ */
 const SignUpCompleteScreen: React.FC<Props> = ({ navigation, route }) => {
     const { signUp } = useContext(AuthContext);
 

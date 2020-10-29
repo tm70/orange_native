@@ -13,6 +13,10 @@ type GameRequestsNavigationProp = StackNavigationProp<StackParamList, 'GameReque
 type GameRequestsRouteProp = RouteProp<StackParamList, 'GameRequests'>;
 type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp; };
 
+/**
+ * Screen listing all this user's current games and game requests, and responding to them
+ * @constructor
+ */
 const GameRequests: React.FC<Props> = ({navigation, route}) => {
     const {token, id: userid} = React.useContext(AuthContext);
     const [r, rerender] = React.useState(false);
