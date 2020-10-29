@@ -14,10 +14,6 @@ export enum HTTPMethod {
     DELETE = 'DELETE',
 }
 
-class AbortController {
-    constructor() {}
-}
-
 /**
  * For constructing and sending API requests to the API backend
  */
