@@ -1,29 +1,29 @@
 import React from 'react';
-import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
 import GameRequestButton from '../components/GameRequestButton';
 import useGetGames from '../hooks/useGetGames';
 import cancelGameRequest from '../api/cancelGameRequest';
 import respondGameRequest from '../api/respondGameRequest';
 import AuthContext from '../context/AuthContext';
 import fontScaler from '../util/fontScaler';
+import { StackParamList } from '../../App';
 
 type GameRequestsNavigationProp = StackNavigationProp<StackParamList, 'GameRequests'>;
-type GameRequestsRouteProp = RouteProp<StackParamList, 'GameRequests'>;
-type Props = { navigation: GameRequestsNavigationProp; route: GameRequestsRouteProp };
+type Props = { navigation: GameRequestsNavigationProp };
 
 /**
  * Screen listing all this user's current games and game requests, and responding to them
  * @constructor
  */
-const GameRequests: React.FC<Props> = ({ navigation, route }) => {
+const GameRequests: React.FC<Props> = ({ navigation }) => {
     const { token, id: userid } = React.useContext(AuthContext);
     const [r, rerender] = React.useState(false);
     const [listenerAdded, addListener] = React.useState(false);
 
     const [trigger, games, bios, errorMessage] = useGetGames();
 
-    if (listenerAdded == false && games.length != 0) {
+    if (!listenerAdded && games.length !== 0) {
         addListener(true);
         navigation.addListener('focus', () => {
             trigger();
@@ -85,7 +85,7 @@ const GameRequests: React.FC<Props> = ({ navigation, route }) => {
     };
 
     // TODO: check that the user doesn't just have no games
-    if (games.length == 0) {
+    if (games.length === 0) {
         return (
             <View style={styles.container}>
                 <Text style={styles.loadtext}>Loading</Text>

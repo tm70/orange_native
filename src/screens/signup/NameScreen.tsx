@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../../App';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../../App';
 import NameInput from '../../components/signup/NameInput';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
 
 // To get the navigation prop typed
@@ -14,13 +14,12 @@ type Props = {
     route: NameScreenRouteProp;
 };
 
-// TODO: Prevent moving on if no name has been entered
-
 /**
  * First screen in signup flow, for entering email and name.
  * @constructor
  */
 const NameScreen: React.FC<Props> = ({ navigation, route }) => {
+    // Load the state using params as default value (if navigated away an has come back to edit)
     const params = route.params;
     const [email, setEmail] = useState(params.email);
     const [firstname, setFirstname] = useState(params.firstname);

@@ -8,15 +8,14 @@ import ProfileButton from '../components/ProfileIcon';
 import useGetRelationships from '../hooks/useGetRelationships';
 
 type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'>;
-type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>;
-type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
+type Props = { navigation: FriendListNavigationProp };
 
 /**
  * Screen for showing this user's friend list, as well as a list of all their sent/received
  * friend requests
  * @constructor
  */
-const FriendList: React.FC<Props> = ({ navigation, route }) => {
+const FriendList: React.FC<Props> = ({ navigation }) => {
     const [showFriends, switchList] = React.useState(true);
     const [listenerAdded, addListener] = React.useState(false);
 

@@ -7,6 +7,7 @@ import ProfileButton from '../components/ProfileIcon';
 import useFriends from '../hooks/useFriends';
 import sendGameRequest from '../api/sendGameRequest';
 import ArrowButton, { Direction } from '../components/ArrowButton';
+import { RouteProp } from '@react-navigation/native';
 import AuthContext from '../context/AuthContext';
 import Loading from '../components/Loading';
 
@@ -29,6 +30,7 @@ const GameInviteFriends: React.FC<Props> = ({ navigation, route }) => {
 
     const [friends, loading, errorMessage] = useFriends();
 
+    // Render a profile button for each friend
     const renderItem = ({ item }) => {
         return (
             <ProfileButton

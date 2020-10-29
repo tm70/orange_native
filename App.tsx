@@ -51,6 +51,7 @@ export type StackParamList = {
     FriendFind: undefined;
     GameMenu: undefined;
     GameList: undefined;
+    GameRequests: undefined;
     GameInviteFriends: { game: string };
     TicTacToe: { game_id: number; opponent_id: number; opponent_name: string };
     Chess: undefined;

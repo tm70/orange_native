@@ -1,33 +1,24 @@
-import React, {useState} from 'react';
-import {Modal, StyleSheet, Text, View} from 'react-native';
+import React, { useState } from 'react';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
 import BasicButton from '../components/BasicButton';
 import BioInformation from '../components/BioInformation';
 import AuthContext from '../context/AuthContext';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
-
-type EditBioScreenNavigationProp = StackNavigationProp<StackParamList, 'EditBio'>;
-type Props = {
-    navigation: EditBioScreenNavigationProp;
-};
 
 /**
  * Screen for displaying this user's bio and editing it. Also serves as the logout screen
  * @constructor
  */
-const BioScreen: React.FC<Props> = ({ navigation }) => {
+const BioScreen: React.FC = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const { id, logout } = React.useContext(AuthContext);
-
-    // TODO: Functionality and remove temp signout button
 
     return (
         <View style={styles.container}>
             <BioInformation id={id} />
 
-            <BasicButton text="Temp Signout Button" color="#94d361" onPress={logout} />
+            <BasicButton text="Signout" color="#94d361" onPress={logout} />
 
             <Modal
                 animationType="slide"

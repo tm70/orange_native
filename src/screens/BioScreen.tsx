@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
-import {RouteProp} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
+import { RouteProp } from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import getRelationship from '../api/getRelationship';
-import setRelationship, {FriendRequestAction} from '../api/setRelationship';
+import setRelationship, { FriendRequestAction } from '../api/setRelationship';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
 
@@ -21,16 +21,16 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);
 
-    // TODO: Display error on error
-
     // Using string "Getting" as a sentinel value as null is a possible return value
     const [rel, setRel] = useState('Getting');
 
+    // Get the relationship
     useEffect(() => {
         getRelationship(id, route.params.id, token).catch(console.log).then(setRel);
     }, []);
 
-    if (rel == 'Friends') {
+    // Return a different view depending whether the user is a friend or not
+    if (rel === 'Friends') {
         return (
             <View style={styles.container}>
                 <BioInformation id={route.params.id} />
@@ -40,8 +40,8 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
             </View>
         );
     } else if (
-        (rel == 'PendingFirstSecond' && id < route.params.id) ||
-        (rel == 'PendingSecondFirst' && id > route.params.id)
+        (rel === 'PendingFirstSecond' && id < route.params.id) ||
+        (rel === 'PendingSecondFirst' && id > route.params.id)
     ) {
         return (
             <View style={styles.container}>
@@ -53,6 +53,7 @@ const BioScreen: React.FC<Props> = ({ route, navigation }) => {
         );
     }
 
+    // Otherwise display a friend request version
     return (
         <View style={styles.container}>
             <BioInformation id={route.params.id} />

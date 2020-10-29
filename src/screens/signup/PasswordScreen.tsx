@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../../App';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../../App';
 import NameInput from '../../components/signup/NameInput';
-import {RouteProp} from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
 
 // To get the navigation prop typed
@@ -21,6 +21,7 @@ type Props = {
  * @constructor
  */
 const PasswordScreen: React.FC<Props> = ({ navigation, route }) => {
+    // Load the state using params as default value (if navigated away an has come back to edit)
     const params = route.params;
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');

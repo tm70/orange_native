@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {StackParamList} from '../../App';
-import {RouteProp} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { StackParamList } from '../../App';
 import MenuButton from '../components/MenuButton';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
 import getBio from '../api/getBio';
 
 type MainScreenNavigationProp = StackNavigationProp<StackParamList, 'MainScreen'>;
-type MainScreenRouteProp = RouteProp<StackParamList, 'MainScreen'>;
 type Props = {
     navigation: MainScreenNavigationProp;
-    route: MainScreenRouteProp;
 };
 
 const DATA = [
@@ -52,7 +49,7 @@ const DATA = [
  * Initial screen when logged in, navigates through the app
  * @constructor
  */
-const Main: React.FC<Props> = ({ route, navigation }) => {
+const Main: React.FC<Props> = ({ navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [bio, setBio] = useState('');
     useEffect(() => {

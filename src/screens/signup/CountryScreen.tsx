@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
-import {RouteProp} from '@react-navigation/native';
-import {StackParamList} from '../../../App';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import { RouteProp } from '@react-navigation/native';
+import { StackParamList } from '../../../App';
 import getCountries from '../../api/getCountries';
 import PickerInput from '../../components/signup/PickerInput';
 import ArrowNavigation from '../../components/signup/ArrowNavigation';
@@ -46,10 +46,11 @@ const CountryScreen: React.FC<Props> = ({ navigation, route }) => {
             });
     }, []);
 
+    // If the user navigated back from elsewhere load the saved value
     const params = route.params;
     let initialCountry = params.country_code
         ? params.country_code
-        : countryOptions.length == 0
+        : countryOptions.length === 0
         ? ''
         : countryOptions[0].value;
     const [country_code, setCountry_code] = useState(initialCountry);
