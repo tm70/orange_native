@@ -16,7 +16,10 @@ type Props = {
 
 // TODO: Prevent moving on if no name has been entered
 
-// Welcome screen placeholder
+/**
+ * First screen in signup flow, for entering email and name.
+ * @constructor
+ */
 const NameScreen: React.FC<Props> = ({ navigation, route }) => {
     const params = route.params;
     const [email, setEmail] = useState(params.email);

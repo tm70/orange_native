@@ -15,6 +15,10 @@ type Props = {
     navigation: EditBioScreenNavigationProp;
 };
 
+/**
+ * Screen for displaying this user's bio and editing it. Also serves as the logout screen
+ * @constructor
+ */
 const BioScreen: React.FC<Props> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
 

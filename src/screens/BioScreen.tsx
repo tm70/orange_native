@@ -14,6 +14,10 @@ type BioScreenNavigationProp = StackNavigationProp<StackParamList, 'Bio'>;
 type BioScreenRouteProp = RouteProp<StackParamList, 'Bio'>;
 type Props = { navigation: BioScreenNavigationProp; route: BioScreenRouteProp };
 
+/**
+ * Screen for displaying another user's bio and sending friend requests
+ * @constructor
+ */
 const BioScreen: React.FC<Props> = ({ route, navigation }) => {
     const { id, token } = React.useContext(AuthContext);
     const [friendModalVisible, setFriendModalVisible] = useState(false);

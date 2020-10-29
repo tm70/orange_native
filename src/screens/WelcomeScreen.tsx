@@ -17,7 +17,10 @@ type Props = {
     route: WelcomeScreenRouteProp;
 };
 
-// Welcome screen placeholder
+/**
+ * Initial screen when not logged in, goes to login or signup
+ * @constructor
+ */
 const WelcomeScreen: React.FC<Props> = ({ navigation, route }) => {
     const params = route.params;
 

@@ -11,6 +11,11 @@ type FriendListNavigationProp = StackNavigationProp<StackParamList, 'FriendList'
 type FriendListRouteProp = RouteProp<StackParamList, 'FriendList'>;
 type Props = { navigation: FriendListNavigationProp; route: FriendListRouteProp };
 
+/**
+ * Screen for showing this user's friend list, as well as a list of all their sent/received
+ * friend requests
+ * @constructor
+ */
 const FriendList: React.FC<Props> = ({navigation, route}) => { 
     const {token, id} = React.useContext(AuthContext);
     const [showFriends, switchList] = React.useState(true);

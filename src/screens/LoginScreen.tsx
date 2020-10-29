@@ -14,6 +14,10 @@ type Props = {
 
 // TODO: Display error on fail to log in
 
+/**
+ * Login screen
+ * @constructor
+ */
 const LoginScreen: React.FC<Props> = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

@@ -30,6 +30,11 @@ const DATA = [
     },
 ];
 
+/**
+ * Screen for picking between starting a new game (GameList to send new invites) or
+ * viewing existing games/requests (GameRequests).
+ * @constructor
+ */
 const GameMenu: React.FC<Props> = ({ navigation, route }) => {
     const renderItem = ({ item }) => (
         <MenuButton

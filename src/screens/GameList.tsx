@@ -31,6 +31,10 @@ const DATA = [
     },
 ];
 
+/**
+ * Screen listing all the games, navigating to sending new invites for them
+ * @constructor
+ */
 const GameList: React.FC<Props> = ({ navigation }) => {
     const renderItem = ({ item }) => (
         <MenuButton
