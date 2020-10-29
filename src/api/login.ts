@@ -3,7 +3,7 @@
  * @property email - The user's email
  * @property password - The user's password
  */
-import ApiRequest, { HTTPMethod } from './ApiRequest';
+import ApiRequest, {HTTPMethod} from './ApiRequest';
 
 export interface LoginParams {
     email: string;

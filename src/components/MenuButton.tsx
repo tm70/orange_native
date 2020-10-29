@@ -1,13 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
+import { ImageBackground, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
 
+/**
+ * The properties passed to the MenuButton
+ *
+ * See MenuButton for more information
+ */
 interface Props {
     title: string;
     onPress: () => void;
-    //icon: ;
+    icon: ImageSourcePropType;
 }
 
+/**
+ * A button on the main menu
+ *
+ * @param title The text to display on the button
+ * @param onPress The action to trigger when the button is pressed
+ * @param icon The icon to display on the button
+ * @constructor
+ */
 const MenuButton: React.FC<Props> = ({ title, onPress, icon }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
         <ImageBackground source={icon} style={{}}>

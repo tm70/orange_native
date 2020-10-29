@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
-import getBio, { Bio } from '../api/getBio';
-import AuthContext from '../context/AuthContext';
+import { GameRequest } from '../api/getGames';
+import { Bio } from '../api/getBio';
 
+/**
+ * Mapping from the possible game states to the string that should be displayed to the user
+ */
 const states = {
     Finished: 'Finished',
     Cancelled: 'Cancelled',
@@ -12,15 +15,22 @@ const states = {
     RequestReceived: 'Accept Request?',
 };
 
+/**
+ * The properties passed to GameRequestButton
+ *
+ * See Game request button for more information
+ */
 interface Props {
-    id: number;
+    item: GameRequest;
+    bio: Bio;
+    onPress: () => void;
 }
 
 /**
  * Button for a Game Request
  * @constructor
- * @param item - The game request
- * @param bio - The bio of the other user
+ * @param item - The game request data returned from the backend
+ * @param bio - The bio information of the other user
  * @param onPress - Function to be called on pressing the button
  */
 const GameRequestButton: React.FC<Props> = ({ item, bio, onPress }) => {

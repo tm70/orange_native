@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import ConnectyCube from 'react-native-connectycube';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import RTCViewGrid from './RTCViewGrid';
-import { CallService, AuthService } from '../../services';
+import {AuthService, CallService} from '../../services';
 import ToolBar from './ToolBar';
 import UsersSelect from './UsersSelect';
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import signup, { SignUpParams } from '../api/signup';
-import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
-import login, { LoginParams } from '../api/login';
-import { AuthService } from '../services';
+import signup, {SignUpParams} from '../api/signup';
+import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
+import login, {LoginParams} from '../api/login';
 
 interface ContextData {
     token: string;

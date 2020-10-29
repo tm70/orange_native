@@ -2,12 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
 
+/**
+ * The properties passed to BasicButton
+ *
+ * See BasicButton for more information
+ */
 interface Props {
     text: string;
     color: string;
     onPress: () => void;
 }
 
+/**
+ * A basic button for use in any generic context
+ * @param text The text displayed on the button
+ * @param color The color of the button
+ * @param onPress Called when the button is pressed
+ * @constructor
+ */
 const BasicButton: React.FC<Props> = ({ text, color, onPress }) => {
     return (
         <TouchableOpacity onPress={onPress}>

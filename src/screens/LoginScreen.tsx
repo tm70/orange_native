@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import NameInput from '../components/signup/NameInput';
 import BasicButton from '../components/BasicButton';
 import AuthContext from '../context/AuthContext';

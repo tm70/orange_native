@@ -1,4 +1,4 @@
-import ApiRequest, { HTTPMethod } from './ApiRequest';
+import ApiRequest, {HTTPMethod} from './ApiRequest';
 
 /**
  * The response format of the server

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import getUserSearch, { SearchedUser } from '../api/getUsersSearch';
+import React, {useEffect, useRef, useState} from 'react';
+import getUserSearch, {SearchedUser} from '../api/getUsersSearch';
 import AuthContext from '../context/AuthContext';
 import ApiRequest from '../api/ApiRequest';
 

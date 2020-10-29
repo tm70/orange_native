@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { RouteProp } from '@react-navigation/native';
-import { StackParamList } from '../../App';
+import {StyleSheet} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {RouteProp} from '@react-navigation/native';
+import {StackParamList} from '../../App';
 import TTTBoard from '../components/tic_tac_toe/TTTBoard';
 
 type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>;

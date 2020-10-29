@@ -1,9 +1,14 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import ArrowButton, { Direction } from '../ArrowButton';
+import {StyleSheet} from 'react-native';
+import ArrowButton, {Direction} from '../ArrowButton';
 
+/**
+ * The properties passed to the ArrowNavigation
+ */
 interface Props {
+    /** The function to call when the left pointing arrow is pressed */
     onBack: () => void;
+    /** The function to call when the right pointing arrow is pressed */
     onNext: () => void;
 }
 

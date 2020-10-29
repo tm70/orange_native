@@ -2,11 +2,19 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import fontScaler from '../util/fontScaler';
 
+/**
+ * The direction the button should point
+ */
 export enum Direction {
     Left,
     Right,
 }
 
+/**
+ * Properties passed to the ArrowButton
+ *
+ * See ArrowButton for more information
+ */
 interface Props {
     text: string;
     color: string;
@@ -16,6 +24,7 @@ interface Props {
 
 /**
  * An arrow shaped button pointing left or right
+ *
  * @constructor
  * @param text - Text to display on the button
  * @param color - The colour of the button, as a string of it's hexcode

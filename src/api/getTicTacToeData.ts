@@ -1,6 +1,5 @@
-import { WEBSOCKET_CONNECT } from './ApiRequest';
-import { GameState } from './getGames';
-import ApiRequest from './ApiRequest';
+import ApiRequest, {WEBSOCKET_CONNECT} from './ApiRequest';
+import {GameState} from './getGames';
 
 /**
  * What the server returns when getting data from a specific game.

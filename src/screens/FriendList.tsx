@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import ProfileButton from '../components/ProfileIcon';
 import useGetRelationships from '../hooks/useGetRelationships';

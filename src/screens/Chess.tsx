@@ -1,7 +1,7 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 
 type TicTacToeNavigationProp = StackNavigationProp<StackParamList, 'TicTacToe'>;

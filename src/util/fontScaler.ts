@@ -1,7 +1,7 @@
 // This is taken from StackOverflow to scale fonts to different screen sizes automatically:
 // https://stackoverflow.com/questions/57114354/react-native-responsive-font-size
 
-import { Dimensions, PixelRatio, Platform } from 'react-native';
+import {Dimensions, PixelRatio, Platform} from 'react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 

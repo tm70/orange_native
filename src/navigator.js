@@ -1,7 +1,6 @@
 import AuthScreen from './components/AuthScreen';
 import VideoScreen from './components/VideoScreen';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
 // const StackNavigator = createStackNavigator(
 //   {

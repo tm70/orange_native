@@ -1,4 +1,4 @@
-import getBio, { Bio } from './getBio';
+import getBio, {Bio} from './getBio';
 
 /**
  * Gets the bios for a list of user ids

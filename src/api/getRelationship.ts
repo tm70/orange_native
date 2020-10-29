@@ -1,5 +1,5 @@
-import { RelationshipType } from './getRelationships';
-import ApiRequest, { HTTPMethod } from './ApiRequest';
+import {RelationshipType} from './getRelationships';
+import ApiRequest from './ApiRequest';
 
 /**
  * A relationship between two users

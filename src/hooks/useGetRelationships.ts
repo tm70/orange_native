@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import getRelationships, { Relationship } from '../api/getRelationships';
-import getBio, { Bio } from '../api/getBio';
+import React, {useEffect, useState} from 'react';
+import getRelationships from '../api/getRelationships';
+import getBio, {Bio} from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
 /**

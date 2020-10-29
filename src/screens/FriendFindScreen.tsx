@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React, {useState} from 'react';
+import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import useUserSearch from '../hooks/useUserSearch';
 import ProfileButton from '../components/ProfileIcon';
-import { SearchedUser } from '../api/getUsersSearch';
+import {SearchedUser} from '../api/getUsersSearch';
 
 type FriendFindScreenNavigationProp = StackNavigationProp<StackParamList, 'FriendFind'>;
 type Props = { navigation: FriendFindScreenNavigationProp };

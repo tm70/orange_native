@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import React, {useContext} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 import fontScaler from '../util/fontScaler';
 import ProfileButton from '../components/ProfileIcon';
 import getFriends from '../hooks/getFriends';
 import sendGameRequest from '../api/sendGameRequest';
-import ArrowButton, { Direction } from '../components/ArrowButton';
+import ArrowButton, {Direction} from '../components/ArrowButton';
 import AuthContext from '../context/AuthContext';
 
 // To get the navigation prop typed

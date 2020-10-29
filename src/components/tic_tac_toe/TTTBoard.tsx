@@ -5,16 +5,19 @@ import { connectTTT, GameResult, getTicTacToeData, MoveResult, TTTPlayer, TTTPos
 import AuthContext from '../../context/AuthContext';
 import Snackbar from 'react-native-snackbar';
 
-interface PickerValue {
-    label: string;
-    value: any;
-}
-
+/**
+ * The properties passed to the TTTBoard
+ *
+ * See TTTBoard for more information
+ */
 interface Props {
     game_id: number;
     onComplete: () => void;
 }
 
+/**
+ * Stores the default value of the board (empty)
+ */
 const DEFAULT_STATE = [
     { pos: 0, char: '-' },
     { pos: 1, char: '-' },
@@ -27,7 +30,14 @@ const DEFAULT_STATE = [
     { pos: 8, char: '-' },
 ];
 
+/**
+ * A tic tac toe board that can be used to represent gameplay
+ * @param game_id The id of the game that this represents (used to start the game itself)
+ * @param onComplete Called when the game is completed
+ * @constructor
+ */
 const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
+    // Setup the game state
     const [loading, setLoading] = React.useState(true);
     const [board, setBoard] = React.useState(DEFAULT_STATE);
     const [turn, setTurn] = React.useState('');
@@ -35,6 +45,7 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
     const { id, token } = React.useContext(AuthContext);
     const game = React.useRef(null as TTTPlayer | null);
 
+    // Connect to the websocket server to start playing the game
     React.useEffect(() => {
         const connectToWS = async () => {
             // Set the initial state
@@ -65,11 +76,13 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
 
         connectToWS();
 
+        // When this component is unmounted we want to clean up the websocket connection
         return () => {
             game.current?.cleanup();
         };
     }, []);
 
+    // Display the loading message if the game isn't ready yet
     if (loading || board.length === 0 || turn.length === 0 || game.current === null) {
         return (
             <View style={styles.loadContainer}>
@@ -78,6 +91,7 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
         );
     }
 
+    // The game is done display a message to the user
     if (winner !== '') {
         Alert.alert('Game finished!', winner, [
             {
@@ -87,7 +101,9 @@ const TTTBoard: React.FC<Props> = ({ game_id, onComplete }) => {
         ]);
     }
 
+    // An item representing each tile of the TTT board
     const Item = ({ pos, character }: { pos: number; character: string | null }) => {
+        // onPress we try to move make a move their and notify the user what happened
         return (
             <TouchableOpacity
                 style={styles.item}

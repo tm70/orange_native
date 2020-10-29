@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity, View } from 'react-native';
-import { CallService } from '../../services';
+import React, {Component} from 'react';
+import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {CallService} from '../../services';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 export default class ToolBar extends Component {

@@ -1,7 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import fontScaler from '../../util/fontScaler';
 
+/**
+ * The properties passed to NameInput
+ * For more information see NameInput
+ */
 interface Props {
     title: string;
     inputPlaceholder: string;
@@ -11,6 +15,16 @@ interface Props {
     autoCapitalize?: 'sentences' | 'none' | 'words' | 'characters' | undefined;
 }
 
+/**
+ *
+ * @param title The title for this input. Positioned above the input itself
+ * @param inputPlaceholder The placeholder text in the input itself
+ * @param text  The property to track the current value of the text
+ * @param onChangeText The function to call when the text changes, passes the new text value
+ * @param secureTextEntry Whether or not this should mimic password entry
+ * @param autoCapitalize Whether or not to autocapitalise the input from the user
+ * @constructor
+ */
 const NameInput: React.FC<Props> = ({
     title,
     inputPlaceholder,

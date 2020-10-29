@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import getGames, { GameRequest } from '../api/getGames';
-import getBios, { Bio } from '../api/getBios';
+import React, {useEffect, useState} from 'react';
+import getGames, {GameRequest} from '../api/getGames';
+import getBios, {Bio} from '../api/getBios';
 import AuthContext from '../context/AuthContext';
 
 /**

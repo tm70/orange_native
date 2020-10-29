@@ -1,4 +1,4 @@
-import ApiRequest, { HTTPMethod } from './ApiRequest';
+import ApiRequest, {HTTPMethod} from './ApiRequest';
 
 /**
  * The information required to sign up a new user

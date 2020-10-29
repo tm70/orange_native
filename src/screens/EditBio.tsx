@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import {Modal, StyleSheet, Text, View} from 'react-native';
 import fontScaler from '../util/fontScaler';
 import BasicButton from '../components/BasicButton';
 import BioInformation from '../components/BioInformation';
 import AuthContext from '../context/AuthContext';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
 
 type EditBioScreenNavigationProp = StackNavigationProp<StackParamList, 'EditBio'>;
 type Props = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 
 export default ({ name }) => (
     <View style={styles.container}>

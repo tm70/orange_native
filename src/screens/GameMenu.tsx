@@ -1,8 +1,8 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
-import { RouteProp } from '@react-navigation/native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
+import {RouteProp} from '@react-navigation/native';
 import MenuButton from '../components/MenuButton';
 import fontScaler from '../util/fontScaler';
 

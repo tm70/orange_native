@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
+import React from 'react';
+import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 import GameRequestButton from '../components/GameRequestButton';
-import getGames from '../api/getGames';
 import useGetGames from '../hooks/useGetGames';
 import cancelGameRequest from '../api/cancelGameRequest';
 import respondGameRequest from '../api/respondGameRequest';

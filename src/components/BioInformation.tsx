@@ -4,15 +4,19 @@ import fontScaler from '../util/fontScaler';
 import getBio, { Bio } from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
+/**
+ * The properties passed to the BioInformation component
+ *
+ * See BioInformation for more information
+ */
 interface Props {
     id: number;
 }
 
 /**
- * Component for displaying a user's basic information. Displays profile image, name, bio
- * and hobbies
+ * Component for displaying a user's basic information. Displays profile image, name, bio and hobbies
  * @constructor
- * @param id - The id of the user for which to display information for
+ * @param id - The id of the user for which this should get and display information
  */
 const BioInformation: React.FC<Props> = ({ id }) => {
     const [bio, setBio] = useState({} as Bio);
@@ -24,6 +28,7 @@ const BioInformation: React.FC<Props> = ({ id }) => {
         getBio(id, token).catch(console.log).then(setBio);
     }, []);
 
+    // If the bio hasn't been loaded yet display a loading message
     if (Object.keys(bio).length === 0) {
         return <Text>Loading</Text>;
     }

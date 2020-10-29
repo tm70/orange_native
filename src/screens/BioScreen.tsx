@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack/lib/typescript/src/types';
-import { StackParamList } from '../../App';
-import { RouteProp } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackParamList} from '../../App';
+import {RouteProp} from '@react-navigation/native';
 import BioInformation from '../components/BioInformation';
-import BasicButton from '../components/BasicButton';
-import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import getRelationship from '../api/getRelationship';
-import setRelationship, { FriendRequestAction } from '../api/setRelationship';
+import setRelationship, {FriendRequestAction} from '../api/setRelationship';
 import fontScaler from '../util/fontScaler';
 import AuthContext from '../context/AuthContext';
 

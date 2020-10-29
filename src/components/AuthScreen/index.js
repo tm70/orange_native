@@ -1,16 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import {
-    StyleSheet,
-    SafeAreaView,
-    View,
-    StatusBar,
-    Image,
-    Text,
     ActivityIndicator,
+    Image,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
     TouchableOpacity,
+    View,
 } from 'react-native';
-import { AuthService } from '../../services';
-import { users } from '../../config';
+import {AuthService} from '../../services';
+import {users} from '../../config';
 
 export default class AuthScreen extends PureComponent {
     state = { isLogging: false };

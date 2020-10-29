@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { RTCView } from 'react-native-connectycube';
-import { CallService } from '../../services';
+import {StyleSheet, View} from 'react-native';
+import {RTCView} from 'react-native-connectycube';
+import {CallService} from '../../services';
 import CallingLoader from './CallingLoader';
 
 export default ({ streams }) => {
