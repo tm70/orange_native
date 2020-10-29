@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import getRelationships, {Relationship} from '../api/getRelationships';
-import getBios, {Bio} from '../api/getBios';
+import getBio, {Bio} from '../api/getBio';
 import AuthContext from '../context/AuthContext';
 
 /**
@@ -28,16 +28,13 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
     const searchAPI = async () => {
         try {
             const relationships = await getRelationships(userid, token);
-            const ids = [];
+            const results = [];
             
             for (r of relationships) {
                 // check if blocked
                 if (["BlockFirstSecond", "BlockSecondFirst", "BlockBoth"].includes(r.relationship)){
                     continue;
                 }
-                let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
-                
-                ids.push(id);
                 
                 // make pending relationships more understandable
                 if (r.relationship == "PendingFirstSecond") {
@@ -53,17 +50,13 @@ const useGetRelationships: () => [() => void, Relation[], string] = () => {
                         r.relationship = "Request Received";
                     }
                 }
-            }
-            
-            const bios = await getBios(ids, token);
-            
-            const results = [];
-            for (i in ids) {
-                results.push({bio:bios[ids[i]], relationship:relationships[i].relationship});
+                
+                let id = (r.user_first_id == userid) ? r.user_second_id : r.user_first_id;
+                let b = await getBio(id, token);
+                results.push({bio:b, relationship:r.relationship});
             }
             
             setRelations(results);
-            
         } catch (err) {
             setErrorMessage('Something went wrong');
         }
